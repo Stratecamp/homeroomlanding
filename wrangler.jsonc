@@ -1,7 +1,7 @@
 {
   // homeroom marketing site — static files, no server code.
   // This tells Cloudflare "everything in this repo is a website, just serve it."
-  "name": "homeroomsite",
+  "name": "homeroomlanding",
   "compatibility_date": "2026-07-01",
 
   "assets": {
