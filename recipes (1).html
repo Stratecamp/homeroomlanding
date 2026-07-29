@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weeknight Recipes — homeroom</title>
+<meta name="description" content="Easy weeknight family dinners with allergy swaps built in. Coming soon from the homeroom house. Join the list.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+<script src="https://gumroad.com/js/gumroad.js" defer></script>
+<script src="email-capture.js" defer></script>
+<style>
+  :root{--blush:#F3E1D9;--blush-deep:#EBD2C7;--cream:#FCF7F1;--ink:#3E4A40;--ink-soft:#6B7268;
+    --teal:#2F6661;--vermilion:#D9472B;--mustard:#DC9A27;--rose:#E78A9B;--moss:#7A8B5C;--dusty:#5E8CA7;--plum:#9B6B9E;--biscuit:#B5803F;
+    --shadow:0 2px 8px rgba(62,74,64,.08),0 8px 24px rgba(62,74,64,.06);
+    --lift:0 6px 16px rgba(62,74,64,.12),0 22px 48px rgba(62,74,64,.12);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+  a{color:inherit;}
+  ::selection{background:var(--teal);color:var(--cream);}
+  .topbar{display:flex;align-items:center;gap:16px;padding:20px 0 8px;flex-wrap:wrap;}
+  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:29px;text-decoration:none;}
+  .logo i{font-style:normal;display:inline-block;transition:transform .2s;}
+  .logo:hover i{transform:translateY(-4px);}
+  .top-links{margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .top-links a.txt{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink-soft);}
+  .top-links a.txt:hover,.top-links a.txt.on{color:var(--ink);}
+  .btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;background:var(--vermilion);color:#fff;border:none;
+    border-radius:999px;padding:11px 24px;cursor:pointer;box-shadow:var(--shadow);text-decoration:none;display:inline-block;transition:transform .15s;}
+  .btn:hover{transform:scale(1.05);}
+  .btn.big{font-size:16.5px;padding:14px 30px;}
+  .btn:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+
+  .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:40px 0 10px;}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;}}
+  .eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--vermilion);margin-bottom:10px;}
+  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(34px,5vw,52px);line-height:1.05;}
+  h1 .accent{color:var(--mustard);}
+  .lede{font-size:16px;font-weight:700;line-height:1.62;color:var(--ink-soft);margin-top:16px;max-width:490px;}
+  .lede b{color:var(--ink);}
+  .form{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;max-width:490px;}
+  input[type=email]{font-family:'Nunito';font-weight:700;font-size:15px;border:2px solid var(--blush-deep);border-radius:999px;
+    padding:14px 22px;flex:1;min-width:230px;background:#fff;color:var(--ink);}
+  .note{font-size:12px;font-weight:800;color:var(--ink-soft);margin-top:10px;line-height:1.6;max-width:470px;}
+  .ok{display:none;background:var(--teal);color:#fff;border-radius:16px;padding:16px 20px;font-weight:800;font-size:14.5px;margin-top:14px;max-width:490px;line-height:1.5;}
+
+  /* sample card stack */
+  .stack{position:relative;height:430px;}
+  .rc{position:absolute;background:#fff;border-radius:22px;box-shadow:var(--lift);padding:22px 24px;width:100%;max-width:420px;transition:transform .25s;}
+  .rc:hover{transform:translateY(-6px) rotate(0deg)!important;z-index:5;}
+  .rc:nth-child(1){top:0;transform:rotate(-2.5deg);}
+  .rc:nth-child(2){top:150px;transform:rotate(1.5deg);}
+  .rc:nth-child(3){top:300px;transform:rotate(-1deg);}
+  .rc .top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .rc .em{font-size:26px;}
+  .rc .tag{font-family:'Fredoka';font-weight:600;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
+    color:#fff;border-radius:999px;padding:4px 11px;margin-left:auto;}
+  .rc b{font-family:'Fredoka';font-weight:600;font-size:18px;display:block;line-height:1.2;}
+  .rc .meta{font-size:12px;font-weight:800;color:var(--ink-soft);margin-top:4px;}
+  .rc .swap{background:var(--blush);border-radius:10px;padding:8px 12px;font-size:11.5px;font-weight:800;color:var(--ink);margin-top:10px;}
+
+  .what{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:30px 34px;margin:56px 0 0;}
+  .what h2{font-family:'Fredoka';font-weight:700;font-size:26px;text-align:center;}
+  .what .sub{font-size:14.5px;font-weight:700;color:var(--ink-soft);text-align:center;margin:8px auto 22px;max-width:580px;line-height:1.6;}
+  .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .feat{background:var(--blush);border-radius:18px;padding:18px 20px;}
+  .feat .em{font-size:26px;margin-bottom:8px;}
+  .feat b{font-family:'Fredoka';font-weight:600;font-size:15.5px;display:block;margin-bottom:4px;}
+  .feat p{font-size:12.5px;font-weight:700;color:var(--ink-soft);line-height:1.55;}
+
+  .strip{background:var(--ink);color:var(--cream);border-radius:24px;padding:28px 32px;margin-top:18px;display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+  .strip b{font-family:'Fredoka';font-weight:600;font-size:18px;display:block;}
+  .strip p{font-size:13px;font-weight:700;opacity:.88;margin-top:4px;max-width:520px;line-height:1.55;}
+  .strip .btn{margin-left:auto;background:#fff;color:var(--ink);}
+  @media(max-width:700px){.strip .btn{margin-left:0;}}
+  footer{padding:44px 0 40px;text-align:center;}
+  footer .f-logo{font-family:'Fredoka';font-weight:700;font-size:24px;margin-bottom:8px;}
+  footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="logo" href="/"><i style="color:var(--teal)">h</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i><i style="color:var(--rose)">e</i><i>r</i><i style="color:var(--teal)">o</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i></a>
+    <div class="top-links">
+      <a class="txt" href="app.html">The app</a>
+      <a class="txt" href="systems.html">Systems</a>
+      <a class="txt on" href="recipes.html">Recipes</a>
+      <a class="txt" href="shop.html">Shop</a>
+      <a class="txt" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
+      <a class="btn" href="https://homeroomfamily.gumroad.com/l/free-sampler">Free lunch notes</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow">🍝 Coming soon</div>
+      <h1>Weeknight dinners, <span class="accent">already figured out.</span></h1>
+      <p class="lede">We feed seven people around real allergies, every week, on school nights, with homework happening at the same table. So we're building the recipe library we kept wishing somebody had already made: <b>easy dinners with the swaps written right on them</b>, so your partner or your twelve-year-old can cook one without checking with you first.</p>
+      <form class="form" data-hr-list="recipes" data-hr-ok="recipes">
+        <input type="email" required placeholder="you@family.com" aria-label="Email address">
+        <button class="btn big" type="submit">Tell me when it's live</button>
+      </form>
+      <div class="ok" id="ok-recipes">💛 You're on the list! First recipes will land in your inbox. Phineas says hi.</div>
+      <p class="note">One email when it opens, and this list gets in first. No spam, leave whenever you want.</p>
+    </div>
+
+    <div class="stack">
+      <div class="rc">
+        <div class="top"><span class="em">🌮</span><span class="tag" style="background:var(--mustard);color:var(--ink)">25 min</span></div>
+        <b>Build-your-own taco night</b>
+        <div class="meta">Everyone builds their own, so everyone eats</div>
+        <div class="swap">🔁 gluten-free? corn tortillas · dairy-free? skip cheese, add extra guac</div>
+      </div>
+      <div class="rc">
+        <div class="top"><span class="em">🍗</span><span class="tag" style="background:var(--teal)">10 min prep</span></div>
+        <b>Sheet-pan chicken + potatoes</b>
+        <div class="meta">One pan. The oven does the parenting.</div>
+        <div class="swap">🔁 meatless? chickpeas roast beautifully at the same temp</div>
+      </div>
+      <div class="rc">
+        <div class="top"><span class="em">🍝</span><span class="tag" style="background:var(--rose);color:var(--ink)">20 min</span></div>
+        <b>Hidden-veg pasta</b>
+        <div class="meta">Blend the peppers in. They'll never testify.</div>
+        <div class="swap">🔁 wheat allergy? lentil pasta holds sauce better than you'd think</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="what">
+    <h2>What's coming</h2>
+    <p class="sub">No four paragraphs about our trip to Tuscany before the ingredient list. Just dinner, written for the tired 5 p.m. version of you.</p>
+    <div class="feats">
+      <div class="feat"><div class="em">⏱️</div><b>Under 30 minutes</b><p>If it needs an hour of standing at the stove, it isn't a school night dinner and we won't pretend it is.</p></div>
+      <div class="feat"><div class="em">🔁</div><b>Swaps written in</b><p>Substitutions for the common allergens on every single recipe, so the restriction lives on the page instead of in your head.</p></div>
+      <div class="feat"><div class="em">👧</div><b>Kid-cookable steps</b><p>We mark which parts a seven-year-old can own. Dinner turns into training instead of a shift you work alone.</p></div>
+      <div class="feat"><div class="em">🛒</div><b>Aisle-sorted lists</b><p>Every week comes with the grocery list already sorted by section. One trip, no laps around the store.</p></div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div><b>Want the system behind the recipes today?</b>
+    <p>The meals system is free and up right now: theme nights, claimed dinner slots, and the allergy notes trick that finally made our kitchen something other people could run.</p></div>
+    <a class="btn" href="systems.html#meals">Read the meals system →</a>
+  </div>
+
+  <footer>
+    <div class="f-logo"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span>r<span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></div>
+    <p>the family operating system · <a href="https://instagram.com/homeroomforfamily">@homeroomforfamily</a><br>
+    Substitution notes come from our family's experience and aren't medical advice, so always double check ingredients and cross-contamination for your household.<br>© 2026 homeroom</p>
+  </footer>
+</div>
+
+<script>
+// Email capture is handled by email-capture.js (set your provider + form IDs there).
+</script>
+</body>
+</html>

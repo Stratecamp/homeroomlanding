@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>homeroom shop — tools for the family load</title>
+<meta name="description" content="Printable lunch notes, family reset kits, and weekly dinner plans from the homeroom house. No subscription traps. Print tonight, use tomorrow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush:#F3E1D9; --blush-deep:#EBD2C7; --cream:#FCF7F1;
+    --ink:#3E4A40; --ink-soft:#6B7268;
+    --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
+    --moss:#7A8B5C; --dusty:#5E8CA7; --plum:#9B6B9E; --biscuit:#B5803F;
+    --shadow:0 2px 8px rgba(62,74,64,.08),0 8px 24px rgba(62,74,64,.06);
+    --lift:0 6px 16px rgba(62,74,64,.12),0 22px 48px rgba(62,74,64,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+  a{color:inherit;}
+  ::selection{background:var(--teal);color:var(--cream);}
+
+  .topbar{display:flex;align-items:center;gap:16px;padding:20px 0 8px;}
+  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:29px;text-decoration:none;}
+  .logo i{font-style:normal;display:inline-block;transition:transform .2s;}
+  .logo:hover i{transform:translateY(-4px);}
+  .top-links{margin-left:auto;display:flex;align-items:center;gap:18px;}
+  .top-links a.txt{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink-soft);}
+  .top-links a.txt:hover{color:var(--ink);}
+  .btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;background:var(--vermilion);color:#fff;
+    border:none;border-radius:999px;padding:11px 24px;cursor:pointer;box-shadow:var(--shadow);
+    text-decoration:none;display:inline-block;transition:transform .15s;}
+  .btn:hover{transform:scale(1.05);}
+  .btn.ghost{background:#fff;color:var(--ink);}
+  .btn:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .cartbtn{position:relative;}
+  .cartbtn .n{position:absolute;top:-7px;right:-7px;background:var(--teal);color:#fff;font-size:11px;font-weight:800;
+    border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+
+  .hero{text-align:center;padding:38px 0 8px;max-width:660px;margin:0 auto;}
+  .eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--vermilion);margin-bottom:10px;}
+  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(32px,4.6vw,48px);line-height:1.08;}
+  .hero p{font-size:15.5px;font-weight:700;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:24px 0 8px;}
+  .f-chip{font-family:'Fredoka',sans-serif;font-weight:600;font-size:13.5px;border:2px solid var(--blush-deep);
+    background:#fff;color:var(--ink-soft);border-radius:999px;padding:9px 18px;cursor:pointer;transition:all .15s;}
+  .f-chip:hover{transform:translateY(-2px);}
+  .f-chip.on{background:var(--ink);border-color:var(--ink);color:var(--cream);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;padding:20px 0 30px;}
+  .prod{background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .18s;position:relative;animation:pop .3s ease;}
+  @keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+  .prod:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:var(--lift);}
+  .tile{height:120px;display:flex;align-items:center;justify-content:center;font-size:52px;}
+  .badge{position:absolute;top:14px;left:14px;font-family:'Fredoka';font-weight:600;font-size:10px;letter-spacing:1px;
+    text-transform:uppercase;background:var(--mustard);color:var(--ink);border-radius:999px;padding:4px 10px;}
+  .badge.teal{background:var(--teal);color:#fff;}
+  .badge.rose{background:var(--rose);color:var(--ink);}
+  .p-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1;}
+  .p-body b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16.5px;line-height:1.2;}
+  .price{font-family:'Fredoka';font-weight:700;font-size:14px;color:var(--vermilion);margin:4px 0 7px;}
+  .price s{color:var(--ink-soft);font-weight:600;margin-left:5px;}
+  .p-body p{font-size:12.5px;font-weight:700;color:var(--ink-soft);line-height:1.5;flex:1;}
+  .p-acts{display:flex;gap:8px;margin-top:13px;}
+  .p-acts .btn{flex:1;text-align:center;font-size:13.5px;padding:10px 8px;}
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(62,74,64,.45);z-index:80;display:none;align-items:center;justify-content:center;padding:20px;}
+  .overlay.on{display:flex;}
+  .modal{background:var(--cream);border-radius:24px;box-shadow:var(--lift);max-width:520px;width:100%;max-height:88vh;overflow:auto;position:relative;animation:pop .25s ease;}
+  .modal .m-tile{height:130px;display:flex;align-items:center;justify-content:center;font-size:58px;border-radius:24px 24px 0 0;}
+  .modal .m-body{padding:22px 26px 26px;}
+  .modal h3{font-family:'Fredoka';font-weight:700;font-size:23px;line-height:1.15;}
+  .modal .price{font-size:16px;}
+  .modal p{font-size:13.5px;font-weight:700;color:var(--ink-soft);line-height:1.6;margin-top:8px;}
+  .modal ul{margin:12px 0 0 2px;list-style:none;}
+  .modal li{font-size:13px;font-weight:800;padding:7px 0;border-bottom:2px dashed var(--blush-deep);}
+  .modal li:last-child{border:none;}
+  .modal .x{position:absolute;top:12px;right:16px;border:none;background:#fff;border-radius:50%;width:34px;height:34px;
+    font-size:15px;font-weight:800;color:var(--ink);cursor:pointer;box-shadow:var(--shadow);}
+  .m-acts{display:flex;gap:10px;margin-top:18px;}
+  .m-acts .btn{flex:1;text-align:center;}
+
+  /* cart drawer */
+  .drawer{position:fixed;top:0;right:-380px;width:360px;max-width:92vw;height:100vh;background:#fff;z-index:90;
+    box-shadow:var(--lift);transition:right .35s cubic-bezier(.34,1.3,.64,1);display:flex;flex-direction:column;}
+  .drawer.on{right:0;}
+  .d-head{display:flex;align-items:center;padding:20px 22px;border-bottom:2px dashed var(--blush-deep);}
+  .d-head b{font-family:'Fredoka';font-weight:600;font-size:18px;}
+  .d-head button{margin-left:auto;border:none;background:var(--blush);border-radius:50%;width:32px;height:32px;font-weight:800;cursor:pointer;color:var(--ink);}
+  .d-items{flex:1;overflow:auto;padding:14px 22px;}
+  .d-item{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:2px dashed var(--blush-deep);}
+  .d-item .em{font-size:26px;width:46px;height:46px;background:var(--cream);border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .d-item b{font-size:13.5px;font-family:'Fredoka';font-weight:600;display:block;line-height:1.2;}
+  .d-item span{font-size:12px;font-weight:800;color:var(--vermilion);}
+  .d-item .rm{margin-left:auto;border:none;background:none;color:var(--ink-soft);font-weight:800;cursor:pointer;font-size:14px;}
+  .d-empty{text-align:center;color:var(--ink-soft);font-weight:800;font-size:13.5px;padding:40px 10px;line-height:1.7;}
+  .d-foot{padding:18px 22px 24px;border-top:2px dashed var(--blush-deep);}
+  .d-total{display:flex;justify-content:space-between;font-family:'Fredoka';font-weight:700;font-size:16px;margin-bottom:12px;}
+  .d-note{font-size:11px;font-weight:800;color:var(--ink-soft);margin-top:10px;line-height:1.55;text-align:center;}
+  .d-foot .btn{width:100%;text-align:center;}
+
+  /* free strip */
+  .free{background:var(--ink);color:var(--cream);border-radius:26px;padding:30px 34px;margin:14px 0 30px;
+    display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+  .free b{font-family:'Fredoka';font-weight:600;font-size:19px;display:block;}
+  .free p{font-size:13px;font-weight:700;opacity:.88;margin-top:4px;max-width:480px;line-height:1.55;}
+  .free .btn{margin-left:auto;}
+  @media(max-width:700px){.free .btn{margin-left:0;}}
+
+  footer{padding:36px 0 40px;text-align:center;}
+  footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:95;}
+</style>
+<script src="https://gumroad.com/js/gumroad.js" defer></script>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="wrap">
+  <div class="topbar">
+    <a class="logo" href="/"><i style="color:var(--teal)">h</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i><i style="color:var(--rose)">e</i><i>r</i><i style="color:var(--teal)">o</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i></a>
+    <div class="top-links">
+      <a class="txt" href="/">Home</a>
+      <a class="txt" href="app.html">The app</a>
+      <a class="txt" href="systems.html">Systems</a>
+      <a class="txt" href="recipes.html">Recipes</a>
+      <a class="txt" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
+      <button class="btn ghost cartbtn" onclick="toggleCart(true)">🧺 Cart<span class="n" id="cart-n" style="display:none">0</span></button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">The homeroom shop</div>
+    <h1>Little tools for the big load.</h1>
+    <p>Everything here runs in our house of seven, plus the dog, plus whoever's staying this weekend. Print it tonight, use it tomorrow morning. No subscriptions, because that's the whole point of us.</p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+
+  <div class="free">
+    <div><b>🎁 Start free: 6-card sampler and the Week Zero checklist</b>
+    <p>Two notes from each theme, dog included, plus the list we run before every school year. Free stuff first, always. It's how we make friends.</p></div>
+    <a class="btn" href="https://homeroomfamily.gumroad.com/l/free-sampler">Get the free kit</a>
+  </div>
+
+  <footer>
+    <p>the family operating system · <a href="https://instagram.com/homeroomforfamily">@homeroomforfamily</a><br>
+    Meal-plan substitution notes come from our family's experience and aren't medical advice, so always double check ingredients for your household.<br>© 2026 homeroom</p>
+  </footer>
+</div>
+
+<!-- modal -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="x" onclick="closeModal()" aria-label="Close">✕</button>
+    <div class="m-tile" id="m-tile"></div>
+    <div class="m-body">
+      <h3 id="m-name"></h3>
+      <div class="price" id="m-price"></div>
+      <p id="m-desc"></p>
+      <ul id="m-feats"></ul>
+      <div class="m-acts">
+        <button class="btn" id="m-add"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- cart drawer -->
+<div class="drawer" id="drawer">
+  <div class="d-head"><b>Your basket 🧺</b><button onclick="toggleCart(false)" aria-label="Close cart">✕</button></div>
+  <div class="d-items" id="d-items"></div>
+  <div class="d-foot">
+    <div class="d-total"><span>Subtotal</span><span id="d-total">$0</span></div>
+    <button class="btn" onclick="checkout()">Checkout</button>
+    <div class="d-note" id="d-note">Instant digital downloads · checkout handled securely by Gumroad 🔒</div>
+  </div>
+</div>
+
+<script>
+// =============== PRODUCT DATA — edit this list to run the shop ===============
+// link: paste each product's Gumroad/Etsy/Stripe URL when live. sub:true = subscription/waitlist (links out directly).
+const PRODUCTS=[
+ {id:'notes-starter',cat:'lunchbox',em:'💌',tile:'var(--rose)',badge:'Bestseller',badgeC:'',
+  name:'Lunch Notes — Starter Pack',price:7,
+  desc:'24 printable lunchbox notes in four themes, tested on our own five kids. Print on cardstock, cut on the dashed lines, tuck one in next to the sandwich. Two minutes of work that gets remembered at noon.',
+  feats:['🦁 Big Day Courage: 6 notes for tests, tryouts, first days','🌤️ Rough Morning Recovery: 6 reset notes (incl. the napkin trick)','😂 Just Because: 6 jokes + missions','🐾 Notes from Phineas: 6 notes of official dog business','✏️ 2 write-your-own blanks · instant PDF download'],
+  link:'https://homeroomfamily.gumroad.com/l/lunch-notes-starter?wanted=true'},
+ {id:'notes-phineas',cat:'lunchbox',em:'🐾',tile:'var(--biscuit)',badge:'Fan favorite',badgeC:'rose',
+  name:'Notes from Phineas — Full Pack',price:7,
+  desc:'A whole pack written by the dog. Encouragement, weather reports (100% chance of wagging at 3:15), and one formal complaint about how few crusts he receives.',
+  feats:['24 notes in Phineas\u2019s voice','\u201cOfficial dog business\u201d seal on every card','Works for dog AND non-dog households, charm is universal','Instant PDF download'],
+  link:'https://homeroomfamily.gumroad.com/l/notes-from-phineas?wanted=true'},
+ {id:'reset-kit',cat:'systems',em:'🗓️',tile:'var(--dusty)',badge:'',badgeC:'',
+  name:'The Sunday Reset Kit',price:12,
+  desc:'The 15 minutes on Sunday that hold our week together. Preview the week, claim the dinners, flip the chores, and everyone names one win. Printed and ready for your fridge.',
+  feats:['The 15-minute agenda card','Weekly grid + chore rotation chart','Meal plan page with allergy-notes column','Fridge-ready Wins Wall printable','Instant PDF download'],
+  link:'https://homeroomfamily.gumroad.com/l/sunday-reset-kit?wanted=true'},
+ {id:'ops-bundle',cat:'systems',em:'🏠',tile:'var(--teal)',badge:'Save $7',badgeC:'teal',
+  name:'Family Ops Bundle',price:19,was:26,
+  desc:'The Sunday Reset Kit plus both lunch note packs. The whole starter system for getting the invisible work out of your head and onto a wall, with 48 notes of joy attached.',
+  feats:['Everything in the Sunday Reset Kit','Lunch Notes Starter Pack (24 cards)','Notes from Phineas Full Pack (24 cards)','Instant PDF downloads'],
+  link:'https://homeroomfamily.gumroad.com/l/family-ops-bundle?wanted=true'},
+ {id:'dinner-club',cat:'dinner',em:'🍝',tile:'var(--mustard)',badge:'Founding · save 35%',badgeC:'teal',
+  name:'What\u2019s for Dinner This Week',price:39,per:'/yr founding · then $49',sub:true,cta:'Join the founding list',
+  desc:'Every Friday: five weeknight dinners plus a weekend cook, the grocery list sorted by aisle, and swap notes for the common allergens. Written by someone who has been feeding seven people around real restrictions for years.',
+  feats:['5 weeknight dinners + 1 weekend cook, every Friday','Aisle-sorted grocery list','Substitution-friendly allergen notes on every recipe','Kid-pick night built into every week','Founding members lock $39/yr for life'],
+  link:'app.html'},
+ {id:'kit',cat:'systems',em:'📺',tile:'var(--vermilion)',badge:'Waitlist',badgeC:'rose',
+  name:'The homeroom Kit',price:0,per:'pay once · own forever',sub:true,cta:'Join the waitlist',
+  desc:'The whole family operating system running in your house: the app, the kitchen tablet, calendar sync to every phone, chore streaks, the Wins Wall, and the rituals that hold it together. Yours to keep. No subscription, not ever.',
+  feats:['The complete homeroom app + 45-minute setup guide','Kitchen wall display mode (any old tablet)','Calendar sync to every phone','No subscription. Ever.','Waitlist members get founding pricing'],
+  link:'app.html'}
+];
+const CATS=[['all','Everything'],['lunchbox','💌 Lunchbox'],['systems','🗓️ Systems'],['dinner','🍝 Dinner']];
+
+// =============== state ===============
+let cat='all',cart=[];
+const $=id=>document.getElementById(id);
+const money=p=>'$'+p;
+
+function renderFilters(){
+  $('filters').innerHTML=CATS.map(([k,n])=>`<button class="f-chip ${k===cat?'on':''}" onclick="cat='${k}';renderFilters();renderGrid()">${n}</button>`).join('');
+}
+function renderGrid(){
+  $('grid').innerHTML=PRODUCTS.filter(p=>cat==='all'||p.cat===cat).map(p=>`
+   <div class="prod">
+     ${p.badge?`<span class="badge ${p.badgeC}">${p.badge}</span>`:''}
+     <div class="tile" style="background:${p.tile}">${p.em}</div>
+     <div class="p-body">
+       <b>${p.name}</b>
+       <div class="price">${p.price?money(p.price):''}${p.per?` <small>${p.per}</small>`:p.price?' · printable':''}${p.was?`<s>${money(p.was)}</s>`:''}</div>
+       <p>${p.desc.split('.')[0]}.</p>
+       <div class="p-acts">
+         <button class="btn ghost" onclick="openModal('${p.id}')">Details</button>
+         <button class="btn" onclick="${p.sub?`goSub('${p.id}')`:`addCart('${p.id}',this)`}">${p.sub?p.cta:'Add to basket'}</button>
+       </div>
+     </div>
+   </div>`).join('');
+}
+function openModal(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  $('m-tile').style.background=p.tile;$('m-tile').textContent=p.em;
+  $('m-name').textContent=p.name;
+  $('m-price').innerHTML=(p.price?money(p.price):'')+(p.per?` <small>${p.per}</small>`:p.price?' · instant download':'');
+  $('m-desc').textContent=p.desc;
+  $('m-feats').innerHTML=p.feats.map(f=>`<li>${f}</li>`).join('');
+  const b=$('m-add');b.textContent=p.sub?p.cta:'Add to basket 🧺';
+  b.onclick=()=>{p.sub?goSub(id):addCart(id,b);closeModal();};
+  $('overlay').classList.add('on');
+}
+function closeModal(){$('overlay').classList.remove('on');}
+function goGumroad(url){const a=document.createElement('a');a.href=url;document.body.appendChild(a);a.click();a.remove();}
+function goSub(id){const p=PRODUCTS.find(x=>x.id===id);if(!p.link)return;
+  p.link.includes('gumroad.com')?goGumroad(p.link):location.href=p.link;}
+
+function addCart(id,el){
+  if(!cart.includes(id)){cart.push(id);
+    if(el){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top);}}
+  renderCart();toggleCart(true);
+}
+function rmCart(id){cart=cart.filter(x=>x!==id);renderCart();}
+function renderCart(){
+  const n=$('cart-n');n.textContent=cart.length;n.style.display=cart.length?'flex':'none';
+  const items=cart.map(id=>PRODUCTS.find(p=>p.id===id));
+  $('d-items').innerHTML=items.length?items.map(p=>`
+    <div class="d-item"><span class="em">${p.em}</span>
+     <div><b>${p.name}</b><span>${money(p.price)}</span></div>
+     <button class="rm" onclick="rmCart('${p.id}')" aria-label="Remove">✕</button></div>`).join('')
+   :`<div class="d-empty">Your basket is empty,<br>unlike the grocery one. 🛒</div>`;
+  $('d-total').textContent=money(items.reduce((s,p)=>s+p.price,0));
+  // bundle nudge
+  if(cart.includes('notes-starter')&&cart.includes('reset-kit')&&!cart.includes('ops-bundle')){
+    $('d-note').innerHTML='💡 Psst, the <b>Family Ops Bundle</b> gets you both of these + the Phineas pack for $19.';
+  }
+}
+function toggleCart(on){$('drawer').classList.toggle('on',on);}
+function checkout(){
+  if(!cart.length)return;
+  const missing=cart.map(id=>PRODUCTS.find(p=>p.id===id)).filter(p=>!p.link);
+  if(missing.length){
+    $('d-note').innerHTML='🛠 Almost live! Paste your Gumroad/Etsy links into the PRODUCTS list at the top of this file and this button will send shoppers straight to checkout.';
+  }else{
+    goGumroad(PRODUCTS.find(p=>p.id===cart[0]).link);
+  }
+}
+
+// =============== confetti (shared brand physics) ===============
+const cv=$('confetti'),ctx=cv.getContext('2d');let PARTS=[],anim;
+function sizeC(){cv.width=innerWidth;cv.height=innerHeight;}sizeC();addEventListener('resize',sizeC);
+const CCOLS=['#2F6661','#D9472B','#DC9A27','#E78A9B','#7A8B5C','#5E8CA7','#9B6B9E','#B5803F'];
+function burst(x,y){
+  for(let i=0;i<60;i++){const a=Math.random()*Math.PI*2,s=3+Math.random()*7;
+    PARTS.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,g:.26,r:2.5+Math.random()*3.5,
+      c:CCOLS[i%8],rot:Math.random()*6,vr:(Math.random()-.5)*.3,l:55+Math.random()*35});}
+  cancelAnimationFrame(anim);
+  (function f(){ctx.clearRect(0,0,cv.width,cv.height);PARTS=PARTS.filter(p=>p.l>0);
+    PARTS.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.rot+=p.vr;p.l--;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;
+      ctx.globalAlpha=Math.min(1,p.l/25);ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);ctx.restore();});
+    if(PARTS.length)anim=requestAnimationFrame(f);})();
+}
+
+renderFilters();renderGrid();renderCart();
+</script>
+</body>
+</html>

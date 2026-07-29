@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Systems — homeroom</title>
+<meta name="description" content="Starter systems for running a household everyone can thrive in: laundry, maintenance, meals, and activities. Frameworks from a real family of eight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+<script src="https://gumroad.com/js/gumroad.js" defer></script>
+<style>
+  :root{--blush:#F3E1D9;--blush-deep:#EBD2C7;--cream:#FCF7F1;--ink:#3E4A40;--ink-soft:#6B7268;
+    --teal:#2F6661;--vermilion:#D9472B;--mustard:#DC9A27;--rose:#E78A9B;--moss:#7A8B5C;--dusty:#5E8CA7;--plum:#9B6B9E;--biscuit:#B5803F;
+    --shadow:0 2px 8px rgba(62,74,64,.08),0 8px 24px rgba(62,74,64,.06);
+    --lift:0 6px 16px rgba(62,74,64,.12),0 22px 48px rgba(62,74,64,.12);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+  a{color:inherit;}
+  ::selection{background:var(--teal);color:var(--cream);}
+  .topbar{display:flex;align-items:center;gap:16px;padding:20px 0 8px;flex-wrap:wrap;}
+  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:29px;text-decoration:none;}
+  .logo i{font-style:normal;display:inline-block;transition:transform .2s;}
+  .logo:hover i{transform:translateY(-4px);}
+  .top-links{margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .top-links a.txt{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink-soft);}
+  .top-links a.txt:hover,.top-links a.txt.on{color:var(--ink);}
+  .btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;background:var(--vermilion);color:#fff;border:none;
+    border-radius:999px;padding:11px 24px;cursor:pointer;box-shadow:var(--shadow);text-decoration:none;display:inline-block;transition:transform .15s;}
+  .btn:hover{transform:scale(1.05);}
+  .btn.ghost{background:#fff;color:var(--ink);}
+  .btn.big{font-size:16.5px;padding:14px 30px;}
+  .hero{text-align:center;padding:38px 0 6px;max-width:720px;margin:0 auto;}
+  .eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--vermilion);margin-bottom:10px;}
+  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(32px,4.6vw,48px);line-height:1.08;}
+  .hero p{font-size:15.5px;font-weight:700;color:var(--ink-soft);margin-top:12px;line-height:1.62;}
+
+  .principle{background:var(--ink);color:var(--cream);border-radius:24px;padding:26px 32px;margin:26px 0 8px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:800px){.principle{grid-template-columns:1fr;}}
+  .principle b{font-family:'Fredoka';font-weight:600;font-size:16px;display:block;margin-bottom:5px;}
+  .principle p{font-size:13px;font-weight:700;opacity:.88;line-height:1.55;}
+  .principle .n{font-family:'Fredoka';font-weight:700;font-size:12px;color:var(--mustard);letter-spacing:1.5px;display:block;margin-bottom:6px;}
+
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:26px 0 4px;}
+  .tab{font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px;border:2px solid var(--blush-deep);background:#fff;
+    color:var(--ink-soft);border-radius:999px;padding:10px 20px;cursor:pointer;transition:all .15s;}
+  .tab:hover{transform:translateY(-2px);}
+  .tab.on{color:#fff;border-color:transparent;}
+
+  .sys{display:none;animation:fade .3s ease;}
+  .sys.on{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+  .sys-head{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:28px 32px;margin:18px 0 14px;position:relative;overflow:hidden;}
+  .sys-head .band{position:absolute;top:0;left:0;right:0;height:10px;}
+  .sys-head .em{font-size:38px;margin-bottom:6px;}
+  .sys-head h2{font-family:'Fredoka';font-weight:700;font-size:27px;line-height:1.15;}
+  .sys-head .pain{font-size:14.5px;font-weight:700;color:var(--ink-soft);margin-top:8px;line-height:1.6;max-width:660px;}
+  .sys-head .pain b{color:var(--ink);}
+
+  .cols{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start;}
+  @media(max-width:880px){.cols{grid-template-columns:1fr;}}
+  .card{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:24px 26px;margin-bottom:16px;}
+  .card h3{font-family:'Fredoka';font-weight:600;font-size:17.5px;margin-bottom:4px;display:flex;align-items:center;gap:9px;}
+  .card .sub{font-size:12.5px;font-weight:800;color:var(--ink-soft);margin-bottom:12px;}
+  .step{display:flex;gap:14px;padding:13px 0;border-bottom:2px dashed var(--blush-deep);}
+  .step:last-child{border:none;padding-bottom:0;}
+  .step .n{flex:none;width:30px;height:30px;border-radius:50%;color:#fff;font-family:'Fredoka';font-weight:600;font-size:14px;
+    display:flex;align-items:center;justify-content:center;}
+  .step b{font-family:'Fredoka';font-weight:600;font-size:15px;display:block;line-height:1.25;}
+  .step span{font-size:13px;font-weight:700;color:var(--ink-soft);line-height:1.55;display:block;margin-top:3px;}
+  .rhythm .r{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-bottom:2px dashed var(--blush-deep);}
+  .rhythm .r:last-child{border:none;}
+  .rhythm .when{font-family:'Fredoka';font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase;
+    color:#fff;border-radius:999px;padding:4px 11px;flex:none;}
+  .rhythm .what{font-size:13px;font-weight:700;color:var(--ink-soft);line-height:1.5;}
+  .rhythm .what b{color:var(--ink);}
+  .kid{background:var(--blush);border-radius:18px;padding:18px 20px;margin-bottom:16px;}
+  .kid h3{font-family:'Fredoka';font-weight:600;font-size:15.5px;margin-bottom:8px;}
+  .kid .age{display:flex;gap:10px;padding:8px 0;border-bottom:2px dashed var(--blush-deep);font-size:12.5px;font-weight:700;color:var(--ink-soft);line-height:1.5;}
+  .kid .age:last-child{border:none;}
+  .kid .age b{font-family:'Fredoka';font-weight:600;color:var(--ink);flex:none;width:66px;}
+  .trap{background:#F7E4E0;border-radius:18px;padding:18px 22px;}
+  .trap h3{font-family:'Fredoka';font-weight:600;font-size:15.5px;margin-bottom:8px;}
+  .trap li{font-size:13px;font-weight:700;color:var(--ink-soft);line-height:1.55;margin:0 0 8px 17px;}
+  .trap li b{color:var(--ink);}
+  .tool{background:var(--teal);color:#fff;border-radius:18px;padding:20px 22px;}
+  .tool b{font-family:'Fredoka';font-weight:600;font-size:15.5px;display:block;margin-bottom:6px;}
+  .tool p{font-size:13px;font-weight:700;opacity:.92;line-height:1.55;margin-bottom:12px;}
+  .tool .btn{background:#fff;color:var(--teal);}
+
+  .cta-strip{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:30px 34px;margin:26px 0 10px;text-align:center;}
+  .cta-strip h2{font-family:'Fredoka';font-weight:700;font-size:26px;}
+  .cta-strip p{font-size:14.5px;font-weight:700;color:var(--ink-soft);margin:8px auto 16px;max-width:560px;line-height:1.6;}
+  footer{padding:44px 0 40px;text-align:center;}
+  footer .f-logo{font-family:'Fredoka';font-weight:700;font-size:24px;margin-bottom:8px;}
+  footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="logo" href="/"><i style="color:var(--teal)">h</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i><i style="color:var(--rose)">e</i><i>r</i><i style="color:var(--teal)">o</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i></a>
+    <div class="top-links">
+      <a class="txt" href="app.html">The app</a>
+      <a class="txt on" href="systems.html">Systems</a>
+      <a class="txt" href="recipes.html">Recipes</a>
+      <a class="txt" href="shop.html">Shop</a>
+      <a class="txt" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
+      <a class="btn" href="https://homeroomfamily.gumroad.com/l/free-sampler">Free lunch notes</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Family operations</div>
+    <h1>Starter systems for a house everybody helps run.</h1>
+    <p>These four cover most of the work that quietly eats a household. What's below is what we actually do in a home with seven people, one dog, and people staying over more weekends than not. It's free and there's no email wall. Take what fits your family, skip the rest, change the parts we got wrong for your house.</p>
+  </div>
+
+  <div class="principle">
+    <div><span class="n">PRINCIPLE 01</span><b>Visible beats remembered</b><p>If a job only exists in your head, you ARE the system. Write it somewhere the family walks past and let the wall do the nagging for once.</p></div>
+    <div><span class="n">PRINCIPLE 02</span><b>Rhythms beat willpower</b><p>Pin the work to a moment that comes around anyway (Sunday at 5, the first of the month). A decision you never have to make twice is time you get back.</p></div>
+    <div><span class="n">PRINCIPLE 03</span><b>Ownership beats helping</b><p>Helping is lovely and it still means somebody had to ask. Hand over a whole job start to finish, and the asking goes away with it.</p></div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <!-- ================= LAUNDRY ================= -->
+  <section class="sys on" id="s-laundry">
+    <div class="sys-head"><span class="band" style="background:var(--dusty)"></span>
+      <div class="em">🧺</div><h2>The laundry system</h2>
+      <p class="pain">Laundry isn't hard. It's <b>never done and never assigned</b>, which is how it quietly becomes one person's whole personality. You don't need to wash more. You need every load to have a name on it and a time it lands in a drawer, so clean clothes stop camping in a basket for four days.</p>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          <h3>🏗️ The framework: one day, one person, one loop</h3>
+          <div class="sub">Set it up once, then it mostly runs itself</div>
+          <div class="step"><span class="n" style="background:var(--dusty)">1</span><div><b>Give every person or pair a laundry day</b><span>Seven people, seven days. Nobody's clothes are competing, and "I have nothing to wear" turns into a personal planning problem instead of a household emergency at 7 a.m.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--dusty)">2</span><div><b>Whole-loop ownership, not stages</b><span>Wash, dry, fold, put away, all the same person. Splitting the stages is where laundry goes to die. A half-owned load will sit in that dryer until Thursday and you know it.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--dusty)">3</span><div><b>Shared loads get a named owner too</b><span>Towels, sheets, and linens get their own day on the calendar like they're a person. Anything unassigned is invisible, and invisible means it's yours by default.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--dusty)">4</span><div><b>Folded means away, same day</b><span>One rule, said kindly, every time: clean laundry doesn't sleep in a basket. This one rule fixed more of our laundry misery than anything else on this list.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--dusty)">5</span><div><b>One hamper per person, sorted at the source</b><span>Sort when the clothes come off, not on a Saturday mountain. Lights and darks bins if your crew can manage it. One bin if they can't yet, and that's completely fine.</span></div></div>
+        </div>
+        <div class="card rhythm">
+          <h3>🔁 The rhythm</h3>
+          <div class="r"><span class="when" style="background:var(--dusty)">Daily</span><span class="what"><b>One load, start to finish</b>, by whoever owns the day. Started before school, away before bed.</span></div>
+          <div class="r"><span class="when" style="background:var(--dusty)">Weekly</span><span class="what"><b>Linens day</b> (ours is Saturday) + reset the laundry room: lost socks bin emptied, supplies checked.</span></div>
+          <div class="r"><span class="when" style="background:var(--dusty)">Monthly</span><span class="what"><b>Outgrown check.</b> One pass through the drawers. Too small goes straight into a donate bin, not "later."</span></div>
+          <div class="r"><span class="when" style="background:var(--dusty)">Seasonally</span><span class="what"><b>Swap the closets</b> and clean the dryer vent (see the maintenance system, it's a fire safety item, not a chore).</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="kid">
+          <h3>👧 Who can do what</h3>
+          <div class="age"><b>Ages 3–5</b>Match socks, carry their own basket, put away underwear/pajamas in a low drawer.</div>
+          <div class="age"><b>Ages 6–9</b>Sort by color, fold soft items, put away everything of their own. Loads the dryer with a stool.</div>
+          <div class="age"><b>Ages 10–13</b>Runs a full machine cycle with supervision. Owns their own laundry day start to finish.</div>
+          <div class="age"><b>Ages 14+</b>Fully independent, including linens and stain treatment. Can own a shared load week.</div>
+        </div>
+        <div class="trap">
+          <h3>⚠️ Traps we fell into</h3>
+          <ul>
+            <li><b>The mega-Saturday.</b> Six loads in one day means one person folding all six, and we both know who. Spread it across the week.</li>
+            <li><b>Refolding their work.</b> A lumpy seven-year-old fold is a working system. Redo it in front of them once and they've learned you'll always redo it.</li>
+            <li><b>The giant clean pile on the couch.</b> The second everyone's clothes touch, nobody owns any of it. Separate baskets, always.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAINTENANCE ================= -->
+  <section class="sys" id="s-maintenance">
+    <div class="sys-head"><span class="band" style="background:var(--teal)"></span>
+      <div class="em">🔧</div><h2>The maintenance system</h2>
+      <p class="pain">This is the most expensive invisible work in the house. <b>Skipped upkeep doesn't stay skipped, it becomes an emergency</b>, usually on a weekend. And every single one of these items lives in somebody's memory right up until the day it doesn't. So get it out of your memory, onto a calendar, with a name next to it.</p>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          <h3>🏗️ The framework: one master list, four cadences</h3>
+          <div class="sub">Build this once; it protects you for years</div>
+          <div class="step"><span class="n" style="background:var(--teal)">1</span><div><b>Brain-dump every recurring item</b><span>House, cars, bodies, pets, paperwork. One sitting, one messy list, don't organize yet. You're just emptying your head onto paper.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--teal)">2</span><div><b>Assign each item a cadence</b><span>Monthly, quarterly, twice a year, yearly. If you have no idea, guess. A wrong date beats no date every time.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--teal)">3</span><div><b>Put it on the calendar with a name attached</b><span>"Somebody should call the dentist" is not a system. "David books dentists the first week of August" is a system. The difference is a name and a date.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--teal)">4</span><div><b>Book the next one before you leave</b><span>Book the next appointment while you're still standing at the checkout desk. That's six months of remembering, gone, for free.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--teal)">5</span><div><b>Keep a vendor list beside the schedule</b><span>Plumber, HVAC, dentist, vet, dryer vent people. Names, numbers, when they last came. Now anyone in the house can handle it without texting you at work.</span></div></div>
+        </div>
+        <div class="card rhythm">
+          <h3>🔁 The starter schedule</h3>
+          <div class="r"><span class="when" style="background:var(--teal)">Monthly</span><span class="what"><b>HVAC filter · smoke/CO alarm test · pet meds (flea, tick, heartworm) · garbage disposal + drain check</b></span></div>
+          <div class="r"><span class="when" style="background:var(--teal)">Quarterly</span><span class="what"><b>Car: tire pressure, oil check, wiper fluid · water filters · deep-clean one zone of the house · test the emergency kit</b></span></div>
+          <div class="r"><span class="when" style="background:var(--teal)">Twice a year</span><span class="what"><b>Dental cleanings (everyone) · HVAC service before summer + winter · gutters · smoke alarm batteries at daylight-saving changes</b></span></div>
+          <div class="r"><span class="when" style="background:var(--teal)">Yearly</span><span class="what"><b>Annual physicals + eye exams · dryer vent cleaning · car registration + inspection · insurance review · vet wellness visit · water heater flush · chimney if you burn</b></span></div>
+        </div>
+      </div>
+      <div>
+        <div class="kid">
+          <h3>📅 The scheduling trick</h3>
+          <div class="age"><b>Anchor</b>Tie annual items to a month you couldn't forget if you tried: birthdays, school start, tax time.</div>
+          <div class="age"><b>Batch</b>Book all the kids' checkups in one call, consecutive slots, one trip. Seven people, one afternoon.</div>
+          <div class="age"><b>Split</b>Divide the master list between adults by domain, not by task. One owns vehicles + house, one owns health + pets.</div>
+          <div class="age"><b>Log it</b>Write the date done next to each item. Next year's schedule builds itself.</div>
+        </div>
+        <div class="trap">
+          <h3>⚠️ The expensive ones</h3>
+          <ul>
+            <li><b>Dryer vents.</b> Lint buildup genuinely starts house fires. This is a yearly job, not an optional one. Put it on the calendar before you close this tab.</li>
+            <li><b>Water heater and HVAC.</b> Both fail dramatically and expensively, and both are cheap to maintain. Servicing costs a fraction of replacing.</li>
+            <li><b>Skipped checkups.</b> Miss one dental cycle and the next visit is a filling instead of a cleaning. Prevention is the cheapest thing on your whole calendar.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MEALS ================= -->
+  <section class="sys" id="s-meals">
+    <div class="sys-head"><span class="band" style="background:var(--mustard)"></span>
+      <div class="em">🍽️</div><h2>The meals system</h2>
+      <p class="pain">Somebody asks "what's for dinner" about 365 times a year, and in most houses <b>the same person answers every single time</b>, while also holding the allergies, the preferences, what's in the freezer, and when the store order closes. Planning it once a week is an hour. Answering it daily is a part time job you never applied for.</p>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          <h3>🏗️ The framework: theme nights + claimed slots</h3>
+          <div class="sub">15 minutes on Sunday replaces seven daily decisions</div>
+          <div class="step"><span class="n" style="background:var(--mustard);color:var(--ink)">1</span><div><b>Anchor two nights with permanent themes</b><span>Taco Monday. Pizza Friday. Two decisions you never make again as long as you live. This alone cuts the planning in half the first week.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--mustard);color:var(--ink)">2</span><div><b>Post the week where everyone sees it</b><span>Fridge, tablet, whiteboard, whatever you've got. A visible dinner stops the question before it's asked, and an empty slot starts looking like an invitation.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--mustard);color:var(--ink)">3</span><div><b>Name a cook per night, not just a meal</b><span>This is the big one. Dinner needs an owner, not just a name. Cooks claim their nights on Sunday, so nobody is being volunteered by an exhausted parent at 4:40.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--mustard);color:var(--ink)">4</span><div><b>Write allergy + swap notes on the plan itself</b><span>"Dairy free: use coconut milk." Four words on the plan, and suddenly your partner or your teenager can cook it or shop for it without checking with you first.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--mustard);color:var(--ink)">5</span><div><b>Give one night to a kid</b><span>Kid pick night buys you one guaranteed complaint-free dinner a week. Nobody boos the meal they chose. Even the siblings give it a pass.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--mustard);color:var(--ink)">6</span><div><b>The plan generates the list</b><span>Shop straight off the plan, sorted by aisle. No wandering the store trying to remember why you came.</span></div></div>
+        </div>
+        <div class="card rhythm">
+          <h3>🔁 The rhythm</h3>
+          <div class="r"><span class="when" style="background:var(--mustard);color:var(--ink)">Sunday</span><span class="what"><b>Plan + claim + list</b>. Fifteen minutes, whole week sorted. Prep one thing that saves a weeknight (rice, dressing, browned meat).</span></div>
+          <div class="r"><span class="when" style="background:var(--mustard);color:var(--ink)">Daily</span><span class="what"><b>Tonight's cook checks the plan in the morning</b>, not at 5pm. Thaw what needs thawing. That's the whole daily job.</span></div>
+          <div class="r"><span class="when" style="background:var(--mustard);color:var(--ink)">Ongoing</span><span class="what"><b>Whoever finishes it, adds it.</b> Shared list on every phone. The oat-milk rule ends the mental inventory.</span></div>
+          <div class="r"><span class="when" style="background:var(--mustard);color:var(--ink)">Monthly</span><span class="what"><b>Pantry + freezer sweep.</b> Plan one week around what you already own before shopping.</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="kid">
+          <h3>👩‍🍳 Who can cook what</h3>
+          <div class="age"><b>Ages 3–5</b>Wash produce, stir cold bowls, tear lettuce, set the table. They're on the crew.</div>
+          <div class="age"><b>Ages 6–9</b>Measure, mix, assemble tacos/pizzas, own the salad. Runs kid-pick night with a co-pilot.</div>
+          <div class="age"><b>Ages 10–13</b>Stovetop with supervision, follows a recipe start to finish. Owns one weeknight dinner.</div>
+          <div class="age"><b>Ages 14+</b>Full solo dinner including planning and the grocery add. A real cook on the roster.</div>
+        </div>
+        <div class="trap">
+          <h3>⚠️ Traps we fell into</h3>
+          <ul>
+            <li><b>Planning meals nobody claimed.</b> A gorgeous plan with no cooks' names on it still lands back on you at 5 p.m.</li>
+            <li><b>Cooking for the wrong version of yourself.</b> Plan for Tired Thursday You, not Sunday Afternoon You. Five easy dinners beat two impressive ones and three nights of panic pizza.</li>
+            <li><b>Keeping the allergy info in your head.</b> As long as it's only in there, you're the only one who can safely cook or shop. Write the swaps down.</li>
+          </ul>
+        </div>
+        <div class="tool">
+          <b>🍝 Recipes are on the way</b>
+          <p>Easy dinners our kids actually eat, with the allergy swaps already written in. Almost ready.</p>
+          <a class="btn" href="recipes.html">Get on the list →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACTIVITIES ================= -->
+  <section class="sys" id="s-activities">
+    <div class="sys-head"><span class="band" style="background:var(--rose)"></span>
+      <div class="em">⚽</div><h2>The activities system</h2>
+      <p class="pain">This is where family calendars snap. <b>Every yes a kid gives is a driving job a parent takes on</b>, and it stacks up so quietly that one day you look around and nobody has eaten dinner at the same table in three weeks. So this system is about capacity first and logistics second.</p>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="card">
+          <h3>🏗️ The framework: budget the capacity, then fill it</h3>
+          <div class="sub">Decide the ceiling before the season, not during it</div>
+          <div class="step"><span class="n" style="background:var(--rose);color:var(--ink)">1</span><div><b>Set a per-kid limit, in writing</b><span>Ours is one sport and one other thing per kid, per season. The exact number matters way less than having one at all. With no ceiling, every season fills right up to overflowing.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--rose);color:var(--ink)">2</span><div><b>Protect nights before you commit</b><span>Pick your untouchable nights first, like family dinner and reset night. Anything that lands on those is a no, and the no isn't personal because you decided it back in August.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--rose);color:var(--ink)">3</span><div><b>Count the true cost, not the practice time</b><span>Fees, gear, drive time, and the siblings waiting in the car. A one hour practice is usually three hours of your family's actual evening.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--rose);color:var(--ink)">4</span><div><b>One calendar, everyone's colors</b><span>Put it on the shared calendar the minute you register. Not in a text thread, not in a coach's email, not in your head.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--rose);color:var(--ink)">5</span><div><b>Assign the driver at the Sunday reset</b><span>Every event gets a driver's name for the week ahead. Carpool trades happen Sunday, while there's still time to fix a conflict.</span></div></div>
+          <div class="step"><span class="n" style="background:var(--rose);color:var(--ink)">6</span><div><b>Gear lives in a launch zone</b><span>One bin or hook per kid, packed the night before. Hunting for a cleat at 7:42 a.m. is the most preventable disaster in modern family life.</span></div></div>
+        </div>
+        <div class="card rhythm">
+          <h3>🔁 The rhythm</h3>
+          <div class="r"><span class="when" style="background:var(--rose);color:var(--ink)">Seasonally</span><span class="what"><b>The capacity conversation.</b> Before signups: what's each kid choosing, what are we dropping, does the total fit the family's real week?</span></div>
+          <div class="r"><span class="when" style="background:var(--rose);color:var(--ink)">Sunday</span><span class="what"><b>Preview + assign drivers</b> for the week. Surface every conflict on Sunday, when trades are still possible.</span></div>
+          <div class="r"><span class="when" style="background:var(--rose);color:var(--ink)">Nightly</span><span class="what"><b>Pack tomorrow's bag.</b> 30 seconds at dinner: who has what tomorrow, is the gear in the launch zone?</span></div>
+          <div class="r"><span class="when" style="background:var(--rose);color:var(--ink)">End of season</span><span class="what"><b>The honest review.</b> What did each kid love? What did we resent driving to? Drop something without guilt.</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="kid">
+          <h3>🎒 Kid-owned pieces</h3>
+          <div class="age"><b>Ages 5–7</b>Packs their own bag from a picture checklist. Carries it in and out themselves.</div>
+          <div class="age"><b>Ages 8–11</b>Knows their own schedule for the week. Responsible for gear being in the launch zone by bedtime.</div>
+          <div class="age"><b>Ages 12–14</b>Tracks their own practices on the shared calendar. Communicates schedule changes to the driver.</div>
+          <div class="age"><b>Ages 15+</b>Manages their own commitments, coordinates rides, adds events to the family calendar directly.</div>
+        </div>
+        <div class="trap">
+          <h3>⚠️ Traps we fell into</h3>
+          <ul>
+            <li><b>Saying yes one at a time.</b> Every single activity sounds reasonable by itself. Four kids' worth of reasonable is a second job. Decide on the total.</li>
+            <li><b>Bleacher homework.</b> A little kid doing worksheets in the stands three nights a week is paying for someone else's season. Count that cost.</li>
+            <li><b>Finishing a miserable season because you paid.</b> That registration fee is already gone. Call it tuition on a lesson learned and let the kid out.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-strip">
+    <h2>Try one this Sunday. Just one.</h2>
+    <p>None of this works while it's still in your head. The Sunday Reset Kit is all four systems printed out and ready for the fridge: agenda card, weekly grid, chore rotation, a meal plan with room for allergy notes, and a Wins Wall.</p>
+    <a class="btn big" href="https://homeroomfamily.gumroad.com/l/sunday-reset-kit?wanted=true">Get the Sunday Reset Kit · $12</a>
+    <p style="margin-top:14px;font-size:13px">Not ready? <a href="https://homeroomfamily.gumroad.com/l/free-sampler" style="font-weight:800;color:var(--teal)">Start with the free sampler →</a></p>
+  </div>
+
+  <footer>
+    <div class="f-logo"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span>r<span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></div>
+    <p>the family operating system · <a href="https://instagram.com/homeroomforfamily">@homeroomforfamily</a><br>
+    This is what works in our house, so change anything that doesn't fit yours. Maintenance and health intervals are starting points, not professional advice; follow your manufacturer, provider, and local guidance.<br>© 2026 homeroom</p>
+  </footer>
+</div>
+
+<script>
+const SYS=[['laundry','🧺 Laundry','#5E8CA7'],['maintenance','🔧 Maintenance','#2F6661'],['meals','🍽️ Meals','#DC9A27'],['activities','⚽ Activities','#E78A9B']];
+let cur='laundry';
+function paintTabs(){
+  document.getElementById('tabs').innerHTML=SYS.map(([k,n,c])=>
+    `<button class="tab ${k===cur?'on':''}" style="${k===cur?`background:${c};${k==='meals'?'color:#3E4A40;':''}`:''}" onclick="go('${k}')">${n}</button>`).join('');
+}
+function go(k){
+  cur=k;paintTabs();
+  document.querySelectorAll('.sys').forEach(s=>s.classList.toggle('on',s.id==='s-'+k));
+  if(location.hash!=='#'+k)history.replaceState(null,'','#'+k);
+}
+paintTabs();
+if(location.hash){const k=location.hash.slice(1);if(SYS.some(s=>s[0]===k))go(k);}
+</script>
+</body>
+</html>
