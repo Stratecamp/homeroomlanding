@@ -112,11 +112,26 @@
   .free .btn{margin-left:auto;}
   @media(max-width:700px){.free .btn{margin-left:0;}}
 
+
+  /* --- mobile header fixes --- */
+  .logo{white-space:nowrap;flex:0 0 auto;}
+  .logo i{display:inline;}
+  @media(max-width:760px){
+    .topbar{gap:10px;padding:16px 0 6px;}
+    .logo{font-size:25px;width:100%;}
+    .top-links{margin-left:0;width:100%;gap:14px;justify-content:flex-start;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none;}
+    .top-links::-webkit-scrollbar{display:none;}
+    .top-links a.txt{font-size:13.5px;white-space:nowrap;flex:0 0 auto;}
+    .top-links .btn{font-size:13.5px;padding:9px 16px;white-space:nowrap;flex:0 0 auto;}
+  }
+
   footer{padding:36px 0 40px;text-align:center;}
   footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
   #confetti{position:fixed;inset:0;pointer-events:none;z-index:95;}
 </style>
 <script src="https://gumroad.com/js/gumroad.js" defer></script>
+<script src="email-capture.js" defer></script>
 </head>
 <body>
 <canvas id="confetti"></canvas>
@@ -142,10 +157,21 @@
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid"></div>
 
+  <div class="free" id="dinner">
+    <div><b>🍽️ Dinner club: founding members lock $39/yr</b>
+    <p>Five weeknight dinners every Friday, a grocery list sorted by aisle, and swap notes for the common allergens. Nothing is charged today; founding members just get first access and the lower price for good.</p>
+    <form class="form" data-hr-list="dinner" data-hr-ok="dinner" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+      <input type="email" required placeholder="you@family.com" aria-label="Email address" style="font-family:'Nunito';font-weight:700;font-size:15px;border:2px solid var(--blush-deep);border-radius:999px;padding:13px 20px;flex:1;min-width:220px;background:var(--cream);color:var(--ink)">
+      <button class="btn" type="submit">Save my founding spot</button>
+    </form>
+    <div id="ok-dinner" style="display:none;background:var(--teal);color:#fff;border-radius:14px;padding:14px 18px;font-weight:800;font-size:14px;margin-top:12px">💛 Check your inbox to confirm your founding spot.</div>
+    </div>
+  </div>
+
   <div class="free">
     <div><b>🎁 Start free: 6-card sampler and the Week Zero checklist</b>
     <p>Two notes from each theme, dog included, plus the list we run before every school year. Free stuff first, always. It's how we make friends.</p></div>
-    <a class="btn" href="https://homeroomfamily.gumroad.com/l/free-sampler">Get the free kit</a>
+    <a class="btn" href="/#freebie">Get the free kit</a>
   </div>
 
   <footer>
@@ -210,7 +236,7 @@ const PRODUCTS=[
   name:'What\u2019s for Dinner This Week',price:39,per:'/yr founding · then $49',sub:true,cta:'Join the founding list',
   desc:'Every Friday: five weeknight dinners plus a weekend cook, the grocery list sorted by aisle, and swap notes for the common allergens. Written by someone who has been feeding seven people around real restrictions for years.',
   feats:['5 weeknight dinners + 1 weekend cook, every Friday','Aisle-sorted grocery list','Substitution-friendly allergen notes on every recipe','Kid-pick night built into every week','Founding members lock $39/yr for life'],
-  link:'app.html'},
+  link:'#dinner'},
  {id:'kit',cat:'systems',em:'📺',tile:'var(--vermilion)',badge:'Waitlist',badgeC:'rose',
   name:'The homeroom Kit',price:0,per:'pay once · own forever',sub:true,cta:'Join the waitlist',
   desc:'The whole family operating system running in your house: the app, the kitchen tablet, calendar sync to every phone, chore streaks, the Wins Wall, and the rituals that hold it together. Yours to keep. No subscription, not ever.',
