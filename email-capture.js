@@ -1,31 +1,32 @@
 /* ============================================================
    homeroom · email capture (Kit)
    ------------------------------------------------------------
-   Posts through a hidden iframe instead of fetch(). Browsers block
-   cross-origin fetch to Kit unless they send CORS headers, which is
-   almost certainly why the earlier version silently failed. A form
-   POST into an iframe is exempt from that rule, so it always lands.
+   Uses Kit's real submission endpoint with the NUMERIC form id
+   (found in the form's HTML embed: action=".../forms/9744403/...").
+   The data-uid (e.g. 94b361b12d) is only for their JS embed and is
+   NOT a valid endpoint — that was the earlier bug.
 
-   Form IDs = the data-uid from each Kit embed snippet.
+   Posts via a hidden iframe so no CORS permission is required.
+   To add a list: get its numeric id from Kit → form → Embed → HTML.
    ============================================================ */
 
 const HR_EMAIL = {
-  ACCOUNT: 'homeroom-for-family',
   FORMS: {
-    sampler: '94b361b12d',   // Free lunch notes + Week Zero (delivers the PDF)
-    app:     'd6d0c99011',   // App early access
-    recipes: 'f5bd724bde',   // Recipe library waitlist
-    dinner:  'e6a79fa509',   // Dinner club founding members
-    general: 'aca427f482'    // General newsletter
-  }
+    sampler: '9744403',   // Free lunch notes + Week Zero (delivers the PDF)
+    app:     '9744295',   // App early access
+    recipes: '9744336',   // Recipe library waitlist
+    dinner:  '9744347',   // Dinner club founding members
+    general: '9744376'    // General newsletter
+  },
+  // Fallback only — every list above has a real id now.
+  HOSTED: {}
 };
 
-function hrEnsureSink() {
+function hrSink() {
   let f = document.getElementById('hr-sink');
   if (!f) {
     f = document.createElement('iframe');
-    f.id = 'hr-sink';
-    f.name = 'hr-sink';
+    f.id = 'hr-sink'; f.name = 'hr-sink';
     f.style.cssText = 'position:absolute;width:0;height:0;border:0;left:-9999px;';
     document.body.appendChild(f);
   }
@@ -33,33 +34,28 @@ function hrEnsureSink() {
 }
 
 function hrSubscribe(email, listKey) {
-  const uid = HR_EMAIL.FORMS[listKey] || HR_EMAIL.FORMS.general;
-  if (!uid) return false;
-
-  hrEnsureSink();
-
+  const id = HR_EMAIL.FORMS[listKey];
+  if (!id) {
+    const url = HR_EMAIL.HOSTED[listKey];
+    if (url) window.open(url, '_blank', 'noopener');
+    return false;
+  }
+  hrSink();
   const form = document.createElement('form');
   form.method = 'POST';
-  form.action = `https://app.kit.com/forms/${uid}/subscriptions`;
+  form.action = `https://app.kit.com/forms/${id}/subscriptions`;
   form.target = 'hr-sink';
   form.style.display = 'none';
 
-  const field = document.createElement('input');
-  field.type = 'hidden';
-  field.name = 'email_address';
-  field.value = email;
-  form.appendChild(field);
-
-  // Kit accepts either field name depending on form version; send both.
-  const alt = document.createElement('input');
-  alt.type = 'hidden';
-  alt.name = 'fields[email_address]';
-  alt.value = email;
-  form.appendChild(alt);
+  const email_address = document.createElement('input');
+  email_address.type = 'hidden';
+  email_address.name = 'email_address';
+  email_address.value = email;
+  form.appendChild(email_address);
 
   document.body.appendChild(form);
   form.submit();
-  setTimeout(() => form.remove(), 2000);
+  setTimeout(() => form.remove(), 3000);
   return true;
 }
 
@@ -75,7 +71,6 @@ function hrInitForms() {
 
       btn.textContent = 'Sending…';
       btn.disabled = true;
-
       hrSubscribe(email, form.dataset.hrList);
 
       setTimeout(() => {
@@ -83,7 +78,7 @@ function hrInitForms() {
         btn.disabled = false;
         if (okBox) okBox.style.display = 'block';
         form.style.display = 'none';
-      }, 900);
+      }, 1000);
     });
   });
 }
