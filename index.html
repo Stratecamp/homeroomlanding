@@ -19,7 +19,7 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 40px;}
   ::selection{background:var(--teal);color:var(--cream);}
   a{color:inherit;}
 
@@ -41,18 +41,20 @@
   .btn:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
 
   /* hero */
-  .hero{display:grid;grid-template-columns:1fr 1.1fr;gap:44px;align-items:center;padding:44px 0 26px;}
-  @media(max-width:920px){.hero{grid-template-columns:1fr;}}
+  .hero{display:grid;grid-template-columns:1.02fr 1.18fr;gap:56px;align-items:center;padding:34px 0 30px;}
+  @media(max-width:1100px){.hero{gap:36px;}}
+  @media(max-width:920px){.hero{grid-template-columns:1fr;gap:28px;padding-top:20px;}}
+  @media(max-width:760px){.wrap{padding:0 18px;}}
   .eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--vermilion);margin-bottom:12px;}
-  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(37px,5.4vw,58px);line-height:1.05;}
+  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(36px,4.4vw,54px);line-height:1.06;letter-spacing:-.5px;}
   h1 .accent{color:var(--teal);}
-  .lede{font-size:17px;font-weight:700;line-height:1.62;margin:18px 0 6px;max-width:500px;}
+  .lede{font-size:17px;font-weight:700;line-height:1.6;margin:18px 0 6px;max-width:540px;}
   .lede b{color:var(--vermilion);}
   .hero-ctas{display:flex;gap:14px;align-items:center;margin-top:22px;flex-wrap:wrap;}
   .micro{font-size:12.5px;font-weight:800;color:var(--ink-soft);}
 
   /* interactive week widget */
-  .widget{background:#fff;border-radius:26px;box-shadow:var(--lift);padding:20px;transform:rotate(.6deg);}
+  .widget{background:#fff;border-radius:26px;box-shadow:var(--lift);padding:22px 24px;transform:rotate(.6deg);}
   .widget .w-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
   .widget .w-title{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;}
   .widget .w-sub{font-size:11px;font-weight:800;color:var(--ink-soft);margin-left:auto;}
@@ -63,12 +65,12 @@
   .chip.on{border-color:var(--ink);background:#fff;}
   .dot{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:8.5px;font-weight:800;font-family:'Fredoka';}
   .week{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;}
-  .day{background:var(--cream);border-radius:14px;padding:8px 7px 9px;min-height:190px;display:flex;flex-direction:column;gap:5px;}
+  .day{background:var(--cream);border-radius:14px;padding:9px 8px 10px;min-height:205px;display:flex;flex-direction:column;gap:5px;}
   .day .d-name{font-family:'Fredoka',sans-serif;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--ink-soft);text-align:center;}
-  .ev{border-radius:8px;padding:4px 7px;color:#fff;font-size:9.6px;font-weight:800;line-height:1.3;transition:all .2s;cursor:default;}
+  .ev{border-radius:8px;padding:5px 8px;color:#fff;font-size:10.2px;font-weight:800;line-height:1.3;transition:all .2s;cursor:default;}
   .ev.dim{opacity:.13;filter:grayscale(.6);}
   .ev.fam{background:repeating-linear-gradient(45deg,var(--teal),var(--teal) 7px,#3a7a74 7px,#3a7a74 14px);}
-  .dinner{margin-top:auto;background:var(--blush);border-radius:8px;padding:4px 7px;font-size:9.3px;font-weight:800;color:var(--ink);}
+  .dinner{margin-top:auto;background:var(--blush);border-radius:8px;padding:5px 8px;font-size:9.8px;font-weight:800;color:var(--ink);}
   .dinner span{display:block;font-size:8.3px;color:var(--ink-soft);}
   .w-foot{text-align:center;font-size:11px;font-weight:800;color:var(--ink-soft);margin-top:11px;}
 
@@ -136,6 +138,32 @@
   .win-again{position:fixed;right:22px;bottom:22px;z-index:59;font-size:22px;background:#fff;border:none;border-radius:50%;width:52px;height:52px;box-shadow:var(--lift);cursor:pointer;display:none;transition:transform .15s;}
   .win-again:hover{transform:scale(1.12);}
   @media(max-width:560px){.win-pop{right:14px;left:14px;width:auto;}}
+
+  /* widget interactivity cues */
+  .widget .w-sub{display:inline-flex;align-items:center;gap:5px;background:var(--mustard);color:var(--ink);
+    border-radius:999px;padding:5px 12px;font-size:11px;font-weight:800;animation:nudge 2.4s ease-in-out infinite;}
+  @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  .chip{position:relative;}
+  .chip:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 4px 12px rgba(62,74,64,.13);}
+  .chip.hint::after{content:'';position:absolute;inset:-4px;border-radius:999px;border:2.5px solid var(--vermilion);
+    opacity:0;animation:ripple 2s ease-out infinite;pointer-events:none;}
+  @keyframes ripple{0%{opacity:.9;transform:scale(.94)}70%{opacity:0;transform:scale(1.16)}100%{opacity:0}}
+  .chips.demo .chip:not(.on){opacity:.85;}
+  .ev{cursor:default;}
+  .day{transition:transform .2s;}
+  .widget.playing .day{transform:none;}
+  .w-foot{transition:color .2s;}
+
+  /* newsletter strip */
+  .news{background:var(--ink);color:var(--cream);border-radius:26px;padding:34px 40px;
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+  @media(max-width:860px){.news{grid-template-columns:1fr;gap:20px;padding:28px 24px;}}
+  .news-copy b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;display:block;line-height:1.2;}
+  .news-copy p{font-size:14px;font-weight:700;opacity:.86;line-height:1.6;margin-top:8px;max-width:420px;}
+  .news-form .form{display:flex;gap:10px;flex-wrap:wrap;margin-top:0;}
+  .news-form input[type=email]{flex:1;min-width:200px;border-color:transparent;}
+  .news-form .success{margin-top:12px;}
+  .news-note{font-size:12px;font-weight:800;opacity:.65;margin-top:12px;}
 
   /* app coming soon */
   .appbox{background:var(--ink);color:var(--cream);border-radius:26px;padding:36px 38px;display:grid;grid-template-columns:1.15fr 1fr;gap:32px;align-items:center;}
@@ -337,14 +365,18 @@
   </section>
 
   <section>
-    <div class="strip" style="margin-top:10px">
-      <div><b>One email a week, from a real house.</b>
-      <p>Systems, dinners, lunchbox notes, and the occasional formal complaint from the dog. No fluff, no daily nagging.</p>
-      <form class="form" data-hr-list="general" data-hr-ok="general" style="margin-top:14px">
-        <input type="email" required placeholder="you@family.com" aria-label="Email address">
-        <button class="btn" type="submit">Subscribe</button>
-      </form>
-      <div class="success" id="ok-general" style="margin-top:12px">💛 Check your inbox to confirm and you're in.</div>
+    <div class="news">
+      <div class="news-copy">
+        <b>One email a week, from a real house.</b>
+        <p>Systems, dinners, lunchbox notes, and the occasional formal complaint from the dog. No fluff, no daily nagging.</p>
+      </div>
+      <div class="news-form">
+        <form class="form" data-hr-list="general" data-hr-ok="general">
+          <input type="email" required placeholder="you@family.com" aria-label="Email address">
+          <button class="btn big" type="submit">Subscribe</button>
+        </form>
+        <div class="success" id="ok-general">💛 Check your inbox to confirm and you're in.</div>
+        <p class="news-note">Free, and you can leave whenever. 🐾</p>
       </div>
     </div>
   </section>
@@ -399,6 +431,35 @@ function week(){
     : `${M[sel].n}'s week. One tap, zero "wait, what do I have today?"`;
 }
 chips();week();
+
+// ---------- auto-demo: show people that the chips are tappable ----------
+let userTouched=false, demoTimer=null, demoStep=0;
+const DEMO=['n','p','all'];
+function markHint(){
+  // pulse the first person chip (and Phineas) until someone interacts
+  document.querySelectorAll('#chips .chip').forEach((c,i)=>{
+    c.classList.toggle('hint', !userTouched && (i===1 || i===8));
+  });
+}
+const _chips=chips;
+chips=function(){_chips();markHint();};
+function runDemo(){
+  if(userTouched) return;
+  sel=DEMO[demoStep%DEMO.length]; demoStep++;
+  chips(); week();
+  demoTimer=setTimeout(runDemo, sel==='all'?2600:2000);
+}
+document.getElementById('chips').addEventListener('click',()=>{
+  userTouched=true; clearTimeout(demoTimer);
+  document.querySelectorAll('#chips .chip').forEach(c=>c.classList.remove('hint'));
+  const sub=document.querySelector('.widget .w-sub'); if(sub){sub.style.animation='none';sub.style.opacity='.55';}
+},{once:false});
+// start the demo once the widget scrolls into view
+const _w=document.querySelector('.widget');
+if(_w&&'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!userTouched&&!demoTimer){setTimeout(runDemo,1200);io.disconnect();}})},{threshold:.4});
+  io.observe(_w);
+} else { setTimeout(runDemo,1600); }
 
 // ---------- forms (wire these to your email/checkout provider) ----------
 function sub(f){document.getElementById('ok').style.display='block';f.querySelector('input').value='';return false;}
