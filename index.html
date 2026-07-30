@@ -153,12 +153,27 @@
   .vs-row.on .vs-t{color:var(--vermilion);opacity:1;}
   .vs-b{font-size:13.5px;font-weight:700;line-height:1.55;display:block;}
 
+
+  /* --- mobile header fixes --- */
+  .logo{white-space:nowrap;flex:0 0 auto;}
+  .logo i{display:inline;}
+  @media(max-width:760px){
+    .topbar{gap:10px;padding:16px 0 6px;}
+    .logo{font-size:25px;width:100%;}
+    .top-links{margin-left:0;width:100%;gap:14px;justify-content:flex-start;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none;}
+    .top-links::-webkit-scrollbar{display:none;}
+    .top-links a.txt{font-size:13.5px;white-space:nowrap;flex:0 0 auto;}
+    .top-links .btn{font-size:13.5px;padding:9px 16px;white-space:nowrap;flex:0 0 auto;}
+  }
+
   footer{padding:50px 0 40px;text-align:center;}
   footer .f-logo{font-family:'Fredoka';font-weight:700;font-size:24px;margin-bottom:8px;}
   footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
   footer a{font-weight:800;}
 </style>
 <script src="https://gumroad.com/js/gumroad.js" defer></script>
+<script src="email-capture.js" defer></script>
 </head>
 <body>
 
@@ -171,7 +186,7 @@
       <a class="txt" href="recipes.html">Recipes</a>
       <a class="txt" href="shop.html">Shop</a>
       <a class="txt" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
-      <a class="btn" href="https://homeroomfamily.gumroad.com/l/free-sampler">Free lunch notes</a>
+      <a class="btn" href="#freebie">Free lunch notes</a>
     </div>
   </div>
 
@@ -182,7 +197,7 @@
       <h1>Your whole family's week, <span class="accent">out of one person's head.</span></h1>
       <p class="lede">homeroom is a <b>family operating system</b>. Not a prettier calendar. The systems, rituals, and printables that get dinners, chores, laundry and logistics out of your head and onto a wall the whole house can see. Because nobody can carry what they can't see.</p>
       <div class="hero-ctas">
-        <a class="btn big" href="https://homeroomfamily.gumroad.com/l/free-sampler">Start with free lunch notes 💌</a>
+        <a class="btn big" href="#freebie">Start with free lunch notes 💌</a>
         <span class="micro">Free to start. No subscription.<br>Built by a mom of 5 who was tired.</span>
       </div>
     </div>
@@ -254,8 +269,12 @@
         <div class="eyebrow">🎒 Free · Week Zero</div>
         <h2>The week <i>before</i> school decides how the first month goes.</h2>
         <p class="lede" style="font-size:15px;max-width:none;">Grab the free <b>Week Zero Checklist</b> and a 6-card lunch note sampler. These are the two things we do before every school year so the first Monday doesn't flatten us.</p>
-        <div class="form"><a class="btn big" href="https://homeroomfamily.gumroad.com/l/free-sampler">Send me the free kit 🎁</a></div>
-        <p class="form-note">Instant download, name any price including zero. We will never sell your info. That would be a weird way to run this.</p>
+        <form class="form" data-hr-list="sampler" data-hr-ok="sampler">
+          <input type="email" required placeholder="you@family.com" aria-label="Email address">
+          <button class="btn big" type="submit">Send me the free kit 🎁</button>
+        </form>
+        <div class="success" id="ok-sampler">💛 Almost there! Check your inbox and click confirm, then the printables land right away.</div>
+        <p class="form-note">Free, delivered straight to your inbox. Leave any time. We will never sell your info; that would be a weird way to run this.</p>
       </div>
       <div class="check" id="checklist">
         <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Build the lunch station (notes, containers, safe snacks)</div>
@@ -314,6 +333,19 @@
     <div class="founder">
       <p>"Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build systems for our 7-person family (and a dog), and the frequent visitors we host. It's made all the difference now that we all have visibility and input into the family load."</p>
       <div class="sig">— Endia Leonard, Founder · Phineas posts Tuesdays 🐾</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="strip" style="margin-top:10px">
+      <div><b>One email a week, from a real house.</b>
+      <p>Systems, dinners, lunchbox notes, and the occasional formal complaint from the dog. No fluff, no daily nagging.</p>
+      <form class="form" data-hr-list="general" data-hr-ok="general" style="margin-top:14px">
+        <input type="email" required placeholder="you@family.com" aria-label="Email address">
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+      <div class="success" id="ok-general" style="margin-top:12px">💛 Check your inbox to confirm and you're in.</div>
+      </div>
     </div>
   </section>
 
