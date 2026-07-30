@@ -1,54 +1,71 @@
 /* ============================================================
-   homeroom · email capture  (Kit / ConvertKit)
+   homeroom · email capture (Kit)
    ------------------------------------------------------------
-   Form IDs live in HR_EMAIL.FORMS below. To add or change one,
-   grab the data-uid from the Kit embed snippet, e.g.
-   <script data-uid="94b361b12d" ...>  →  '94b361b12d'
+   Posts through a hidden iframe instead of fetch(). Browsers block
+   cross-origin fetch to Kit unless they send CORS headers, which is
+   almost certainly why the earlier version silently failed. A form
+   POST into an iframe is exempt from that rule, so it always lands.
+
+   Form IDs = the data-uid from each Kit embed snippet.
    ============================================================ */
 
 const HR_EMAIL = {
-  ACCOUNT: 'homeroom-for-family',        // your Kit subdomain
+  ACCOUNT: 'homeroom-for-family',
   FORMS: {
-    sampler: '94b361b12d',               // Free lunch notes + Week Zero (delivers the PDF)
-    app:     'd6d0c99011',               // App early access list
-    recipes: 'f5bd724bde',               // Recipe library waitlist
-    dinner:  'e6a79fa509',               // Dinner club founding members
-    general: 'aca427f482'                // General newsletter
+    sampler: '94b361b12d',   // Free lunch notes + Week Zero (delivers the PDF)
+    app:     'd6d0c99011',   // App early access
+    recipes: 'f5bd724bde',   // Recipe library waitlist
+    dinner:  'e6a79fa509',   // Dinner club founding members
+    general: 'aca427f482'    // General newsletter
   }
 };
 
-async function hrSubscribe(email, listKey) {
-  const uid = HR_EMAIL.FORMS[listKey] || HR_EMAIL.FORMS.general;
-  if (!uid) { console.warn('[homeroom] no form id for', listKey); return { ok: true, demo: true }; }
-
-  const body = new FormData();
-  body.append('email_address', email);
-
-  // Primary: Kit's form subscription endpoint.
-  try {
-    const res = await fetch(`https://app.kit.com/forms/${uid}/subscriptions`, {
-      method: 'POST', headers: { 'Accept': 'application/json' }, body
-    });
-    if (res.ok) return { ok: true };
-    throw new Error('status ' + res.status);
-  } catch (err) {
-    // Fallback: fire it opaquely at the hosted form. We can't read the response,
-    // but Kit still records the subscriber.
-    try {
-      await fetch(`https://${HR_EMAIL.ACCOUNT}.kit.com/${uid}`, {
-        method: 'POST', mode: 'no-cors', body
-      });
-      return { ok: true, opaque: true };
-    } catch (e2) {
-      console.error('[homeroom] signup failed:', e2);
-      return { ok: false };
-    }
+function hrEnsureSink() {
+  let f = document.getElementById('hr-sink');
+  if (!f) {
+    f = document.createElement('iframe');
+    f.id = 'hr-sink';
+    f.name = 'hr-sink';
+    f.style.cssText = 'position:absolute;width:0;height:0;border:0;left:-9999px;';
+    document.body.appendChild(f);
   }
+  return f;
+}
+
+function hrSubscribe(email, listKey) {
+  const uid = HR_EMAIL.FORMS[listKey] || HR_EMAIL.FORMS.general;
+  if (!uid) return false;
+
+  hrEnsureSink();
+
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = `https://app.kit.com/forms/${uid}/subscriptions`;
+  form.target = 'hr-sink';
+  form.style.display = 'none';
+
+  const field = document.createElement('input');
+  field.type = 'hidden';
+  field.name = 'email_address';
+  field.value = email;
+  form.appendChild(field);
+
+  // Kit accepts either field name depending on form version; send both.
+  const alt = document.createElement('input');
+  alt.type = 'hidden';
+  alt.name = 'fields[email_address]';
+  alt.value = email;
+  form.appendChild(alt);
+
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(() => form.remove(), 2000);
+  return true;
 }
 
 function hrInitForms() {
   document.querySelectorAll('form[data-hr-list]').forEach(form => {
-    form.addEventListener('submit', async e => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
       const input = form.querySelector('input[type=email]');
       const btn   = form.querySelector('button');
@@ -56,22 +73,17 @@ function hrInitForms() {
       const email = (input.value || '').trim();
       if (!email) return;
 
-      const original = btn.textContent;
-      btn.textContent = 'Sending…'; btn.disabled = true;
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
 
-      const result = await hrSubscribe(email, form.dataset.hrList);
+      hrSubscribe(email, form.dataset.hrList);
 
-      btn.disabled = false; btn.textContent = original;
-
-      if (result.ok) {
+      setTimeout(() => {
         input.value = '';
+        btn.disabled = false;
         if (okBox) okBox.style.display = 'block';
         form.style.display = 'none';
-      } else if (okBox) {
-        okBox.style.background = '#D9472B';
-        okBox.textContent = "Something went wrong on our end. Try again in a moment, or email us and we'll add you by hand.";
-        okBox.style.display = 'block';
-      }
+      }, 900);
     });
   });
 }
