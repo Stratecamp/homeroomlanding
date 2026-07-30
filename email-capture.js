@@ -1,116 +1,78 @@
 /* ============================================================
-   homeroom · email capture
+   homeroom · email capture  (Kit / ConvertKit)
    ------------------------------------------------------------
-   SETUP: fill in the CONFIG block below, save, commit. Done.
-
-   USING KIT (formerly ConvertKit) — recommended, free to 10k:
-     1. Kit dashboard → Grow → Landing Pages & Forms → New Form → Inline
-     2. Save it, then look at the form's URL in your browser:
-        https://app.kit.com/forms/1234567/edit   ← 1234567 is the FORM ID
-     3. Set PROVIDER to 'kit' and paste that number into the FORMS below.
-     4. Make one form per source so you know where people came from
-        (e.g. "App early list", "Recipes list"). Or reuse one ID for all.
-
-   USING MAILERLITE — also free to 1k:
-     1. MailerLite → Forms → Embedded forms → create one → "Use HTML code"
-     2. In that code, find the <form action="..."> URL. It looks like:
-        https://assets.mailerlite.com/jsonp/123456/forms/7890123456/subscribe
-     3. Set PROVIDER to 'mailerlite' and paste the FULL URL into FORMS below.
-
-   NOT READY YET? Leave PROVIDER as 'demo'. Forms will show the thank-you
-   message but nothing is stored, so don't run ads to it in demo mode.
+   Form IDs live in HR_EMAIL.FORMS below. To add or change one,
+   grab the data-uid from the Kit embed snippet, e.g.
+   <script data-uid="94b361b12d" ...>  →  '94b361b12d'
    ============================================================ */
 
 const HR_EMAIL = {
-  PROVIDER: 'demo',            // 'kit' | 'mailerlite' | 'demo'
-
+  ACCOUNT: 'homeroom-for-family',        // your Kit subdomain
   FORMS: {
-    app:     '',               // people wanting the app early list
-    recipes: '',               // people wanting the recipe library
-    general: ''                // anything else
-  },
-
-  // Optional: sent to Kit as a custom field so you can segment later.
-  SOURCE_FIELD: 'signup_source'
+    sampler: '94b361b12d',               // Free lunch notes + Week Zero (delivers the PDF)
+    app:     'd6d0c99011',               // App early access list
+    recipes: 'f5bd724bde',               // Recipe library waitlist
+    dinner:  'e6a79fa509',               // Dinner club founding members
+    general: 'aca427f482'                // General newsletter
+  }
 };
 
-/* ---------- the machinery (you shouldn't need to touch this) ---------- */
-
 async function hrSubscribe(email, listKey) {
-  const cfg = HR_EMAIL;
-  const target = cfg.FORMS[listKey] || cfg.FORMS.general || '';
+  const uid = HR_EMAIL.FORMS[listKey] || HR_EMAIL.FORMS.general;
+  if (!uid) { console.warn('[homeroom] no form id for', listKey); return { ok: true, demo: true }; }
 
-  if (cfg.PROVIDER === 'demo' || !target) {
-    console.warn('[homeroom] Email capture is in demo mode. Set HR_EMAIL.PROVIDER and FORMS in email-capture.js to store addresses.');
-    return { ok: true, demo: true };
-  }
+  const body = new FormData();
+  body.append('email_address', email);
 
+  // Primary: Kit's form subscription endpoint.
   try {
-    if (cfg.PROVIDER === 'kit') {
-      const body = new FormData();
-      body.append('email_address', email);
-      body.append(`fields[${cfg.SOURCE_FIELD}]`, listKey);
-      const res = await fetch(`https://app.kit.com/forms/${target}/subscriptions`, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body
-      });
-      if (!res.ok) throw new Error('Kit responded ' + res.status);
-      return { ok: true };
-    }
-
-    if (cfg.PROVIDER === 'mailerlite') {
-      const body = new FormData();
-      body.append('fields[email]', email);
-      body.append('ml-submit', '1');
-      body.append('anticsrf', 'true');
-      await fetch(target, { method: 'POST', mode: 'no-cors', body });
-      // no-cors gives an opaque response, so we can't read status. MailerLite
-      // still records the subscriber. Check your dashboard after a test signup.
-      return { ok: true, opaque: true };
-    }
-
-    throw new Error('Unknown PROVIDER: ' + cfg.PROVIDER);
+    const res = await fetch(`https://app.kit.com/forms/${uid}/subscriptions`, {
+      method: 'POST', headers: { 'Accept': 'application/json' }, body
+    });
+    if (res.ok) return { ok: true };
+    throw new Error('status ' + res.status);
   } catch (err) {
-    console.error('[homeroom] signup failed:', err);
-    return { ok: false, error: err };
+    // Fallback: fire it opaquely at the hosted form. We can't read the response,
+    // but Kit still records the subscriber.
+    try {
+      await fetch(`https://${HR_EMAIL.ACCOUNT}.kit.com/${uid}`, {
+        method: 'POST', mode: 'no-cors', body
+      });
+      return { ok: true, opaque: true };
+    } catch (e2) {
+      console.error('[homeroom] signup failed:', e2);
+      return { ok: false };
+    }
   }
 }
 
-/* Wires up any <form data-hr-list="app"> on the page.
-   Expects a sibling/nearby element with id "ok-<formId>" for the success note. */
 function hrInitForms() {
   document.querySelectorAll('form[data-hr-list]').forEach(form => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      const input  = form.querySelector('input[type=email]');
-      const btn    = form.querySelector('button');
-      const okBox  = document.getElementById('ok-' + (form.dataset.hrOk || form.dataset.hrList));
-      const email  = (input.value || '').trim();
+      const input = form.querySelector('input[type=email]');
+      const btn   = form.querySelector('button');
+      const okBox = document.getElementById('ok-' + (form.dataset.hrOk || form.dataset.hrList));
+      const email = (input.value || '').trim();
       if (!email) return;
 
       const original = btn.textContent;
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
+      btn.textContent = 'Sending…'; btn.disabled = true;
 
       const result = await hrSubscribe(email, form.dataset.hrList);
 
-      btn.disabled = false;
-      btn.textContent = original;
+      btn.disabled = false; btn.textContent = original;
 
       if (result.ok) {
         input.value = '';
         if (okBox) okBox.style.display = 'block';
         form.style.display = 'none';
-      } else {
-        if (okBox) {
-          okBox.style.background = '#D9472B';
-          okBox.textContent = "Something went wrong on our end. Try again in a moment, or email us and we'll add you by hand.";
-          okBox.style.display = 'block';
-        }
+      } else if (okBox) {
+        okBox.style.background = '#D9472B';
+        okBox.textContent = "Something went wrong on our end. Try again in a moment, or email us and we'll add you by hand.";
+        okBox.style.display = 'block';
       }
     });
   });
 }
-
 document.addEventListener('DOMContentLoaded', hrInitForms);
