@@ -115,18 +115,29 @@
   .final .ok{margin:14px auto 0;}
   .final .note{margin:10px auto 0;}
 
-  /* --- mobile header fixes --- */
+  @media(max-width:760px){.wrap{padding:0 18px;}}
+
+  /* --- header: desktop + mobile menu --- */
   .logo{white-space:nowrap;flex:0 0 auto;}
   .logo i{display:inline;}
-  @media(max-width:760px){
-    .wrap{padding:0 18px;}
-    .topbar{gap:10px;padding:16px 0 6px;}
-    .logo{font-size:25px;width:100%;}
-    .top-links{margin-left:0;width:100%;gap:14px;justify-content:flex-start;
-      overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none;}
-    .top-links::-webkit-scrollbar{display:none;}
-    .top-links a.txt{font-size:13.5px;white-space:nowrap;flex:0 0 auto;}
-    .top-links .btn{font-size:13.5px;padding:9px 16px;white-space:nowrap;flex:0 0 auto;}
+  .navtoggle{display:none;margin-left:auto;background:#fff;border:2px solid var(--blush-deep);
+    border-radius:14px;width:48px;height:44px;cursor:pointer;align-items:center;justify-content:center;
+    flex-direction:column;gap:5px;padding:0;flex:0 0 auto;}
+  .navtoggle span{display:block;width:21px;height:2.5px;background:var(--ink);border-radius:2px;transition:transform .22s,opacity .18s;}
+  .navtoggle.on span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .navtoggle.on span:nth-child(2){opacity:0;}
+  .navtoggle.on span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+  @media(max-width:860px){
+    .topbar{flex-wrap:wrap;gap:10px;padding:16px 0 6px;}
+    .logo{font-size:26px;}
+    .navtoggle{display:flex;}
+    .top-links{display:none;width:100%;flex-direction:column;align-items:stretch;gap:0;
+      margin:4px 0 8px;background:#fff;border-radius:18px;box-shadow:var(--lift);padding:8px;}
+    .top-links.open{display:flex;animation:menuIn .2s ease;}
+    @keyframes menuIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1}}
+    .top-links a.txt{font-size:16px;padding:14px 16px;border-bottom:2px dashed var(--blush-deep);color:var(--ink);}
+    .top-links a.txt:last-of-type{border-bottom:none;}
+    .top-links .btn{margin:8px 4px 4px;text-align:center;font-size:15.5px;}
   }
 
   footer{padding:46px 0 40px;text-align:center;}
@@ -155,7 +166,8 @@
 <div class="wrap">
   <div class="topbar">
     <a class="logo" href="/"><i style="color:var(--teal)">h</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i><i style="color:var(--rose)">e</i><i>r</i><i style="color:var(--teal)">o</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i></a>
-    <div class="top-links">
+    <button class="navtoggle" id="navtoggle" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><span></span><span></span><span></span></button>
+    <div class="top-links" id="topnav">
       <a class="txt on" href="app.html">The app</a>
       <a class="txt" href="systems.html">Systems</a>
       <a class="txt" href="recipes.html">Recipes</a>
@@ -236,7 +248,7 @@
     <h2>Why we built it instead of buying one</h2>
   </div>
   <div class="story">
-    <p>I build systems for enterprises for a living. Meanwhile at home I was the system: seven people's schedules, the food allergies, the laundry rotations, the vet appointments, when the grocery order locks, which kid outgrew their shoes. None of it written anywhere. All of it in my head.</p>
+    <p>I build systems for enterprises for a living. Meanwhile at home I was the system: everyone's schedules, the food allergies, the laundry rotations, the vet appointments, when the grocery order locks, which kid outgrew their shoes. None of it written anywhere. All of it in my head.</p>
     <p>We priced the wall calendar gadgets. A few hundred dollars, then a subscription on top. We tried the family apps, and they were fine until the thing we actually needed sat behind a paywall, or the interface was so grown-up that our kids never opened it once.</p>
     <p>So we built our own, and the surprising part wasn't the software. It was what happened when the invisible work became visible. David started claiming dinners because he could see the empty Thursday. Josiah walked the dog because the rotation said so, not because I remembered to remind him. The kids stopped asking me what was happening and started checking the wall.</p>
     <p>It's been running our house for months now, through school years and sick days and a lot of guests. People keep asking how to get it. So we're getting it ready for you.</p>
@@ -251,7 +263,7 @@
     <div class="q"><b>What's it going to cost?</b><p>One payment, and then it's yours. No monthly fee, not now and not later. Early list members get founding pricing.</p></div>
     <div class="q"><b>Do I need a special screen for the wall?</b><p>Nope. An old tablet propped up or stuck to the wall with a cheap mount does the whole job. That was the entire point.</p></div>
     <div class="q"><b>Who owns our family's information?</b><p>You do. That's not a marketing line, it's how the thing is built. We don't want your family's schedule and we're never selling anyone's data.</p></div>
-    <div class="q"><b>Will my kids actually use it?</b><p>Ours do, and they're 4 to 15. The trick is that it's built for them too: their color, their streaks, their wins, and things they get to check off. Chores they can complete are weirdly satisfying at any age.</p></div>
+    <div class="q"><b>Will my kids actually use it?</b><p>Ours do, across a wide range of ages. The trick is that it's built for them too: their color, their streaks, their wins, and things they get to check off. Chores they can complete are weirdly satisfying at any age.</p></div>
     <div class="q"><b>I don't want to wait. What can I do right now?</b><p>Plenty, honestly. The <a href="systems.html" style="color:var(--teal);font-weight:800">four family systems</a> are free and up today, and the <a href="shop.html" style="color:var(--teal);font-weight:800">printables</a> run the same rituals on paper. Start there and the app will slot right in later.</p></div>
   </div>
 
@@ -268,7 +280,7 @@
 
   <footer>
     <div class="f-logo"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span>r<span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></div>
-    <p>the family operating system · <a href="https://instagram.com/homeroomforfamily">@homeroomforfamily</a><br>© 2026 homeroom</p>
+    <p>the family operating system · <a href="https://instagram.com/homeroomforfamily">@homeroomforfamily</a><br>© 2026 homeroom for family, LLC</p>
   </footer>
 </div>
 
@@ -303,6 +315,20 @@ function week(){
 chips();week();
 
 // Email capture is handled by email-capture.js (set your provider + form IDs there).
+
+// ---------- mobile menu ----------
+(function(){
+  var t=document.getElementById('navtoggle'), n=document.getElementById('topnav');
+  if(!t||!n) return;
+  t.addEventListener('click',function(){
+    var open=n.classList.toggle('open');
+    t.classList.toggle('on',open);
+    t.setAttribute('aria-expanded',open?'true':'false');
+  });
+  n.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){n.classList.remove('open');t.classList.remove('on');t.setAttribute('aria-expanded','false');}
+  });
+})();
 </script>
 </body>
 </html>
