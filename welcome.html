@@ -3,189 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>You're in — homeroom</title>
-<meta name="robots" content="noindex">
-<meta name="description" content="You're confirmed. Here's what happens next.">
+<title>Weeknight Recipes — homeroom</title>
+<meta name="description" content="Easy weeknight family dinners with allergy swaps built in. Coming soon from the homeroom house. Join the list.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-<link rel="icon" href="/favicon.png">
+<script src="https://gumroad.com/js/gumroad.js" defer></script>
+<script src="email-capture.js" defer></script>
 <style>
   :root{--blush:#F3E1D9;--blush-deep:#EBD2C7;--cream:#FCF7F1;--ink:#3E4A40;--ink-soft:#6B7268;
     --teal:#2F6661;--vermilion:#D9472B;--mustard:#DC9A27;--rose:#E78A9B;--moss:#7A8B5C;--dusty:#5E8CA7;--plum:#9B6B9E;--biscuit:#B5803F;
     --shadow:0 2px 8px rgba(62,74,64,.08),0 8px 24px rgba(62,74,64,.06);
     --lift:0 6px 16px rgba(62,74,64,.12),0 22px 48px rgba(62,74,64,.12);}
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  .wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 40px;}
   a{color:inherit;}
-  #confetti{position:fixed;inset:0;pointer-events:none;z-index:50;}
+  ::selection{background:var(--teal);color:var(--cream);}
+  .topbar{display:flex;align-items:center;gap:16px;padding:20px 0 8px;flex-wrap:wrap;}
+  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:29px;text-decoration:none;}
+  .logo i{font-style:normal;display:inline-block;transition:transform .2s;}
+  .logo:hover i{transform:translateY(-4px);}
+  .top-links{margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .top-links a.txt{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink-soft);}
+  .top-links a.txt:hover,.top-links a.txt.on{color:var(--ink);}
+  .btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;background:var(--vermilion);color:#fff;border:none;
+    border-radius:999px;padding:11px 24px;cursor:pointer;box-shadow:var(--shadow);text-decoration:none;display:inline-block;transition:transform .15s;}
+  .btn:hover{transform:scale(1.05);}
+  .btn.big{font-size:16.5px;padding:14px 30px;}
+  .btn:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
 
-  .topbar{display:flex;justify-content:center;padding:28px 0 4px;}
-  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;text-decoration:none;white-space:nowrap;}
-  .logo i{font-style:normal;}
-
-  .card{background:#fff;border-radius:28px;box-shadow:var(--lift);padding:44px 44px 40px;margin-top:22px;text-align:center;position:relative;overflow:hidden;}
-  .card .band{position:absolute;top:0;left:0;right:0;height:12px;background:var(--teal);}
-  .em{font-size:62px;line-height:1;margin-bottom:14px;}
-  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(30px,5vw,42px);line-height:1.1;}
-  .lede{font-size:16.5px;font-weight:700;color:var(--ink-soft);line-height:1.65;margin:14px auto 0;max-width:520px;}
+  .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:40px 0 10px;}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;}}
+  .eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--vermilion);margin-bottom:10px;}
+  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(34px,5vw,52px);line-height:1.05;}
+  h1 .accent{color:var(--mustard);}
+  .lede{font-size:16px;font-weight:700;line-height:1.62;color:var(--ink-soft);margin-top:16px;max-width:490px;}
   .lede b{color:var(--ink);}
-  @media(max-width:620px){.card{padding:34px 24px 30px;}}
+  .form{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;max-width:490px;}
+  input[type=email]{font-family:'Nunito';font-weight:700;font-size:15px;border:2px solid var(--blush-deep);border-radius:999px;
+    padding:14px 22px;flex:1;min-width:230px;background:#fff;color:var(--ink);}
+  .note{font-size:12px;font-weight:800;color:var(--ink-soft);margin-top:10px;line-height:1.6;max-width:470px;}
+  .ok{display:none;background:var(--teal);color:#fff;border-radius:16px;padding:16px 20px;font-weight:800;font-size:14.5px;margin-top:14px;max-width:490px;line-height:1.5;}
 
-  .steps{text-align:left;margin:26px auto 0;max-width:540px;}
-  .step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:2px dashed var(--blush-deep);}
-  .step:last-child{border:none;}
-  .step .n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;
-    font-family:'Fredoka';font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;}
-  .step b{font-family:'Fredoka';font-weight:600;font-size:16px;display:block;line-height:1.25;}
-  .step span{font-size:13.5px;font-weight:700;color:var(--ink-soft);line-height:1.55;display:block;margin-top:3px;}
+  /* sample card stack */
+  .stack{position:relative;height:430px;}
+  .rc{position:absolute;background:#fff;border-radius:22px;box-shadow:var(--lift);padding:22px 24px;width:100%;max-width:420px;transition:transform .25s;}
+  .rc:hover{transform:translateY(-6px) rotate(0deg)!important;z-index:5;}
+  .rc:nth-child(1){top:0;transform:rotate(-2.5deg);}
+  .rc:nth-child(2){top:150px;transform:rotate(1.5deg);}
+  .rc:nth-child(3){top:300px;transform:rotate(-1deg);}
+  .rc .top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .rc .em{font-size:26px;}
+  .rc .tag{font-family:'Fredoka';font-weight:600;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
+    color:#fff;border-radius:999px;padding:4px 11px;margin-left:auto;}
+  .rc b{font-family:'Fredoka';font-weight:600;font-size:18px;display:block;line-height:1.2;}
+  .rc .meta{font-size:12px;font-weight:800;color:var(--ink-soft);margin-top:4px;}
+  .rc .swap{background:var(--blush);border-radius:10px;padding:8px 12px;font-size:11.5px;font-weight:800;color:var(--ink);margin-top:10px;}
 
-  .sec{margin-top:34px;}
-  .sec h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;text-align:center;}
-  .sec .sub{text-align:center;font-size:14.5px;font-weight:700;color:var(--ink-soft);margin:8px auto 18px;max-width:520px;line-height:1.6;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
-  .tile{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:22px 24px;text-decoration:none;display:block;transition:transform .18s;}
-  .tile:hover{transform:translateY(-5px) rotate(-.3deg);box-shadow:var(--lift);}
-  .tile .t-em{font-size:30px;margin-bottom:8px;}
-  .tile b{font-family:'Fredoka';font-weight:600;font-size:17px;display:block;margin-bottom:4px;}
-  .tile p{font-size:13px;font-weight:700;color:var(--ink-soft);line-height:1.55;}
+  .what{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:30px 34px;margin:56px 0 0;}
+  .what h2{font-family:'Fredoka';font-weight:700;font-size:26px;text-align:center;}
+  .what .sub{font-size:14.5px;font-weight:700;color:var(--ink-soft);text-align:center;margin:8px auto 22px;max-width:580px;line-height:1.6;}
+  .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .feat{background:var(--blush);border-radius:18px;padding:18px 20px;}
+  .feat .em{font-size:26px;margin-bottom:8px;}
+  .feat b{font-family:'Fredoka';font-weight:600;font-size:15.5px;display:block;margin-bottom:4px;}
+  .feat p{font-size:12.5px;font-weight:700;color:var(--ink-soft);line-height:1.55;}
 
-  .note{background:var(--blush);border-radius:20px;padding:22px 26px;margin-top:20px;text-align:center;}
-  .note b{font-family:'Fredoka';font-weight:600;font-size:16px;display:block;margin-bottom:6px;}
-  .note p{font-size:13.5px;font-weight:700;color:var(--ink-soft);line-height:1.6;}
-  .note code{background:#fff;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:800;}
+  .strip{background:var(--ink);color:var(--cream);border-radius:24px;padding:28px 32px;margin-top:18px;display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+  .strip b{font-family:'Fredoka';font-weight:600;font-size:18px;display:block;}
+  .strip p{font-size:13px;font-weight:700;opacity:.88;margin-top:4px;max-width:520px;line-height:1.55;}
+  .strip .btn{margin-left:auto;background:#fff;color:var(--ink);}
+  @media(max-width:700px){.strip .btn{margin-left:0;}}
 
-  footer{padding:40px 0 44px;text-align:center;}
-  footer .f-logo{font-family:'Fredoka';font-weight:700;font-size:22px;margin-bottom:8px;}
+  @media(max-width:760px){.wrap{padding:0 18px;}}
+
+  /* --- header: desktop + mobile menu --- */
+  .logo{white-space:nowrap;flex:0 0 auto;}
+  .logo i{display:inline;}
+  .navtoggle{display:none;margin-left:auto;background:#fff;border:2px solid var(--blush-deep);
+    border-radius:14px;width:48px;height:44px;cursor:pointer;align-items:center;justify-content:center;
+    flex-direction:column;gap:5px;padding:0;flex:0 0 auto;}
+  .navtoggle span{display:block;width:21px;height:2.5px;background:var(--ink);border-radius:2px;transition:transform .22s,opacity .18s;}
+  .navtoggle.on span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .navtoggle.on span:nth-child(2){opacity:0;}
+  .navtoggle.on span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+  @media(max-width:860px){
+    .topbar{flex-wrap:wrap;gap:10px;padding:16px 0 6px;}
+    .logo{font-size:26px;}
+    .navtoggle{display:flex;}
+    .top-links{display:none;width:100%;flex-direction:column;align-items:stretch;gap:0;
+      margin:4px 0 8px;background:#fff;border-radius:18px;box-shadow:var(--lift);padding:8px;}
+    .top-links.open{display:flex;animation:menuIn .2s ease;}
+    @keyframes menuIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1}}
+    .top-links a.txt{font-size:16px;padding:14px 16px;border-bottom:2px dashed var(--blush-deep);color:var(--ink);}
+    .top-links a.txt:last-of-type{border-bottom:none;}
+    .top-links .btn{margin:8px 4px 4px;text-align:center;font-size:15.5px;}
+  }
+
+  footer{padding:44px 0 40px;text-align:center;}
+  footer .f-logo{font-family:'Fredoka';font-weight:700;font-size:24px;margin-bottom:8px;}
   footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
 </style>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="homeroom">
+<meta property="og:title" content="Weeknight Recipes — homeroom">
+<meta property="og:description" content="Easy family dinners with the allergy swaps written right on them. Coming soon; join the list.">
+<meta property="og:url" content="https://homeroomforfamily.com/recipes.html">
+<meta property="og:image" content="https://homeroomforfamily.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="homeroom — a family week view with dinners, chores and a Wins Wall card reading Josiah got a 3.87">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Weeknight Recipes — homeroom">
+<meta name="twitter:description" content="Easy family dinners with the allergy swaps written right on them. Coming soon; join the list.">
+<meta name="twitter:image" content="https://homeroomforfamily.com/og-image.png">
+<meta name="theme-color" content="#FCF7F1">
+<link rel="canonical" href="https://homeroomforfamily.com/recipes.html">
+<link rel="icon" href="/favicon.png">
 </head>
 <body>
-<canvas id="confetti"></canvas>
 <div class="wrap">
-
   <div class="topbar">
     <a class="logo" href="/"><i style="color:var(--teal)">h</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i><i style="color:var(--rose)">e</i><i>r</i><i style="color:var(--teal)">o</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i></a>
-  </div>
-
-  <div class="card">
-    <span class="band" id="band"></span>
-    <div class="em" id="hero-em">🎉</div>
-    <h1 id="hero-head">You're in.</h1>
-    <p class="lede" id="hero-sub">Thanks for confirming. You're on the list, and I'll only email you when there's something genuinely worth your time.</p>
-
-    <div class="steps" id="steps"></div>
-  </div>
-
-  <div class="sec">
-    <h2>While you're here</h2>
-    <p class="sub">The free stuff is the good stuff. Start with whichever part of the week is currently eating you alive.</p>
-    <div class="grid">
-      <a class="tile" href="/systems.html">
-        <div class="t-em">🗓️</div><b>The four systems</b>
-        <p>Laundry, maintenance, meals, activities. Free frameworks, no email wall. Most people start with meals.</p>
-      </a>
-      <a class="tile" href="/shop.html">
-        <div class="t-em">💌</div><b>The shop</b>
-        <p>Printable lunch notes, the Sunday Reset Kit, and the bundle. Print tonight, use tomorrow morning.</p>
-      </a>
-      <a class="tile" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">
-        <div class="t-em">🐾</div><b>Come say hi</b>
-        <p>@homeroomforfamily. Systems, dinners, and one dog who posts on Tuesdays.</p>
-      </a>
+    <button class="navtoggle" id="navtoggle" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><span></span><span></span><span></span></button>
+    <div class="top-links" id="topnav">
+      <a class="txt" href="app.html">The app</a>
+      <a class="txt" href="systems.html">Systems</a>
+      <a class="txt on" href="recipes.html">Recipes</a>
+      <a class="txt" href="shop.html">Shop</a>
+      <a class="txt" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
+      <a class="btn" href="/#freebie">Free lunch notes</a>
     </div>
   </div>
 
-  <div class="note">
-    <b>📬 One small favor</b>
-    <p>New senders often land in Promotions or Spam. If you can, drag my email to your inbox and add <code>endia@homeroomforfamily.com</code> to your contacts. That way the good stuff actually reaches you.</p>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">🍝 Coming soon</div>
+      <h1>Weeknight dinners, <span class="accent">already figured out.</span></h1>
+      <p class="lede">We feed seven people around real allergies, every week, on school nights, with homework happening at the same table. So we're building the recipe library we kept wishing somebody had already made: <b>easy dinners with the swaps written right on them</b>, so your partner or your twelve-year-old can cook one without checking with you first.</p>
+      <form class="form" data-hr-list="recipes" data-hr-ok="recipes">
+        <input type="email" required placeholder="you@family.com" aria-label="Email address">
+        <button class="btn big" type="submit">Tell me when it's live</button>
+      </form>
+      <div class="ok" id="ok-recipes">💛 You're on the list! First recipes will land in your inbox. Phineas says hi.</div>
+      <p class="note">One email when it opens, and this list gets in first. No spam, leave whenever you want.</p>
+    </div>
+
+    <div class="stack">
+      <div class="rc">
+        <div class="top"><span class="em">🌮</span><span class="tag" style="background:var(--mustard);color:var(--ink)">25 min</span></div>
+        <b>Build-your-own taco night</b>
+        <div class="meta">Everyone builds their own, so everyone eats</div>
+        <div class="swap">🔁 gluten-free? corn tortillas · dairy-free? skip cheese, add extra guac</div>
+      </div>
+      <div class="rc">
+        <div class="top"><span class="em">🍗</span><span class="tag" style="background:var(--teal)">10 min prep</span></div>
+        <b>Sheet-pan chicken + potatoes</b>
+        <div class="meta">One pan. The oven does the parenting.</div>
+        <div class="swap">🔁 meatless? chickpeas roast beautifully at the same temp</div>
+      </div>
+      <div class="rc">
+        <div class="top"><span class="em">🍝</span><span class="tag" style="background:var(--rose);color:var(--ink)">20 min</span></div>
+        <b>Hidden-veg pasta</b>
+        <div class="meta">Blend the peppers in. They'll never testify.</div>
+        <div class="swap">🔁 wheat allergy? lentil pasta holds sauce better than you'd think</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="what">
+    <h2>What's coming</h2>
+    <p class="sub">No four paragraphs about our trip to Tuscany before the ingredient list. Just dinner, written for the tired 5 p.m. version of you.</p>
+    <div class="feats">
+      <div class="feat"><div class="em">⏱️</div><b>Under 30 minutes</b><p>If it needs an hour of standing at the stove, it isn't a school night dinner and we won't pretend it is.</p></div>
+      <div class="feat"><div class="em">🔁</div><b>Swaps written in</b><p>Substitutions for the common allergens on every single recipe, so the restriction lives on the page instead of in your head.</p></div>
+      <div class="feat"><div class="em">👧</div><b>Kid-cookable steps</b><p>We mark which parts a seven-year-old can own. Dinner turns into training instead of a shift you work alone.</p></div>
+      <div class="feat"><div class="em">🛒</div><b>Aisle-sorted lists</b><p>Every week comes with the grocery list already sorted by section. One trip, no laps around the store.</p></div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div><b>Want the system behind the recipes today?</b>
+    <p>The meals system is free and up right now: theme nights, claimed dinner slots, and the allergy notes trick that finally made our kitchen something other people could run.</p></div>
+    <a class="btn" href="systems.html#meals">Read the meals system →</a>
   </div>
 
   <footer>
     <div class="f-logo"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span>r<span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></div>
-    <p>the family operating system · built by a mom, for the whole house<br>© 2026 homeroom for family, LLC</p>
+    <p>where the invisible work becomes visible · <a href="https://instagram.com/homeroomforfamily">@homeroomforfamily</a><br>
+    Substitution notes come from our family's experience and aren't medical advice, so always double check ingredients and cross-contamination for your household.<br>© 2026 homeroom for family, LLC</p>
   </footer>
 </div>
 
 <script>
-// ---------- per-list copy (Kit can append ?list=app to the redirect URL) ----------
-var LISTS = {
-  app: {
-    color:'#2F6661', em:'🏠', head:"You're on the early list.",
-    sub:"Thanks for confirming. When homeroom is ready for other families, you'll hear from me first — and you'll get founding pricing when it opens.",
-    steps:[
-      ["No countdown timers.","I'm not going to email you every week about something you can't use yet. You'll hear from me when there's something real to try."],
-      ["Pay once, keep it.","No monthly fee, not now and not later. Early list members get founding pricing."],
-      ["Start with the free systems.","The rituals work on paper today. When the app arrives, it'll slot right into what you've already built."]
-    ]
-  },
-  sampler: {
-    color:'#E78A9B', em:'💌', head:"Your lunch notes are on the way.",
-    sub:"Check your inbox in the next minute or two — the printable pack and the Week Zero checklist are headed there now.",
-    steps:[
-      ["Print on cardstock if you've got it.","US Letter, 100% scale, background graphics on. The dashed borders are your cut lines."],
-      ["Let a kid do the cutting.","They're genuinely good at it and it makes the notes feel like theirs too."],
-      ["Keep the stack where lunches get packed.","Two minutes in the morning, remembered at noon."]
-    ]
-  },
-  recipes: {
-    color:'#DC9A27', em:'🍝', head:"You're on the recipe list.",
-    sub:"Thanks for confirming. When the library opens, this list gets in first — easy weeknight dinners with the allergy swaps written right on them.",
-    steps:[
-      ["One email when it's live.","No weekly nagging in the meantime. Promise."],
-      ["The meals system is free right now.","Theme nights, claimed dinner slots, and the allergy-notes trick that makes a kitchen shareable."],
-      ["Reply and tell me what's hard.","Picky eater? Six allergies? Zero time? I read every reply and it shapes what gets written."]
-    ]
-  },
-  dinner: {
-    color:'#D9472B', em:'🍽️', head:"Your founding spot is saved.",
-    sub:"Nothing is charged today. When the dinner club opens, founding members lock in $39 a year for as long as they stay subscribed.",
-    steps:[
-      ["You'll hear before anyone else.","Including the exact date and what the first week looks like."],
-      ["Every Friday, once it's live.","Five weeknight dinners, a grocery list sorted by aisle, and swap notes for the common allergens."],
-      ["Written from a real kitchen.","Cooking around actual restrictions, every week, on school nights."]
-    ]
-  },
-  general: {
-    color:'#5E8CA7', em:'💛', head:"You're in.",
-    sub:"Thanks for confirming. One email a week: systems, dinners, lunchbox notes, and the occasional formal complaint from the dog.",
-    steps:[
-      ["No fluff, no daily nagging.","If a week doesn't have anything useful in it, I won't send one."],
-      ["Reply any time.","These come from a real person in a real house. I read what comes back."],
-      ["Start with the free systems.","Four frameworks for the work that quietly eats a household alive."]
-    ]
-  }
-};
+// Email capture is handled by email-capture.js (set your provider + form IDs there).
 
+// ---------- mobile menu ----------
 (function(){
-  var p = new URLSearchParams(location.search).get('list');
-  var d = LISTS[p] || LISTS.general;
-  document.getElementById('band').style.background = d.color;
-  document.getElementById('hero-em').textContent = d.em;
-  document.getElementById('hero-head').textContent = d.head;
-  document.getElementById('hero-sub').textContent = d.sub;
-  document.getElementById('steps').innerHTML = d.steps.map(function(s,i){
-    return '<div class="step"><span class="n" style="background:'+d.color+'">'+(i+1)+'</span><div><b>'+s[0]+'</b><span>'+s[1]+'</span></div></div>';
-  }).join('');
-  document.title = d.head + ' — homeroom';
+  var t=document.getElementById('navtoggle'), n=document.getElementById('topnav');
+  if(!t||!n) return;
+  t.addEventListener('click',function(){
+    var open=n.classList.toggle('open');
+    t.classList.toggle('on',open);
+    t.setAttribute('aria-expanded',open?'true':'false');
+  });
+  n.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){n.classList.remove('open');t.classList.remove('on');t.setAttribute('aria-expanded','false');}
+  });
 })();
-
-// ---------- confetti ----------
-var cv=document.getElementById('confetti'),ctx=cv.getContext('2d'),PARTS=[],anim;
-function sizeC(){cv.width=innerWidth;cv.height=innerHeight;}sizeC();addEventListener('resize',sizeC);
-var COLS=['#2F6661','#D9472B','#DC9A27','#E78A9B','#7A8B5C','#5E8CA7','#9B6B9E','#B5803F'];
-function burst(x,y,n){
-  for(var i=0;i<(n||150);i++){var a=Math.random()*Math.PI*2,s=4+Math.random()*9;
-    PARTS.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-7,g:.3,r:3+Math.random()*4.5,
-      c:COLS[i%COLS.length],rot:Math.random()*6,vr:(Math.random()-.5)*.35,l:80+Math.random()*50});}
-  cancelAnimationFrame(anim);
-  (function f(){ctx.clearRect(0,0,cv.width,cv.height);PARTS=PARTS.filter(function(p){return p.l>0;});
-    PARTS.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.rot+=p.vr;p.l--;
-      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;
-      ctx.globalAlpha=Math.min(1,p.l/30);ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);ctx.restore();});
-    if(PARTS.length)anim=requestAnimationFrame(f);})();
-}
-setTimeout(function(){burst(innerWidth/2,innerHeight*0.32,170);},400);
 </script>
 </body>
 </html>
