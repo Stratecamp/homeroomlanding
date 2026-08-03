@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to homeroom — Founding Families</title>
+<meta name="description" content="You're one of our first families. Here's how to get homeroom set up in about ten minutes.">
+
+<!-- Unlisted: keep this page out of search results and site navigation -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Link preview for texts and DMs -->
+<meta property="og:title" content="Welcome to homeroom 🏡">
+<meta property="og:description" content="You're one of our first families. Here's how to get set up — about ten minutes.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F3E1D9">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --blush:#F3E1D9; --blush-deep:#EBD2C7; --cream:#FCF7F1;
+    --ink:#3E4A40; --ink-soft:#6B7268;
+    --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
+    --moss:#7A8B5C; --dusty:#5E8CA7; --plum:#9B6B9E;
+    --radius:24px; --radius-md:16px;
+    --shadow:0 2px 8px rgba(62,74,64,.08), 0 8px 24px rgba(62,74,64,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--blush);color:var(--ink);
+    -webkit-font-smoothing:antialiased;line-height:1.6;}
+  .wrap{max-width:680px;margin:0 auto;padding:44px 20px 90px;}
+
+  /* ---------- header ---------- */
+  header{text-align:center;margin-bottom:38px;}
+  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(38px,10vw,54px);
+    letter-spacing:.5px;line-height:1;margin-bottom:10px;}
+  .logo span{display:inline-block;animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards;}
+  .logo span:nth-child(1){animation-delay:.00s}.logo span:nth-child(2){animation-delay:.05s}
+  .logo span:nth-child(3){animation-delay:.10s}.logo span:nth-child(4){animation-delay:.15s}
+  .logo span:nth-child(5){animation-delay:.20s}.logo span:nth-child(6){animation-delay:.25s}
+  .logo span:nth-child(7){animation-delay:.30s}.logo span:nth-child(8){animation-delay:.35s}
+  @keyframes pop{0%{transform:translateY(22px) scale(.75);opacity:0}100%{transform:none;opacity:1}}
+  .kicker{display:inline-block;background:var(--vermilion);color:#fff;font-family:'Fredoka',sans-serif;
+    font-weight:600;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;
+    padding:5px 16px;border-radius:999px;margin-bottom:16px;}
+  header h1{font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(23px,5.5vw,30px);
+    line-height:1.25;margin-bottom:10px;}
+  header p{font-size:16px;color:var(--ink-soft);font-weight:600;max-width:480px;margin:0 auto;}
+
+  /* ---------- cards ---------- */
+  .card{background:var(--cream);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:28px 30px;margin-bottom:18px;}
+  .card h2{font-family:'Fredoka',sans-serif;font-weight:600;font-size:21px;margin-bottom:6px;
+    display:flex;align-items:center;gap:11px;flex-wrap:wrap;}
+  .card h2 .num{background:var(--teal);color:#fff;width:30px;height:30px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:none;}
+  .card .sub{font-size:14px;color:var(--ink-soft);font-weight:700;margin-bottom:18px;}
+
+  .step{display:flex;gap:14px;padding:13px 0;border-bottom:2px dashed var(--blush-deep);}
+  .step:last-child{border-bottom:none;padding-bottom:0;}
+  .step .dot{width:26px;height:26px;border-radius:50%;background:var(--blush);color:var(--ink);
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:13px;flex:none;
+    display:flex;align-items:center;justify-content:center;margin-top:2px;}
+  .step .body h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;margin-bottom:3px;}
+  .step .body p{font-size:14.5px;color:var(--ink-soft);font-weight:600;}
+  .step .body p + p{margin-top:6px;}
+  .step .body b{color:var(--ink);font-weight:800;}
+
+  .btn{display:inline-block;background:var(--teal);color:var(--cream);text-decoration:none;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;padding:15px 34px;
+    border-radius:999px;margin:6px 0 2px;transition:transform .15s;}
+  .btn:hover{transform:scale(1.03);}
+  .btn.wide{display:block;text-align:center;}
+
+  .note{background:var(--blush);border-radius:var(--radius-md);padding:15px 18px;
+    font-size:14px;font-weight:700;color:var(--ink);margin:16px 0 0;line-height:1.55;}
+  .note.warn{background:#FFF3CD;border:2px solid var(--mustard);}
+  .note .lbl{display:block;font-size:11px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px;}
+
+  .platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));
+    gap:14px;margin-top:16px;}
+  .platform{background:var(--blush);border-radius:var(--radius-md);padding:17px 19px;}
+  .platform h4{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;margin-bottom:9px;}
+  .platform ol{margin:0;padding-left:19px;}
+  .platform li{font-size:13.5px;font-weight:700;color:var(--ink-soft);line-height:1.75;}
+  .platform li b{color:var(--ink);}
+
+  .faq{border-bottom:2px dashed var(--blush-deep);padding:15px 0;}
+  .faq:last-child{border-bottom:none;padding-bottom:0;}
+  .faq h4{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15.5px;margin-bottom:5px;}
+  .faq p{font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .faq a{color:var(--teal);font-weight:800;}
+
+  .qlist{counter-reset:q;margin-top:6px;}
+  .qlist li{list-style:none;counter-increment:q;position:relative;padding:11px 0 11px 40px;
+    font-size:15px;font-weight:700;border-bottom:2px dashed var(--blush-deep);}
+  .qlist li:last-child{border-bottom:none;}
+  .qlist li::before{content:counter(q);position:absolute;left:0;top:10px;width:26px;height:26px;
+    border-radius:50%;background:var(--mustard);color:#fff;font-family:'Fredoka',sans-serif;
+    font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+
+  footer{text-align:center;margin-top:34px;}
+  footer .heart{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;margin-bottom:8px;}
+  footer p{font-size:13px;color:var(--ink-soft);font-weight:700;}
+  footer a{color:var(--teal);}
+
+  @media (max-width:560px){
+    .card{padding:24px 21px;}
+    .wrap{padding:32px 15px 70px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo" aria-label="homeroom">
+      <span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span>
+    </div>
+    <span class="kicker">Founding Family</span>
+    <h1>You're one of our first families</h1>
+    <p>Which means you're getting homeroom before it's in the App Store. It still installs like a real app — there's just no store download involved. Setup takes about ten minutes.</p>
+  </header>
+
+  <div class="note warn">
+    <span class="lbl">Before you start</span>
+    Use <b>Safari</b> on iPhone or iPad, and <b>Chrome</b> on Android. Other browsers can't add apps to your home screen. One adult sets up the household first — everyone else joins after.
+  </div>
+
+  <!-- ============ PART 1 ============ -->
+  <div class="card" style="margin-top:18px;">
+    <h2><span class="num">1</span> For the parent setting things up</h2>
+    <p class="sub">About five minutes</p>
+
+    <div class="step">
+      <span class="dot">1</span>
+      <div class="body">
+        <h3>Open homeroom</h3>
+        <p>Tap the button below in <b>Safari</b> or <b>Chrome</b>.</p>
+        <a class="btn wide" href="https://app.homeroomforfamily.com">Open homeroom →</a>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">2</span>
+      <div class="body">
+        <h3>Sign in</h3>
+        <p>Enter your email and tap <b>Send me a sign-in link</b>. Check your inbox and tap the link — there's no password to create or remember.</p>
+        <p>Not there in a minute? Check spam. It comes from <b>hello@homeroomforfamily.com</b>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">3</span>
+      <div class="body">
+        <h3>Set up your household</h3>
+        <p>Three quick screens: <b>name your household</b>, <b>add everyone who lives there</b> (pets included — each person gets their own color), and optionally pick <b>starter packs</b> of chores and meals so you don't begin with an empty app.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">4</span>
+      <div class="body">
+        <h3>Add it to your home screen ⭐</h3>
+        <p>Don't skip this — it's what turns homeroom into a real app instead of a browser tab.</p>
+        <div class="platform-grid">
+          <div class="platform">
+            <h4>📱 iPhone &amp; iPad</h4>
+            <ol>
+              <li>Tap the <b>Share</b> button (square with an arrow)</li>
+              <li>Scroll to <b>Add to Home Screen</b></li>
+              <li>Tap <b>Add</b></li>
+            </ol>
+          </div>
+          <div class="platform">
+            <h4>🤖 Android</h4>
+            <ol>
+              <li>Tap the <b>⋮</b> menu, top right</li>
+              <li>Tap <b>Install app</b></li>
+              <li>Tap <b>Install</b></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">5</span>
+      <div class="body">
+        <h3>Get the invite link for your family</h3>
+        <p>In the app, tap the <b>settings icon</b> (top right) → <b>Family invite link</b> → <b>Copy link</b>. Text or AirDrop it to everyone in your household.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PART 2 ============ -->
+  <div class="card">
+    <h2><span class="num">2</span> For everyone else</h2>
+    <p class="sub">About two minutes each — kids included</p>
+
+    <div class="step">
+      <span class="dot">1</span>
+      <div class="body">
+        <h3>Tap the invite link</h3>
+        <p>Open it in <b>Safari</b> (iPhone) or <b>Chrome</b> (Android). You'll join the household automatically — no email, no password, nothing to sign up for.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">2</span>
+      <div class="body">
+        <h3>Add it to your home screen</h3>
+        <p>Same as above: <b>Share → Add to Home Screen</b> on iPhone, or <b>⋮ → Install app</b> on Android.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">3</span>
+      <div class="body">
+        <h3>Tap your name</h3>
+        <p>Open the app and tap your own name at the top. That's it.</p>
+        <p><b>For kids:</b> tap your name, see your tasks, tap to check them off. Confetti happens. 🎉</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PART 3 ============ -->
+  <div class="card">
+    <h2>✨ Two things worth doing</h2>
+    <p class="sub">Optional, but this is where homeroom really clicks</p>
+
+    <div class="step">
+      <span class="dot">🖥</span>
+      <div class="body">
+        <h3>Put homeroom on a kitchen tablet</h3>
+        <p>Any old iPad or Android tablet works. Open the invite link on it first, then go to <b>app.homeroomforfamily.com/wall</b> for a big, tappable display of today — the schedule, tonight's dinner, everyone's tasks.</p>
+        <p>To keep it awake: <b>Settings → Display &amp; Brightness → Auto-Lock → Never</b>. To lock it to homeroom, turn on <b>Guided Access</b> under Accessibility.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="dot">📅</span>
+      <div class="body">
+        <h3>Get homeroom events in your normal calendar</h3>
+        <p>Tap <b>settings → Calendar subscriptions → Open</b>, then <b>Subscribe</b> next to your name. homeroom events flow into Apple or Google Calendar automatically from then on — reminders included.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FAQ ============ -->
+  <div class="card">
+    <h2>Questions we expect</h2>
+
+    <div class="faq">
+      <h4>Do I need to download anything from the App Store?</h4>
+      <p>No. homeroom installs straight from the web. The App Store version is coming, and you won't lose anything when it does.</p>
+    </div>
+    <div class="faq">
+      <h4>Is my family's information private?</h4>
+      <p>Yes. Your household's data is visible only to your household. We don't show ads, don't track anyone, and never sell data. Full details at <a href="https://app.homeroomforfamily.com/privacy">our privacy policy</a>.</p>
+    </div>
+    <div class="faq">
+      <h4>Do my kids need email addresses or passwords?</h4>
+      <p>No. They join with the link you send and just tap their name.</p>
+    </div>
+    <div class="faq">
+      <h4>Can I get my data out?</h4>
+      <p>Any time. <b>Settings → Your data → Download</b> gives you everything as a spreadsheet or a full backup file.</p>
+    </div>
+    <div class="faq">
+      <h4>How do I add someone later — a babysitter, or grandma visiting?</h4>
+      <p>In the app: <b>+ Add → Person</b>, then send them the invite link. When they leave, remove them and tap <b>Reset link</b> so the old one stops working.</p>
+    </div>
+    <div class="faq">
+      <h4>Something's broken, or I have an idea.</h4>
+      <p>Please tell us — that's the whole point of you being here early. Email <a href="mailto:support@homeroomforfamily.com">support@homeroomforfamily.com</a>. Screenshots help enormously.</p>
+    </div>
+  </div>
+
+  <!-- ============ FEEDBACK ============ -->
+  <div class="card">
+    <h2>💛 After your first week</h2>
+    <p class="sub">No essay required — but if you have five minutes, these four answers are worth more to us than anything else</p>
+    <ol class="qlist">
+      <li>What did you actually use every day?</li>
+      <li>What did you expect to find and couldn't?</li>
+      <li>Did the rest of your family use it, or was it mostly you?</li>
+      <li>What made you want to close the app?</li>
+    </ol>
+    <div class="note">
+      <span class="lbl">Especially that last one</span>
+      Be blunt. Knowing what made you put your phone down is how this gets good.
+    </div>
+  </div>
+
+  <footer>
+    <div class="heart">Thank you for being early 💛</div>
+    <p>
+      <a href="https://app.homeroomforfamily.com">Open homeroom</a> ·
+      <a href="https://app.homeroomforfamily.com/privacy">Privacy</a> ·
+      <a href="https://app.homeroomforfamily.com/terms">Terms</a>
+    </p>
+    <p style="margin-top:8px;">homeroom · where our week comes together</p>
+  </footer>
+
+</div>
+</body>
+</html>
