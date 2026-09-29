@@ -245,6 +245,24 @@
   .amount small{font-size:22px;font-weight:600;color:var(--ink-soft);}
   .save{display:inline-block;margin-top:10px;background:var(--mustard);color:var(--ink);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:800;min-height:26px;}
   .save.hide{visibility:hidden;}
+  .per-month{font-size:15px;font-weight:800;color:var(--ink-soft);margin-top:8px;}
+  .assure{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;margin-top:14px;font-size:13.5px;font-weight:800;color:var(--teal);}
+
+  /* testimonial under the demo */
+  .lift-quote{max-width:880px;margin:70px auto 0;text-align:center;}
+  .lift-quote blockquote{font-family:var(--serif);font-size:clamp(25px,3.1vw,36px);line-height:1.18;letter-spacing:-.01em;color:#232B25;}
+  .lift-quote figcaption{margin-top:16px;font-size:14px;font-weight:800;color:var(--ink-soft);display:flex;gap:8px 12px;justify-content:center;align-items:center;flex-wrap:wrap;}
+  .lift-quote figcaption a{color:var(--teal);}
+
+  /* getting everyone on board */
+  .week1{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .week1 li{background:var(--cream);border-radius:20px;box-shadow:var(--shadow);padding:20px 18px 22px;}
+  .week1 .dy{display:inline-block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;color:#fff;border-radius:999px;padding:3px 12px;margin-bottom:12px;}
+  .week1 b{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;line-height:1.25;}
+  .week1 p{font-size:13.5px;color:var(--ink-soft);margin-top:6px;}
+  .who-gets{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;}
+  .who-gets div{background:var(--blush);border-radius:18px;padding:16px 18px;font-size:13.5px;color:var(--ink-soft);}
+  .who-gets b{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:15.5px;color:var(--ink);margin-bottom:3px;}
   .price-wrap ul{list-style:none;text-align:left;margin:26px 0 24px;display:grid;gap:10px;}
   .price-wrap li{display:flex;gap:10px;font-size:15px;}
   .price-wrap li::before{content:"✓";font-family:'Fredoka',sans-serif;font-weight:700;color:var(--teal);flex:none;}
@@ -278,6 +296,27 @@
   footer .links a:hover{color:var(--ink);}
   footer .fine{font-size:12px;color:var(--ink-soft);margin-top:14px;}
 
+  /* live-from-the-house pop-up */
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:60;}
+  .pop{position:fixed;right:22px;bottom:22px;z-index:61;width:320px;background:var(--cream);border-radius:22px;box-shadow:var(--lift);
+    padding:24px 20px 14px;transform:translateY(170%) rotate(2deg);transition:transform .55s cubic-bezier(.34,1.56,.64,1);overflow:hidden;text-align:left;}
+  .pop.show{transform:none;}
+  .pop .band{position:absolute;top:0;left:0;right:0;height:8px;}
+  .pop .lab{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;padding-right:22px;}
+  .pop .phd{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;line-height:1.25;}
+  .pop .psub{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.45;}
+  .pop .pchip{display:inline-flex;align-items:center;gap:6px;background:var(--blush);border-radius:999px;padding:3px 12px 3px 3px;font-size:12px;font-weight:800;margin-top:10px;}
+  .pop .pchip .dot{width:20px;height:20px;font-size:10px;}
+  .pop .act{font-family:'Fredoka',sans-serif;font-weight:600;font-size:13.5px;border:none;border-radius:999px;padding:9px 18px;cursor:pointer;color:#fff;margin-top:12px;display:block;transition:transform .15s;}
+  .pop .act:hover{transform:scale(1.04);}
+  .pop .act.done{background:var(--ink-soft)!important;cursor:default;transform:none;}
+  .pop .x{position:absolute;top:12px;right:12px;border:none;background:none;font-size:15px;font-weight:800;color:var(--ink-soft);cursor:pointer;width:28px;height:28px;border-radius:50%;}
+  .pop .x:hover{background:var(--blush);}
+  .pop .more{display:block;margin-top:14px;padding-top:10px;border-top:2px dashed var(--blush-deep);font-size:12.5px;font-weight:800;color:var(--teal);text-decoration:none;}
+  .pop .more:hover{text-decoration:underline;}
+  .pop-again{position:fixed;right:22px;bottom:22px;z-index:59;font-size:22px;background:var(--cream);border:none;border-radius:50%;width:54px;height:54px;box-shadow:var(--lift);cursor:pointer;display:none;transition:transform .15s;}
+  .pop-again:hover{transform:scale(1.1) rotate(-8deg);}
+
   /* mobile sticky cta */
   .sticky{display:none;}
 
@@ -297,13 +336,14 @@
     .phone-wrap{position:relative;right:auto;bottom:auto;margin:0 auto 34px;}
     .phone{transform:none;}
     .stage-cap{margin-top:34px;}
+    .week1,.who-gets{grid-template-columns:1fr 1fr;}
     .quotes{grid-template-columns:1fr;}
     .q.c1{grid-row:auto;}
     .rest-grid{grid-template-columns:1fr 1fr;}
   }
   @media (max-width:640px){
     .nav a.txt{display:none;}
-    .leads,.extras,.rest-grid{grid-template-columns:1fr;}
+    .leads,.extras,.rest-grid,.week1,.who-gets{grid-template-columns:1fr;}
     .load{padding:32px 26px;}
     .lead,.q,.rest{padding:26px 22px;}
     .steps{padding:6px 20px;}
@@ -311,6 +351,9 @@
     section{padding:56px 0;}
     .sticky{display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:40;transform:translateY(140%);transition:transform .3s;}
     .sticky.show{transform:none;}
+    .pop{left:14px;right:14px;width:auto;bottom:14px;}
+    .pop-again{right:16px;bottom:92px;width:48px;height:48px;font-size:19px;}
+    body.pop-open .sticky{transform:translateY(140%)!important;}
     .sticky .btn{width:100%;box-shadow:var(--lift);}
     footer{padding-bottom:100px;}
   }
@@ -385,6 +428,11 @@
     <span>💻 Any computer, right in the browser</span>
     <span>📺 The kitchen wall, on the tablet you already own</span>
   </div>
+
+  <figure class="lift-quote">
+    <blockquote>“‘How can I help’ is a question I don’t have to ask anymore. … I can open the app, and choose where I can jump in and own some of the load at any time.”</blockquote>
+    <figcaption><span>👨‍👧‍👦 Father of 2</span><a href="#stories">More from homeroom families</a></figcaption>
+  </figure>
 </div>
 
 <hr class="dash" style="margin-top:70px">
@@ -483,6 +531,32 @@
 
 <hr class="dash">
 
+<!-- ================= GETTING EVERYONE ON BOARD ================= -->
+<div class="wrap">
+  <section id="onboard">
+    <div class="head">
+      <span class="label">Getting everyone on board</span>
+      <h2>An app the whole house <em>actually opens.</em></h2>
+      <p>Most family calendars end up with one person using them. homeroom is built for everyone else in the house too. Here's a first week that works.</p>
+    </div>
+    <ol class="week1">
+      <li><span class="dy" style="background:var(--teal)">Day 1</span><b>Everyone gets a color</b><p>Add the house, pets included, and text the family link. Kids tap their name. No email, no password.</p></li>
+      <li><span class="dy" style="background:var(--vermilion)">Day 2</span><b>Empty your head</b><p>Put in the week you're already carrying. homeroom asks "Who's got it?" on anything that needs someone.</p></li>
+      <li><span class="dy" style="background:var(--mustard);color:var(--ink)">Day 3</span><b>Hand out the chores</b><p>Kids see their own list, start a timer, and check it off. Streaks and confetti do the nagging.</p></li>
+      <li><span class="dy" style="background:var(--plum)">Day 5</span><b>Meet them where they look</b><p>Everyone subscribes their own calendar feed, and the old tablet goes up in the kitchen.</p></li>
+      <li><span class="dy" style="background:var(--moss)">Day 7</span><b>Celebrate one win</b><p>Post something on the Wins Wall. If it made someone proud, it goes on the wall.</p></li>
+    </ol>
+    <div class="who-gets">
+      <div><b>🧒 Kids</b>Their own color, their own chores, and confetti when they finish.</div>
+      <div><b>🎧 Teens</b>Their schedule in the calendar app they already use.</div>
+      <div><b>🤝 A partner or co-parent</b>Every open "Who's got it?" in one place, so helping doesn't start with asking.</div>
+      <div><b>👵 Grandparents and sitters</b>The week they're helping with, from one link.</div>
+    </div>
+  </section>
+</div>
+
+<hr class="dash">
+
 <!-- ================= TESTIMONIALS ================= -->
 <div class="wrap">
   <section id="stories">
@@ -509,7 +583,7 @@
 
       <figure class="q c3">
         <blockquote>
-          <div class="pull">"'How can I help' is a question I don't have to ask anymore."</div>
+          <div class="pull">"It's a game changer, and gives me a new perspective of what my wife carries in her mind."</div>
           <p class="full">"I can now see all of the household tasks, big picture, and all the details wheeling through my wife's brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time. It's a game changer, and gives me a new perspective of what my wife carries in her mind."</p>
         </blockquote>
         <figcaption class="who"><span class="em">👨‍👧‍👦</span><div><b>Father of 2</b><span>Jumping in where he's needed</span></div></figcaption>
@@ -568,7 +642,7 @@
     <div class="head center">
       <span class="label">Pricing</span>
       <h2>One plan. The whole house.</h2>
-      <p>Every person, every phone, every computer, and the kitchen display, all on one household subscription.</p>
+      <p>About <span class="js-permo">$8</span> a month covers every person, every phone, every computer, and the kitchen display.</p>
     </div>
     <div class="price-wrap">
       <div class="toggle" role="group" aria-label="Billing period">
@@ -577,6 +651,7 @@
       </div>
       <div class="trial-badge js-trial-badge">7 days free</div>
       <div class="amount"><span id="amt">$99</span><small id="per">/year</small></div>
+      <div class="per-month" id="permo"></div>
       <div class="save" id="save">Save $45 a year</div>
       <ul>
         <li>Unlimited family members, pets included, each with their own color</li>
@@ -586,6 +661,7 @@
         <li>No ads, no tracking, and your data downloads any time</li>
       </ul>
       <a class="btn big js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
+      <div class="assure"><span>🔔 We'll remind you before your trial ends</span><span>✋ Cancel anytime from Settings</span></div>
       <button class="share js-share" type="button">📤 Send this to your partner or co-parent</button>
       <div class="share-sub">or anyone who helps run the house</div>
       <p class="terms" id="terms"></p>
@@ -656,6 +732,19 @@
   <div class="fine">© 2026 homeroom for family, LLC</div>
 </footer>
 
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="pop" id="pop" role="status" aria-live="polite" aria-hidden="true">
+  <span class="band" id="pop-band"></span>
+  <button class="x" id="pop-x" aria-label="Close">✕</button>
+  <div class="lab" id="pop-lab"></div>
+  <div class="phd" id="pop-head"></div>
+  <div class="psub" id="pop-sub"></div>
+  <span class="pchip" id="pop-chip"></span>
+  <button class="act" id="pop-act"></button>
+  <a class="more js-start" id="pop-more" href="https://app.homeroomforfamily.com"></a>
+</div>
+<button class="pop-again" id="pop-again" aria-label="Show another moment from a homeroom house" title="More from the homeroom house">✨</button>
+
 <div class="sticky" id="sticky"><a class="btn big js-start" href="https://app.homeroomforfamily.com">Start your free trial</a></div>
 
 <script>
@@ -665,8 +754,7 @@ const CONFIG = {
   siteUrl: 'https://homeroomforfamily.com',
   monthly: 12,   // dollars per month
   annual: 99,    // dollars per year
-  trialDays: 7,
-  cardUpFront: false  // true if checkout asks for a card before the trial starts
+  trialDays: 7      // a card is collected at signup; nothing is charged until the trial ends
 };
 /* ============================================================ */
 
@@ -682,24 +770,23 @@ function setPlan(plan){
   const s = document.getElementById('save');
   s.textContent = 'Save ' + fmt(save) + ' a year';
   s.classList.toggle('hide', plan !== 'annual' || save <= 0);
+  document.getElementById('permo').textContent = plan === 'annual'
+    ? `About ${perMonth()} a month for the whole house`
+    : 'For the whole house, month to month';
 }
+function perMonth(){ return '$' + Math.round(CONFIG.annual / 12); }
+document.querySelectorAll('.js-permo').forEach(e => e.textContent = perMonth());
 document.querySelectorAll('.toggle button').forEach(b => b.addEventListener('click', () => setPlan(b.dataset.plan)));
 setPlan('annual');
 
 // ---- free trial copy (all driven by CONFIG) ----
 function trialCopy(plan){
   const d = CONFIG.trialDays, price = plan === 'monthly' ? fmt(CONFIG.monthly) + '/month' : fmt(CONFIG.annual) + '/year';
-  const both = fmt(CONFIG.annual) + '/year or ' + fmt(CONFIG.monthly) + '/month';
-  return CONFIG.cardUpFront ? {
-    line: `<b>${d} days free.</b> Cancel before day ${d} and you won't be charged.<br>Then ${both}.`,
-    terms: `Your ${d}-day free trial starts when you sign up. Unless you cancel before it ends, your subscription starts automatically at ${price} and renews at that rate until you cancel. Cancel any time from Settings in the app; a paid plan runs to the end of the period you paid for.`,
-    step: `Your ${d}-day free trial starts here.`,
-    faq: `Your subscription starts automatically on day ${d + 1} at the plan you picked. Cancel any time before then from Settings and you won't be charged.`
-  } : {
-    line: `<b>${d} days free. No card needed.</b><br>Then ${both}. Cancel anytime.`,
-    terms: `Your ${d}-day free trial needs no card. To keep going afterward, choose monthly or yearly in the app. Paid plans renew automatically at the same rate until you cancel. Cancel any time from Settings in the app; your plan runs to the end of the period you paid for.`,
-    step: `Your ${d}-day free trial starts here, no card needed.`,
-    faq: `After ${d} days, choose monthly or yearly in the app to keep going. Nothing is charged until you pick a plan. If you don't, your family's information stays yours: you can still see it and download it.`
+  return {
+    line: `<b>${d} days free.</b> We'll remind you before it ends. Cancel anytime.<br>Then ${fmt(CONFIG.annual)}/year (about ${perMonth()} a month) or ${fmt(CONFIG.monthly)}/month.`,
+    terms: `Your ${d}-day free trial starts when you sign up, and we'll email you a reminder before it ends. Unless you cancel before then, your subscription starts automatically at ${price} and renews at that rate until you cancel. Cancel any time from Settings in the app; a paid plan runs to the end of the period you paid for.`,
+    step: `You'll add a card to start your ${d}-day free trial. Nothing is charged until the trial ends.`,
+    faq: `We'll email you a reminder before your ${d} days are up. If you keep going, your subscription starts automatically on the plan you picked. Cancel any time before then from Settings and you won't be charged.`
   };
 }
 function applyTrial(plan){
@@ -818,6 +905,79 @@ renderPhone();
 renderChips(); renderWeek(); setFoot(DEFAULT_FOOT);
 
 // ---- mobile sticky CTA after the hero ----
+// ---- live from the house: pop-up cards ----
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv = document.getElementById('confetti'), cx = cv.getContext('2d');
+let parts = [], raf;
+function sizeCanvas(){ cv.width = innerWidth; cv.height = innerHeight; }
+sizeCanvas(); addEventListener('resize', sizeCanvas);
+const ALL = ['#2F6661','#D9472B','#DC9A27','#E78A9B','#7A8B5C','#5E8CA7','#9B6B9E','#B5803F'];
+function burst(el, cols){
+  if (reduceMotion) return;
+  const r = el.getBoundingClientRect(), x = r.left + r.width/2, y = r.top + 20;
+  for (let i = 0; i < 120; i++){
+    const a = Math.random()*Math.PI*2, v = 4 + Math.random()*8;
+    parts.push({x, y, vx:Math.cos(a)*v, vy:Math.sin(a)*v - 6, r:3+Math.random()*4, c:cols[i % cols.length], rot:Math.random()*6, vr:(Math.random()-.5)*.35, l:70+Math.random()*40});
+  }
+  cancelAnimationFrame(raf);
+  (function tick(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    parts = parts.filter(p => p.l > 0);
+    parts.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.vy+=.28; p.vx*=.99; p.rot+=p.vr; p.l--;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.rot); cx.globalAlpha=Math.min(1,p.l/30); cx.fillStyle=p.c; cx.fillRect(-p.r,-p.r/2,p.r*2,p.r); cx.restore(); });
+    if (parts.length) raf = requestAnimationFrame(tick);
+  })();
+}
+const dot = (c,i) => `<span class="dot" style="background:${c}">${i}</span>`;
+let hi5 = 0;
+const CARDS = [
+  { band:'var(--dusty)', lab:"🙋 Needs someone", head:"Chase · Art club pickup, 3:30", sub:"Nobody has claimed it yet. One tap and the whole house knows it's covered.",
+    chip: dot('var(--dusty)','C') + 'Chase · art club', act:"I've got it", color:'var(--dusty)',
+    go:(b,pop) => { b.textContent = "✓ Claimed. Everyone's phone just updated."; b.classList.add('done');
+      document.getElementById('pop-chip').innerHTML = dot('var(--teal)','E') + "Endia's got it"; burst(pop, ['#5E8CA7','#2F6661','#FCF7F1']); } },
+  { band:'var(--moss)', lab:"🎉 New on the Wins Wall", head:"Josiah got a 3.87 this term!", sub:"Posted by Grandma from two states away. High-fives scheduled for dinner.",
+    chip: dot('var(--moss)','J') + 'Josiah · chore streak day 15', act:"Throw more confetti 🎉", color:'var(--moss)', auto:true,
+    go:(b,pop) => burst(pop, ALL) },
+  { band:'var(--vermilion)', lab:"🍽 Tonight's dinner · claimed", head:"Sheet-pan chicken. Nia's cooking.", sub:"She claimed the empty slot herself. Nobody had to ask.",
+    chip: dot('var(--mustard)','N') + 'Nia · swap note: chickpeas for meatless', act:"Send Nia a high-five 🖐", color:'var(--vermilion)',
+    go:(b,pop) => { hi5++; b.textContent = 'High-five sent 🖐 ×' + hi5 + (hi5 > 2 ? ". She's pretending not to care." : ''); burst(pop, ['#D9472B','#E78A9B','#DC9A27']); } },
+  { band:'var(--biscuit)', lab:"🐾 Official dog business", head:"Phineas · vet visit Thu 3:30", sub:"He will act betrayed. He is fine. Treats are budgeted for after.",
+    chip: dot('var(--biscuit)','🐾') + 'Ride: Endia · walk covered by Chase', act:"Mark handled ✓", color:'var(--biscuit)',
+    go:(b,pop) => { b.textContent = 'Handled ✓ The whole house can see it.'; b.classList.add('done'); burst(pop, ['#B5803F','#DC9A27','#FCF7F1']); } }
+];
+const pop = document.getElementById('pop'), popAgain = document.getElementById('pop-again');
+let cur = 0;
+function render(i){
+  const c = CARDS[i];
+  document.getElementById('pop-band').style.background = c.band;
+  const lab = document.getElementById('pop-lab'); lab.textContent = c.lab; lab.style.color = c.band;
+  document.getElementById('pop-head').textContent = c.head;
+  document.getElementById('pop-sub').textContent = c.sub;
+  document.getElementById('pop-chip').innerHTML = c.chip;
+  const b = document.getElementById('pop-act'); b.textContent = c.act; b.style.background = c.color; b.classList.remove('done');
+  b.onclick = () => { if (!b.classList.contains('done')) c.go(b, pop); };
+  document.getElementById('pop-more').textContent = `Try homeroom free for ${CONFIG.trialDays} days →`;
+  document.getElementById('pop-more').href = CONFIG.appUrl;
+}
+function showCard(i){
+  cur = i; render(i);
+  pop.classList.add('show'); pop.setAttribute('aria-hidden','false');
+  document.body.classList.add('pop-open'); popAgain.style.display = 'none';
+  if (CARDS[i].auto) setTimeout(() => burst(pop, ALL), 450);
+}
+function hidePop(){
+  pop.classList.remove('show'); pop.setAttribute('aria-hidden','true');
+  document.body.classList.remove('pop-open'); popAgain.style.display = 'block';
+}
+document.getElementById('pop-x').addEventListener('click', hidePop);
+popAgain.addEventListener('click', () => showCard((cur + 1) % CARDS.length));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && pop.classList.contains('show')) hidePop(); });
+let popShown = false;
+function firstPop(){ if (popShown) return; popShown = true; showCard(0); }
+new IntersectionObserver(([e]) => { if (!e.isIntersecting && e.boundingClientRect.top < 0) setTimeout(firstPop, 900); })
+  .observe(document.querySelector('.stage'));
+setTimeout(firstPop, 25000);
+
 const sticky = document.getElementById('sticky');
 const heroEnd = document.querySelector('.stage');
 const pricing = document.getElementById('pricing');
