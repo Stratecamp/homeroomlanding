@@ -3,565 +3,828 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>homeroom — household operations, shared. Back-to-school, without the chaos.</title>
-<meta name="description" content="homeroom is what one mom built so one person wouldn't carry the whole house. Lunch notes, dinner plans, and family systems. Everyone gets a color, even the dog.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --blush:#F3E1D9; --blush-deep:#EBD2C7; --cream:#FCF7F1;
-    --ink:#3E4A40; --ink-soft:#6B7268;
-    --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
-    --moss:#7A8B5C; --dusty:#5E8CA7; --plum:#9B6B9E; --biscuit:#B5803F;
-    --shadow:0 2px 8px rgba(62,74,64,.08),0 8px 24px rgba(62,74,64,.06);
-    --lift:0 6px 16px rgba(62,74,64,.12),0 22px 48px rgba(62,74,64,.12);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  .wrap{max-width:1280px;margin:0 auto;padding:0 40px;}
-  ::selection{background:var(--teal);color:var(--cream);}
-  a{color:inherit;}
-
-  /* topbar */
-  .topbar{display:flex;align-items:center;gap:16px;padding:20px 0 8px;}
-  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:29px;text-decoration:none;user-select:none;}
-  .logo i{font-style:normal;display:inline-block;transition:transform .2s;}
-  .logo:hover i{transform:translateY(-4px);}
-  .logo i:nth-child(odd){transition-delay:.05s;}
-  .top-links{margin-left:auto;display:flex;align-items:center;gap:18px;}
-  .top-links a.txt{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink-soft);}
-  .top-links a.txt:hover{color:var(--ink);}
-  .btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15.5px;background:var(--vermilion);color:#fff;
-    border:none;border-radius:999px;padding:12px 26px;cursor:pointer;box-shadow:var(--shadow);
-    text-decoration:none;display:inline-block;transition:transform .15s;}
-  .btn:hover{transform:scale(1.05) rotate(-.5deg);}
-  .btn.ghost{background:#fff;color:var(--ink);}
-  .btn.big{font-size:17.5px;padding:15px 32px;}
-  .btn:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
-
-  /* hero */
-  .hero{display:grid;grid-template-columns:1.02fr 1.18fr;gap:56px;align-items:center;padding:34px 0 30px;}
-  @media(max-width:1100px){.hero{gap:36px;}}
-  @media(max-width:920px){.hero{grid-template-columns:1fr;gap:28px;padding-top:20px;}}
-  @media(max-width:760px){.wrap{padding:0 18px;}}
-  .eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--vermilion);margin-bottom:12px;}
-  h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(36px,4.4vw,54px);line-height:1.06;letter-spacing:-.5px;}
-  h1 .accent{color:var(--teal);}
-  .lede{font-size:17px;font-weight:700;line-height:1.6;margin:18px 0 6px;max-width:540px;}
-  .lede b{color:var(--vermilion);}
-  .hero-ctas{display:flex;gap:14px;align-items:center;margin-top:22px;flex-wrap:wrap;}
-  .micro{font-size:12.5px;font-weight:800;color:var(--ink-soft);}
-
-  /* interactive week widget */
-  .widget{background:#fff;border-radius:26px;box-shadow:var(--lift);padding:22px 24px;transform:rotate(.6deg);}
-  .widget .w-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
-  .widget .w-title{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;}
-  .widget .w-sub{font-size:11px;font-weight:800;color:var(--ink-soft);margin-left:auto;}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-  .chip{display:flex;align-items:center;gap:5px;background:var(--blush);border:2px solid transparent;border-radius:999px;
-    padding:4px 11px 4px 5px;font-size:11.5px;font-weight:800;cursor:pointer;transition:all .15s;user-select:none;}
-  .chip:hover{transform:translateY(-2px);}
-  .chip.on{border-color:var(--ink);background:#fff;}
-  .dot{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:8.5px;font-weight:800;font-family:'Fredoka';}
-  .week{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;}
-  .day{background:var(--cream);border-radius:14px;padding:9px 8px 10px;min-height:205px;display:flex;flex-direction:column;gap:5px;}
-  .day .d-name{font-family:'Fredoka',sans-serif;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--ink-soft);text-align:center;}
-  .ev{border-radius:8px;padding:5px 8px;color:#fff;font-size:10.2px;font-weight:800;line-height:1.3;transition:all .2s;cursor:default;}
-  .ev.dim{opacity:.13;filter:grayscale(.6);}
-  .ev.fam{background:repeating-linear-gradient(45deg,var(--teal),var(--teal) 7px,#3a7a74 7px,#3a7a74 14px);}
-  .dinner{margin-top:auto;background:var(--blush);border-radius:8px;padding:5px 8px;font-size:9.8px;font-weight:800;color:var(--ink);}
-  .dinner span{display:block;font-size:8.3px;color:var(--ink-soft);}
-  .w-foot{text-align:center;font-size:11px;font-weight:800;color:var(--ink-soft);margin-top:11px;}
-
-  /* sections */
-  section{padding:44px 0 8px;}
-  .sec-head{text-align:center;max-width:640px;margin:0 auto 26px;}
-  h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(27px,3.6vw,38px);line-height:1.14;}
-  .sec-head p{font-size:15.5px;font-weight:700;color:var(--ink-soft);margin-top:10px;line-height:1.6;}
-
-  /* load strip */
-  .strip{background:var(--ink);color:var(--cream);border-radius:26px;padding:34px 36px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;}
-  @media(max-width:820px){.strip{grid-template-columns:1fr;}}
-  .strip b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;display:block;margin-bottom:6px;}
-  .strip p{font-size:13.5px;font-weight:700;line-height:1.6;opacity:.88;}
-  .strip .num{font-family:'Fredoka';font-weight:700;font-size:13px;color:var(--mustard);display:block;margin-bottom:8px;letter-spacing:1.5px;}
-
-  /* products */
-  .shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
-  .prod{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:24px 22px;display:flex;flex-direction:column;transition:transform .18s;position:relative;}
-  .prod:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:var(--lift);}
-  .prod .p-em{font-size:34px;margin-bottom:10px;}
-  .prod .badge{position:absolute;top:16px;right:16px;font-family:'Fredoka';font-weight:600;font-size:10.5px;letter-spacing:1px;
-    text-transform:uppercase;background:var(--mustard);color:var(--ink);border-radius:999px;padding:4px 10px;}
-  .prod .badge.teal{background:var(--teal);color:#fff;}
-  .prod b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;}
-  .prod .price{font-family:'Fredoka';font-weight:700;font-size:15px;color:var(--vermilion);margin:3px 0 8px;}
-  .prod p{font-size:13px;font-weight:700;color:var(--ink-soft);line-height:1.55;flex:1;}
-  .prod .btn{margin-top:14px;text-align:center;}
-
-  /* bts checklist */
-  .bts{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:36px;display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:center;}
-  @media(max-width:820px){.bts{grid-template-columns:1fr;}}
-  .bts h2{font-size:clamp(24px,3vw,32px);}
-  .check{background:var(--blush);border-radius:18px;padding:20px 22px;}
-  .check .c-item{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:2px dashed var(--blush-deep);font-size:13.5px;font-weight:800;cursor:pointer;user-select:none;}
-  .check .c-item:last-child{border:none;}
-  .check .box{width:20px;height:20px;border-radius:6px;background:#fff;border:2px solid var(--blush-deep);flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:all .15s;}
-  .check .c-item.done .box{background:var(--teal);border-color:var(--teal);}
-  .check .c-item.done{color:var(--ink-soft);text-decoration:line-through;}
-  .form{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
-  input[type=email]{font-family:'Nunito';font-weight:700;font-size:15px;border:2px solid var(--blush-deep);border-radius:999px;
-    padding:13px 20px;flex:1;min-width:220px;background:var(--cream);color:var(--ink);}
-  .form-note{font-size:11.5px;font-weight:800;color:var(--ink-soft);margin-top:8px;}
-  .success{display:none;background:var(--teal);color:#fff;border-radius:14px;padding:14px 18px;font-weight:800;font-size:14px;margin-top:12px;}
-
-  /* founder */
-  .founder{display:grid;grid-template-columns:1fr;max-width:760px;margin:0 auto;background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:36px 40px;}
-  .founder p{font-size:16px;font-weight:700;line-height:1.7;}
-  .founder .sig{font-family:'Fredoka';font-weight:600;font-size:15px;margin-top:14px;color:var(--teal);}
-
-  /* wins wall pop */
-  #confetti{position:fixed;inset:0;pointer-events:none;z-index:60;}
-  .win-pop{position:fixed;right:22px;bottom:22px;z-index:61;background:#fff;border-radius:20px;box-shadow:var(--lift);
-    padding:22px 20px 16px;width:295px;transform:translateY(150%) rotate(2deg);transition:transform .5s cubic-bezier(.34,1.56,.64,1);}
-  .win-pop.show{transform:translateY(0) rotate(0);}
-  .win-pop .w-band{position:absolute;top:0;left:0;right:0;height:8px;border-radius:20px 20px 0 0;background:var(--moss);}
-  .win-pop .w-label{font-family:'Fredoka',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--moss);margin-bottom:6px;}
-  .win-pop .w-head{font-family:'Fredoka',sans-serif;font-weight:700;font-size:19px;line-height:1.22;}
-  .win-pop .w-sub{font-size:12px;font-weight:800;color:var(--ink-soft);margin-top:6px;}
-  .win-pop .w-chip{display:inline-flex;align-items:center;gap:6px;background:var(--blush);border-radius:999px;padding:4px 12px 4px 5px;font-size:11.5px;font-weight:800;margin-top:10px;}
-  .win-pop .w-act{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;border:none;border-radius:999px;padding:8px 16px;cursor:pointer;color:#fff;margin-top:12px;display:block;transition:transform .15s;}
-  .win-pop .w-act:hover{transform:scale(1.05);}
-  .win-pop .w-act.done{background:var(--ink-soft)!important;cursor:default;transform:none;}
-  .win-pop .x{position:absolute;top:10px;right:12px;border:none;background:none;font-size:15px;font-weight:800;color:var(--ink-soft);cursor:pointer;}
-  .win-again{position:fixed;right:22px;bottom:22px;z-index:59;font-size:22px;background:#fff;border:none;border-radius:50%;width:52px;height:52px;box-shadow:var(--lift);cursor:pointer;display:none;transition:transform .15s;}
-  .win-again:hover{transform:scale(1.12);}
-  @media(max-width:560px){.win-pop{right:14px;left:14px;width:auto;}}
-
-  /* widget interactivity cues */
-  .widget .w-sub{display:inline-flex;align-items:center;gap:5px;background:var(--mustard);color:var(--ink);
-    border-radius:999px;padding:5px 12px;font-size:11px;font-weight:800;animation:nudge 2.4s ease-in-out infinite;}
-  @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-  .chip{position:relative;}
-  .chip:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 4px 12px rgba(62,74,64,.13);}
-  .chip.hint::after{content:'';position:absolute;inset:-4px;border-radius:999px;border:2.5px solid var(--vermilion);
-    opacity:0;animation:ripple 2s ease-out infinite;pointer-events:none;}
-  @keyframes ripple{0%{opacity:.9;transform:scale(.94)}70%{opacity:0;transform:scale(1.16)}100%{opacity:0}}
-  .chips.demo .chip:not(.on){opacity:.85;}
-  .ev{cursor:default;}
-  .day{transition:transform .2s;}
-  .widget.playing .day{transform:none;}
-  .w-foot{transition:color .2s;}
-
-  /* newsletter strip */
-  .news{background:var(--ink);color:var(--cream);border-radius:26px;padding:34px 40px;
-    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
-  @media(max-width:860px){.news{grid-template-columns:1fr;gap:20px;padding:28px 24px;}}
-  .news-copy b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;display:block;line-height:1.2;}
-  .news-copy p{font-size:14px;font-weight:700;opacity:.86;line-height:1.6;margin-top:8px;max-width:420px;}
-  .news-form .form{display:flex;gap:10px;flex-wrap:wrap;margin-top:0;}
-  .news-form input[type=email]{flex:1;min-width:200px;border-color:transparent;}
-  .news-form .success{margin-top:12px;}
-  .news-note{font-size:12px;font-weight:800;opacity:.65;margin-top:12px;}
-
-  /* app coming soon */
-  .appbox{background:var(--ink);color:var(--cream);border-radius:26px;padding:36px 38px;display:grid;grid-template-columns:1.15fr 1fr;gap:32px;align-items:center;}
-  @media(max-width:880px){.appbox{grid-template-columns:1fr;padding:28px 24px;}}
-  .app-eyebrow{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--mustard);margin-bottom:10px;}
-  .appbox h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(24px,3.2vw,32px);line-height:1.14;margin-bottom:12px;}
-  .appbox p{font-size:14px;font-weight:700;line-height:1.65;opacity:.9;margin-bottom:10px;}
-  .appbox p b{opacity:1;color:var(--mustard);}
-  .app-kicker{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;opacity:1!important;margin:14px 0 16px!important;}
-  .app-micro{display:block;font-size:12px;font-weight:800;opacity:.72;margin-top:12px;}
-  .app-vs{display:flex;flex-direction:column;gap:12px;}
-  .vs-row{background:rgba(252,247,241,.08);border-radius:16px;padding:16px 18px;}
-  .vs-row.on{background:var(--cream);color:var(--ink);}
-  .vs-t{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:6px;opacity:.75;}
-  .vs-row.on .vs-t{color:var(--vermilion);opacity:1;}
-  .vs-b{font-size:13.5px;font-weight:700;line-height:1.55;display:block;}
-
-
-  /* --- header: desktop + mobile menu --- */
-  .logo{white-space:nowrap;flex:0 0 auto;}
-  .logo i{display:inline;}
-  .navtoggle{display:none;margin-left:auto;background:#fff;border:2px solid var(--blush-deep);
-    border-radius:14px;width:48px;height:44px;cursor:pointer;align-items:center;justify-content:center;
-    flex-direction:column;gap:5px;padding:0;flex:0 0 auto;}
-  .navtoggle span{display:block;width:21px;height:2.5px;background:var(--ink);border-radius:2px;transition:transform .22s,opacity .18s;}
-  .navtoggle.on span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
-  .navtoggle.on span:nth-child(2){opacity:0;}
-  .navtoggle.on span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
-  @media(max-width:860px){
-    .topbar{flex-wrap:wrap;gap:10px;padding:16px 0 6px;}
-    .logo{font-size:26px;}
-    .navtoggle{display:flex;}
-    .top-links{display:none;width:100%;flex-direction:column;align-items:stretch;gap:0;
-      margin:4px 0 8px;background:#fff;border-radius:18px;box-shadow:var(--lift);padding:8px;}
-    .top-links.open{display:flex;animation:menuIn .2s ease;}
-    @keyframes menuIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1}}
-    .top-links a.txt{font-size:16px;padding:14px 16px;border-bottom:2px dashed var(--blush-deep);color:var(--ink);}
-    .top-links a.txt:last-of-type{border-bottom:none;}
-    .top-links .btn{margin:8px 4px 4px;text-align:center;font-size:15.5px;}
-  }
-
-  footer{padding:50px 0 40px;text-align:center;}
-  footer .f-logo{font-family:'Fredoka';font-weight:700;font-size:24px;margin-bottom:8px;}
-  footer p{font-size:12.5px;font-weight:800;color:var(--ink-soft);line-height:1.7;}
-  footer a{font-weight:800;}
-</style>
-<script src="https://gumroad.com/js/gumroad.js" defer></script>
-<script src="email-capture.js" defer></script>
+<title>homeroom · the family command center</title>
+<meta name="description" content="homeroom is the family app that shows who's got it. Schedules, chores, dinners, and groceries for the whole house, color-coded by person, on every phone, every computer, and the kitchen wall.">
+<meta property="og:title" content="homeroom · the family command center">
+<meta property="og:description" content="Every calendar shows you what's happening. homeroom shows you who's got it. On every phone, every computer, and the kitchen wall. Try it free for 7 days.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="homeroom">
-<meta property="og:title" content="homeroom — household operations, shared">
-<meta property="og:description" content="Systems, dinners, chores and lunchbox notes that get the whole family's week out of one person's head. Built by a mom, for the whole house.">
 <meta property="og:url" content="https://homeroomforfamily.com/">
 <meta property="og:image" content="https://homeroomforfamily.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="homeroom — a family week view with dinners, chores and a Wins Wall card reading Josiah got a 3.87">
+<meta property="og:image:alt" content="homeroom, the family command center: a phone showing today's schedule with a Who's got it? button">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="homeroom — household operations, shared">
-<meta name="twitter:description" content="Systems, dinners, chores and lunchbox notes that get the whole family's week out of one person's head. Built by a mom, for the whole house.">
-<meta name="twitter:image" content="https://homeroomforfamily.com/og-image.png">
-<meta name="theme-color" content="#FCF7F1">
-<link rel="canonical" href="https://homeroomforfamily.com/">
-<link rel="icon" href="/favicon.png">
+<meta name="theme-color" content="#F3ECE2">
+<!-- Analytics: Cloudflare dashboard > Analytics & Logs > Web Analytics > Add a site > homeroomforfamily.com, and choose automatic setup.
+     It's cookieless, collects no personal data, and Cloudflare adds the script automatically, so nothing needs to be pasted here. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --oat:#F3ECE2; --blush:#F3E1D9; --blush-deep:#EBD2C7; --cream:#FFFCF8;
+    --serif:'DM Serif Display',Georgia,serif;
+    --ink:#3E4A40; --ink-soft:#6B7268;
+    --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
+    --moss:#7A8B5C; --dusty:#5E8CA7; --plum:#9B6B9E; --biscuit:#B5803F;
+    --stripe:repeating-linear-gradient(45deg,#2F6661,#2F6661 10px,#3a7a74 10px,#3a7a74 20px);
+    --shadow:0 2px 8px rgba(62,74,64,.07),0 10px 28px rgba(62,74,64,.07);
+    --lift:0 6px 16px rgba(62,74,64,.10),0 24px 56px rgba(62,74,64,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',system-ui,sans-serif;font-weight:700;background:var(--oat);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.55;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
+  a{color:inherit;}
+  ::selection{background:var(--teal);color:var(--cream);}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:8px;}
+
+  .btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;background:var(--vermilion);color:#fff;border:none;border-radius:999px;
+    padding:13px 26px;cursor:pointer;box-shadow:var(--shadow);text-decoration:none;display:inline-block;transition:transform .15s;text-align:center;}
+  .btn:hover{transform:scale(1.04);}
+  .btn.big{font-size:18px;padding:16px 34px;}
+  .btn.quiet{background:var(--cream);color:var(--ink);}
+
+  .label{font-size:12px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink-soft);}
+  .dash{border:none;border-top:2.5px dashed var(--blush-deep);margin:0;}
+  .dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;
+    font-family:'Fredoka',sans-serif;font-size:11px;font-weight:600;flex:none;}
+
+  /* ---------- top bar ---------- */
+  .topbar{display:flex;align-items:center;gap:18px;padding:20px 0 6px;}
+  .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;text-decoration:none;line-height:1;letter-spacing:.3px;}
+  .nav{margin-left:auto;display:flex;align-items:center;gap:22px;}
+  .nav a.txt{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink-soft);}
+  .nav a.txt:hover{color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{text-align:center;padding:64px 0 30px;}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,7.4vw,96px);line-height:.98;letter-spacing:-.025em;max-width:980px;margin:16px auto 0;color:#232B25;}
+  h1 em{font-style:normal;color:var(--teal);}
+  .lede{font-family:var(--serif);font-size:clamp(21px,2.5vw,30px);line-height:1.25;letter-spacing:-.01em;margin:22px auto 0;max-width:980px;color:var(--teal);}
+  .lede em{font-style:normal;color:var(--vermilion);}
+  .hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 20px;margin-top:30px;}
+  .works-on{font-size:13.5px;font-weight:800;color:var(--ink-soft);}
+  .trial-line{font-size:14px;font-weight:800;color:var(--ink-soft);text-align:left;line-height:1.45;}
+  .trial-line b{color:var(--teal);}
+  .trial-badge{display:table;margin-left:auto;margin-right:auto;background:var(--teal);color:#fff;font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px;border-radius:999px;padding:5px 16px;margin-bottom:14px;}
+  .share{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;border:2.5px dashed var(--blush-deep);border-radius:999px;padding:12px 18px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:15.5px;color:var(--ink);transition:background .15s,border-color .15s;}
+  .share:hover{background:var(--blush);border-color:var(--rose);}
+  .share:focus-visible{outline:3px solid var(--teal);outline-offset:3px;}
+  .share-sub{font-size:12.5px;color:var(--ink-soft);margin-top:6px;}
+  .share.inline{width:auto;display:inline-flex;margin:14px auto 0;}
+
+  /* signature: one house, every screen */
+  .stage{position:relative;width:min(1200px,calc(100vw - 40px));left:50%;transform:translateX(-50%);padding-bottom:10px;}
+  .device-tag{display:inline-flex;align-items:center;gap:7px;background:var(--cream);border-radius:999px;box-shadow:var(--shadow);padding:4px 14px 4px 4px;font-size:13px;font-weight:800;margin:0 0 12px 8px;}
+  .device-tag .dot{width:22px;height:22px;}
+  .laptop{width:calc(100% - 215px);}
+  .lap-screen{background:#2B332D;border-radius:22px 22px 6px 6px;padding:12px 12px 14px;box-shadow:var(--lift);}
+  .browser{background:#fff;border-radius:12px;overflow:hidden;}
+  .chrome{display:flex;align-items:center;gap:6px;background:#F4EEE8;padding:9px 12px;}
+  .chrome i{width:10px;height:10px;border-radius:50%;background:#E0D3C8;flex:none;}
+  .chrome .url{margin:0 auto;background:#fff;border-radius:999px;padding:3px 18px;font-size:11.5px;font-weight:800;color:var(--ink-soft);}
+  .lap-base{height:16px;background:#D8CCC1;border-radius:0 0 20px 20px;width:108%;margin-left:-4%;position:relative;}
+  .lap-base::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:120px;height:7px;background:#C9BCB0;border-radius:0 0 10px 10px;}
+  .wk{background:#fff;padding:20px 20px 14px;text-align:left;}
+  .phone-wrap{position:absolute;right:0;bottom:-30px;width:246px;text-align:left;}
+  .phone{background:#2B332D;border-radius:40px;padding:10px;box-shadow:var(--lift);transform:rotate(2deg);}
+  .ph-screen{background:#FBF4EE;border-radius:31px;padding:12px 12px 14px;min-height:452px;}
+  .ph-notch{width:84px;height:22px;background:#2B332D;border-radius:999px;margin:0 auto 12px;}
+  .ph-head{display:flex;align-items:baseline;gap:8px;padding:0 4px 10px;border-bottom:2px dashed var(--blush-deep);margin-bottom:10px;}
+  .ph-head b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;}
+  .ph-head span{font-size:11.5px;font-weight:800;color:var(--ink-soft);}
+  .ph-ev{background:#fff;border-radius:14px;padding:8px 10px;display:flex;gap:9px;margin-bottom:8px;box-shadow:0 1px 3px rgba(62,74,64,.06);}
+  .ph-ev .pb{width:5px;border-radius:5px;flex:none;}
+  .ph-ev .t{font-size:10.5px;font-weight:800;color:var(--ink-soft);}
+  .ph-ev .n{font-family:'Fredoka',sans-serif;font-weight:600;font-size:14.5px;line-height:1.2;}
+  .ph-ev .gi{display:inline-flex;align-items:center;gap:5px;margin-top:5px;background:var(--blush);border-radius:999px;padding:2px 10px 2px 2px;font-size:11px;font-weight:800;white-space:nowrap;}
+  .ph-ev .gi .dot{width:17px;height:17px;font-size:8.5px;}
+  .ph-ev .askq{all:unset;cursor:pointer;display:inline-block;margin-top:5px;background:var(--vermilion);color:#fff;border-radius:999px;padding:3px 11px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:12px;animation:nudge 2.6s ease-in-out infinite;}
+  .ph-ev .askq:focus-visible{outline:2px solid var(--ink);}
+  .ph-din{background:var(--mustard);color:var(--ink);border-radius:14px;padding:8px 11px;}
+  .ph-din .label{font-size:9.5px;color:var(--ink);opacity:.8;}
+  .ph-din b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;display:block;}
+  .ph-din span{font-size:11px;font-weight:800;}
+  .stage-cap{text-align:center;font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);color:var(--teal);margin:56px auto 0;max-width:760px;line-height:1.25;}
+  .wk-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .wk-title{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;}
+  .wk-range{font-size:12.5px;font-weight:800;color:var(--ink-soft);}
+  .wk-hint{margin-left:auto;background:#F6E6BF;color:#8A6412;border-radius:999px;padding:5px 13px;font-size:12px;font-weight:800;}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--blush);border:2px solid transparent;border-radius:999px;
+    padding:4px 13px 4px 5px;font-size:13px;font-weight:800;cursor:pointer;transition:transform .15s,background .15s;font-family:inherit;color:var(--ink);}
+  .chip:hover{transform:translateY(-2px);}
+  .chip[aria-pressed="true"]{border-color:var(--ink);background:#fff;}
+  .chip .dot{width:20px;height:20px;font-size:10px;}
+  .grid-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px 4px;}
+  .week{display:grid;grid-template-columns:repeat(7,minmax(100px,1fr));gap:7px;min-width:740px;}
+  .day{background:#FBF4EE;border-radius:16px;padding:10px 8px;display:flex;flex-direction:column;gap:6px;min-height:268px;}
+  .day.today{box-shadow:0 0 0 2.5px var(--vermilion) inset;}
+  .d-name{font-family:'Fredoka',sans-serif;font-weight:600;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);text-align:center;margin-bottom:2px;}
+  .day.today .d-name{color:var(--vermilion);}
+  .ev{border-radius:10px;padding:6px 8px;color:#fff;font-size:12px;font-weight:800;line-height:1.25;transition:opacity .2s,filter .2s,transform .2s;position:relative;}
+  .ev.lt{color:var(--ink);}
+  .ev.fam{background:var(--stripe);}
+  .ev.dim{opacity:.14;filter:grayscale(.7);}
+  .ev .gi{white-space:nowrap;display:flex;align-items:center;gap:3px;margin-top:4px;font-size:9.8px;letter-spacing:-.1px;opacity:.95;}
+  .ev .gi .dot{width:15px;height:15px;font-size:8px;box-shadow:0 0 0 1.5px rgba(255,255,255,.85);}
+  .ev .askq{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:#fff;color:var(--vermilion);border-radius:999px;padding:1px 8px;font-size:10.5px;font-weight:800;animation:nudge 2.6s ease-in-out infinite;white-space:nowrap;}
+  .ev .askq:focus-visible{outline:2px solid var(--ink);}
+  @keyframes nudge{0%,80%,100%{transform:none}86%{transform:rotate(-4deg)}92%{transform:rotate(4deg)}}
+  .din{margin-top:auto;background:var(--blush);border-radius:10px;padding:6px 8px;font-size:11.5px;font-weight:800;line-height:1.25;}
+  .din span{display:block;font-size:10.5px;color:var(--ink-soft);margin-top:1px;}
+  .wk-foot{text-align:center;font-size:13px;font-weight:800;color:var(--ink-soft);margin-top:14px;min-height:20px;}
+  .proof{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:34px auto 0;max-width:1000px;}
+  .proof span{background:var(--cream);border-radius:999px;box-shadow:var(--shadow);padding:10px 18px;font-size:14px;font-weight:800;}
+
+  /* ---------- sections ---------- */
+  section{padding:76px 0;}
+  .head{max-width:680px;margin-bottom:36px;}
+  .head.center{text-align:center;margin-left:auto;margin-right:auto;}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.8vw,58px);line-height:1.02;letter-spacing:-.02em;margin-top:10px;color:#232B25;}
+  h2 em{font-style:normal;color:var(--teal);}
+  .head p{font-size:16.5px;color:var(--ink-soft);margin-top:14px;}
+
+  /* load statement */
+  .load{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:44px 48px;display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center;}
+  .load .big{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-.02em;}
+  .load .big em{font-style:normal;color:var(--teal);}
+  .load p{font-size:16px;color:var(--ink-soft);}
+  .load p + p{margin-top:12px;}
+
+  /* lead features */
+  .leads{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .lead{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:30px 30px 28px;display:flex;flex-direction:column;}
+  .lead .em{font-size:30px;line-height:1;}
+  .lead h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:23px;line-height:1.2;margin:14px 0 8px;}
+  .lead p{font-size:15px;color:var(--ink-soft);}
+  .lead .demo{margin-top:20px;background:var(--blush);border-radius:16px;padding:14px 16px;font-size:13px;font-weight:800;}
+  .lead.first{grid-column:1 / -1;display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:center;}
+  .lead.first h3{font-size:clamp(24px,3vw,32px);}
+  .lead.first .quote-line{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--teal);margin-top:14px;line-height:1.35;}
+  .series{display:flex;flex-direction:column;gap:7px;}
+  .series .row{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:8px 12px;font-size:13px;font-weight:800;}
+  .series .row .d{width:62px;color:var(--ink-soft);flex:none;}
+  .series .row.changed{box-shadow:0 0 0 2.5px var(--teal) inset;}
+  .series .row .who{margin-left:auto;display:flex;align-items:center;gap:6px;}
+  .wall-mini{background:var(--ink);border-radius:16px;padding:8px;}
+  .wall-mini .in{background:var(--cream);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;}
+  .wall-mini .clock{font-family:'Fredoka',sans-serif;font-weight:700;font-size:28px;grid-row:span 2;}
+  .wall-mini .l1{font-size:12px;font-weight:800;}
+  .wall-mini .l2{font-size:11.5px;font-weight:800;color:var(--ink-soft);}
+  .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px 4px 4px;background:#fff;font-size:12.5px;font-weight:800;margin:0 6px 6px 0;}
+  .blurred{filter:blur(3.5px);user-select:none;}
+  .lock-row{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .lock-row + .lock-row{margin-top:8px;padding-top:8px;border-top:2px dashed var(--blush-deep);}
+
+  /* everything else */
+  .rest{margin-top:18px;background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:34px 34px 30px;}
+  .rest .label{margin-bottom:18px;display:block;}
+  .rest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 30px;}
+  .rest-item{display:flex;gap:12px;}
+  .rest-item .e{font-size:20px;line-height:1.3;flex:none;}
+  .rest-item b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16.5px;display:block;line-height:1.3;}
+  .rest-item span{font-size:13.5px;color:var(--ink-soft);display:block;margin-top:3px;}
+
+  /* testimonials */
+  .quotes{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto;gap:18px;}
+  .q{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:32px 32px 28px;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+  .q::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;}
+  .q.c1::before{background:var(--teal);}
+  .q.c2::before{background:var(--plum);}
+  .q.c3::before{background:var(--vermilion);}
+  .q.c1{grid-row:span 2;}
+  .q .pull{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.7vw,31px);line-height:1.15;letter-spacing:-.01em;}
+  .q .full{font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.65;flex:1;}
+  .q .who{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:16px;border-top:2px dashed var(--blush-deep);}
+  .q .who .em{font-size:22px;}
+  .q .who b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15.5px;display:block;}
+  .q .who span{font-size:12.5px;color:var(--ink-soft);}
+
+  /* install */
+  .install{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:start;}
+  .no-store{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:28px 30px;margin-top:22px;}
+  .no-store b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;display:block;margin-bottom:6px;}
+  .no-store p{font-size:14.5px;color:var(--ink-soft);}
+  .tabs{display:inline-flex;background:var(--cream);border-radius:999px;padding:5px;box-shadow:var(--shadow);margin-bottom:18px;}
+  .tabs button{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;border:none;background:none;color:var(--ink-soft);padding:9px 20px;border-radius:999px;cursor:pointer;}
+  .tabs button[aria-selected="true"]{background:var(--ink);color:var(--cream);}
+  .steps{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:10px 30px;list-style:none;counter-reset:s;}
+  .steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:14px;padding:20px 0;border-bottom:2px dashed var(--blush-deep);}
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{content:counter(s);width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;}
+  .steps li:nth-child(2)::before{background:var(--vermilion);}
+  .steps li:nth-child(3)::before{background:var(--mustard);color:var(--ink);}
+  .steps li:nth-child(4)::before{background:var(--plum);}
+  .steps li:nth-child(5)::before{background:var(--moss);}
+  .steps b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;display:block;line-height:1.3;}
+  .steps p{font-size:14.5px;color:var(--ink-soft);margin-top:4px;}
+  .steps code{font-family:inherit;font-weight:800;color:var(--ink);background:var(--blush);border-radius:6px;padding:1px 7px;white-space:nowrap;}
+  .key{display:inline-block;background:#fff;border:2px solid var(--blush-deep);border-radius:8px;padding:0 7px;font-weight:800;color:var(--ink);font-size:13px;}
+  .only-android{display:none;}
+  .android .only-ios{display:none;}
+  .android .only-android{display:inline;}
+  .extras{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+  .extra{display:grid;grid-template-columns:auto 1fr;gap:0 16px;align-items:start;}
+  .extra .em{grid-row:span 2;}
+  .extra b{margin-top:0 !important;}
+  .extra{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:24px 26px;}
+  .extra .em{font-size:24px;}
+  .extra b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;display:block;margin:8px 0 6px;}
+  .extra p{font-size:14px;color:var(--ink-soft);}
+  .extras > *{min-width:0;}
+  .extra code{white-space:normal;overflow-wrap:anywhere;font-family:inherit;color:var(--ink);}
+
+  /* pricing */
+  .price-wrap{max-width:560px;margin:0 auto;background:var(--cream);border-radius:24px;box-shadow:var(--lift);padding:36px 38px 30px;text-align:center;}
+  .toggle{display:inline-flex;background:var(--blush);border-radius:999px;padding:5px;margin-bottom:22px;}
+  .toggle button{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;border:none;background:none;color:var(--ink-soft);padding:9px 20px;border-radius:999px;cursor:pointer;}
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:var(--cream);}
+  .amount{font-family:'Fredoka',sans-serif;font-weight:700;font-size:72px;line-height:1;}
+  .amount small{font-size:22px;font-weight:600;color:var(--ink-soft);}
+  .save{display:inline-block;margin-top:10px;background:var(--mustard);color:var(--ink);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:800;min-height:26px;}
+  .save.hide{visibility:hidden;}
+  .price-wrap ul{list-style:none;text-align:left;margin:26px 0 24px;display:grid;gap:10px;}
+  .price-wrap li{display:flex;gap:10px;font-size:15px;}
+  .price-wrap li::before{content:"✓";font-family:'Fredoka',sans-serif;font-weight:700;color:var(--teal);flex:none;}
+  .price-wrap .btn{width:100%;}
+  .terms{font-size:12.5px;color:var(--ink-soft);margin-top:16px;line-height:1.6;}
+
+  /* founder */
+  .founder{max-width:780px;margin:0 auto;text-align:center;}
+  .founder p{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3vw,34px);line-height:1.25;letter-spacing:-.01em;}
+  .founder .sig{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--ink-soft);margin-top:18px;display:flex;align-items:center;justify-content:center;gap:9px;}
+
+  /* faq */
+  .faq{max-width:780px;margin:0 auto;}
+  details{background:var(--cream);border-radius:18px;box-shadow:var(--shadow);margin-bottom:10px;}
+  summary{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;padding:18px 24px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+";font-size:22px;line-height:1;color:var(--vermilion);transition:transform .2s;}
+  details[open] summary::after{transform:rotate(45deg);}
+  details p{padding:0 24px 20px;font-size:15px;color:var(--ink-soft);}
+
+  /* final */
+  .final{text-align:center;}
+  .final h2{max-width:720px;margin:10px auto 0;}
+  .final p{font-size:16.5px;color:var(--ink-soft);margin:14px auto 28px;max-width:520px;}
+
+  footer{padding:40px 0 56px;text-align:center;}
+  footer .logo{font-size:24px;}
+  footer .tag{font-size:13.5px;font-weight:800;color:var(--ink-soft);margin-top:6px;}
+  footer .links{margin-top:18px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;font-size:13.5px;font-weight:800;}
+  footer .links a{text-decoration:none;color:var(--ink-soft);}
+  footer .links a:hover{color:var(--ink);}
+  footer .fine{font-size:12px;color:var(--ink-soft);margin-top:14px;}
+
+  /* mobile sticky cta */
+  .sticky{display:none;}
+
+  @media (max-width:920px){
+    .hero{grid-template-columns:1fr;gap:44px;padding-top:36px;}
+    .lap-screen{padding:8px 8px 10px;border-radius:16px 16px 6px 6px;}
+    .wk{padding:14px 12px 12px;}
+    .wk-title{font-size:16px;}
+    .wk-hint{margin-left:0;}
+    .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin-left:-2px;scrollbar-width:none;}
+    .chips::-webkit-scrollbar{display:none;}
+    .chip{flex:none;}
+    .week{grid-template-columns:repeat(7,120px);min-width:0;}
+    .load,.lead.first,.install{grid-template-columns:1fr;}
+    .laptop{width:100%;}
+    .stage{display:flex;flex-direction:column-reverse;}
+    .phone-wrap{position:relative;right:auto;bottom:auto;margin:0 auto 34px;}
+    .phone{transform:none;}
+    .stage-cap{margin-top:34px;}
+    .quotes{grid-template-columns:1fr;}
+    .q.c1{grid-row:auto;}
+    .rest-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .nav a.txt{display:none;}
+    .leads,.extras,.rest-grid{grid-template-columns:1fr;}
+    .load{padding:32px 26px;}
+    .lead,.q,.rest{padding:26px 22px;}
+    .steps{padding:6px 20px;}
+    .price-wrap{padding:30px 22px 24px;}
+    section{padding:56px 0;}
+    .sticky{display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:40;transform:translateY(140%);transition:transform .3s;}
+    .sticky.show{transform:none;}
+    .sticky .btn{width:100%;box-shadow:var(--lift);}
+    footer{padding-bottom:100px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
 </head>
 <body>
 
 <div class="wrap">
-  <div class="topbar">
-    <a class="logo" href="#"><i style="color:var(--teal)">h</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i><i style="color:var(--rose)">e</i><i>r</i><i style="color:var(--teal)">o</i><i style="color:var(--vermilion)">o</i><i style="color:var(--mustard)">m</i></a>
-    <button class="navtoggle" id="navtoggle" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><span></span><span></span><span></span></button>
-    <div class="top-links" id="topnav">
-      <a class="txt" href="systems.html">Systems</a>
-      <a class="txt" href="app.html">The app</a>
-      <a class="txt" href="recipes.html">Recipes</a>
-      <a class="txt" href="shop.html">Shop</a>
-      <a class="txt" href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
-      <a class="btn" href="#freebie">Free lunch notes</a>
-    </div>
-  </div>
+  <header class="topbar">
+    <a class="logo" href="#" aria-label="homeroom home"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span><span style="color:var(--ink)">r</span><span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></a>
+    <nav class="nav" aria-label="Main">
+      <a class="txt" href="#features">Features</a>
+      <a class="txt" href="#stories">Families</a>
+      <a class="txt" href="#install">Get the app</a>
+      <a class="txt" href="#pricing">Pricing</a>
+      <a class="btn js-start" href="https://app.homeroomforfamily.com">Try it free</a>
+    </nav>
+  </header>
 
-  <!-- ============ HERO ============ -->
+  <!-- ================= HERO ================= -->
   <div class="hero">
-    <div>
-      <div class="eyebrow">🎒 Back-to-school season is coming</div>
-      <h1>Your whole family's week, <span class="accent">out of one person's head.</span></h1>
-      <p class="lede">homeroom is <b>household operations, shared</b>. Not a prettier calendar. The systems, rituals, and printables that get dinners, chores, laundry and logistics out of your head and onto a wall the whole house can see. Because nobody can carry what they can't see.</p>
-      <div class="hero-ctas">
-        <a class="btn big" href="#freebie">Start with free lunch notes 💌</a>
-        <span class="micro">Free to start. No subscription.<br>Built by a mom, for the whole house.</span>
-      </div>
-    </div>
-
-    <div class="widget">
-      <div class="w-head">
-        <span class="w-title">This week at the homeroom house</span>
-        <span class="w-sub">👇 tap a person</span>
-      </div>
-      <div class="chips" id="chips"></div>
-      <div class="week" id="week"></div>
-      <div class="w-foot" id="wfoot">Everyone's week at a glance. Yes, the dog has a column 🐾</div>
+    <span class="label">The family command center</span>
+    <h1>Sometimes the hardest load is <em>the mental load.</em></h1>
+    <p class="lede">homeroom is household operations, shared. <em>Not a prettier calendar.</em></p>
+    <div class="hero-ctas">
+      <a class="btn big js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
+      <span class="trial-line js-trial-line"></span>
     </div>
   </div>
 
-  <!-- ============ LOAD STRIP ============ -->
-  <section>
-    <div class="strip">
-      <div><span class="num">THE PROBLEM</span><b>It all lives in one head.</b><p>Who has practice. What's for dinner. Whose turn with the dog. Which snack is safe for which kid. Nobody can take that off your plate, because nobody else can see it.</p></div>
-      <div><span class="num">THE SHIFT</span><b>Put it on the wall.</b><p>The week, the dinners, the rotations, all of it somewhere everyone walks past. Now the empty Tuesday dinner slot does the asking instead of you.</p></div>
-      <div><span class="num">THE RESULT</span><b>Everybody carries some.</b><p>Kids check the wall instead of hollering "MOOOM." Your partner claims Thursday without being asked. You stop being the family's operating system, because now the family has one.</p></div>
+  <div class="stage">
+    <div class="laptop">
+      <span class="device-tag"><span class="dot" style="background:var(--teal)">E</span>Endia · at her desk</span>
+      <div class="lap-screen">
+        <div class="browser">
+          <div class="chrome"><i></i><i></i><i></i><span class="url">🔒 app.homeroomforfamily.com</span></div>
+          <div class="wk" aria-label="Interactive example of a homeroom week on a computer">
+            <div class="wk-head">
+              <span class="wk-title">This week at the homeroom house</span>
+              <span class="wk-range">Sept 28 to Oct 4</span>
+              <span class="wk-hint">👆 tap a person</span>
+            </div>
+            <div class="chips" id="chips" role="group" aria-label="Show one person's week"></div>
+            <div class="grid-scroll"><div class="week" id="week"></div></div>
+            <div class="wk-foot" id="wkfoot" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+      <div class="lap-base" aria-hidden="true"></div>
     </div>
-  </section>
 
-  <!-- ============ PRODUCTS ============ -->
-  <section id="shop">
-    <div class="sec-head">
-      <h2>Start small. This week, honestly.</h2>
-      <p>Made in our kitchen, tested on our five kids. Print them tonight, use them at 7 a.m. tomorrow. No subscriptions, no $300 gadget required.</p>
-    </div>
-    <div class="shelf">
-      <div class="prod">
-        <span class="badge">Bestseller</span>
-        <div class="p-em">💌</div>
-        <b>Lunch Notes — Starter Pack</b>
-        <div class="price">$7 · printable</div>
-        <p>24 notes for lunchboxes: courage for test days, repair notes for mornings that went sideways, jokes, plus a whole set written by the dog. Print, cut, tuck one next to the sandwich. Two minutes, remembered at noon.</p>
-        <a class="btn" href="https://homeroomfamily.gumroad.com/l/lunch-notes-starter?wanted=true">Get the pack</a>
-      </div>
-      <div class="prod">
-        <div class="p-em">🗓️</div>
-        <b>The Sunday Reset Kit</b>
-        <div class="price">$12 · printable</div>
-        <p>The 15 minutes on Sunday that hold our whole week together. Agenda card, weekly grid, chore rotation, a meal plan with a spot for allergy notes, and a Wins Wall for the fridge.</p>
-        <a class="btn" href="https://homeroomfamily.gumroad.com/l/sunday-reset-kit?wanted=true">Get the kit</a>
-      </div>
-      <div class="prod">
-        <span class="badge teal">Founding · save 35%</span>
-        <div class="p-em">🍝</div>
-        <b>What's for Dinner This Week</b>
-        <div class="price">$39/yr founding · then $49</div>
-        <p>Every Friday: five weeknight dinners plus a weekend cook, a grocery list sorted by aisle, and swap notes for the common allergens. Written by someone who feeds seven people around real restrictions, every single week.</p>
-        <a class="btn" href="#freebie" onclick="return joinList(this,'dinner')">Join the founding list</a>
-      </div>
-      <div class="prod">
-        <div class="p-em">🏠</div>
-        <b>The homeroom Kit</b>
-        <div class="price">Coming soon · pay once, own forever</div>
-        <p>The whole thing running in your house: the app, the kitchen tablet, calendar sync to every phone, the rituals. Yours to keep for one payment. No subscription, not ever.</p>
-        <a class="btn ghost" href="#freebie" onclick="return joinList(this,'kit')">Get on the waitlist</a>
+    <div class="phone-wrap">
+      <span class="device-tag"><span class="dot" style="background:var(--vermilion)">D</span>David · in the pickup line</span>
+      <div class="phone" aria-label="Interactive example of today in homeroom on a phone">
+        <div class="ph-screen">
+          <div class="ph-notch" aria-hidden="true"></div>
+          <div class="ph-head"><b>Today</b><span>Tue, Sept 29</span></div>
+          <div id="phList"></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ============ BACK TO SCHOOL ============ -->
-  <section id="freebie">
-    <div class="bts">
+  <p class="stage-cap">Same house, same minute. Claim something on either screen and watch the other one update.</p>
+
+  <div class="proof">
+    <span>📱 Every phone in the house, iPhone or Android</span>
+    <span>💻 Any computer, right in the browser</span>
+    <span>📺 The kitchen wall, on the tablet you already own</span>
+  </div>
+</div>
+
+<hr class="dash" style="margin-top:70px">
+
+<!-- ================= THE LOAD ================= -->
+<div class="wrap">
+  <section style="padding-bottom:0">
+    <div class="load">
+      <div class="big">The load isn't the tasks. <em>It's the tracking.</em></div>
       <div>
-        <div class="eyebrow">🎒 Free · Week Zero</div>
-        <h2>The week <i>before</i> school decides how the first month goes.</h2>
-        <p class="lede" style="font-size:15px;max-width:none;">Grab the free <b>Week Zero Checklist</b> and a 6-card lunch note sampler. These are the two things we do before every school year so the first Monday doesn't flatten us.</p>
-        <form class="form" data-hr-list="sampler" data-hr-ok="sampler">
-          <input type="email" required placeholder="you@family.com" aria-label="Email address">
-          <button class="btn big" type="submit">Send me the free kit 🎁</button>
-        </form>
-        <div class="success" id="ok-sampler">💛 Almost there! Check your inbox and click confirm, then the printables land right away.</div>
-        <p class="form-note">Free, delivered straight to your inbox. Leave any time. We will never sell your info; that would be a weird way to run this.</p>
-      </div>
-      <div class="check" id="checklist">
-        <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Build the lunch station (notes, containers, safe snacks)</div>
-        <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Set chore + laundry rotations before the chaos</div>
-        <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Load every known date into one shared place</div>
-        <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Claim the first week of dinners (allergy notes on)</div>
-        <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Dry-run one school morning. Find the missing shoe now.</div>
-        <div class="c-item" onclick="this.classList.toggle('done')"><span class="box">✓</span>Post one summer win on the Wins Wall 🎉</div>
+        <p>Who's driving, what's for dinner, whose turn it is, when the cleaners come. Whether you're running the house solo or alongside a partner, a co-parent, or a grandparent, all of that tends to live in somebody's head. Usually yours.</p>
+        <p>homeroom gets it out of your head and onto every screen in the house. The kids can own their part, anyone in your corner can see where to jump in, and it asks the one question every other family app skips.</p>
       </div>
     </div>
   </section>
+</div>
 
-  <!-- ============ APP COMING SOON ============ -->
-  <section id="app">
-    <div class="appbox">
-      <div class="app-copy">
-        <div class="app-eyebrow">🏠 The app · coming soon</div>
-        <h2>Not a nicer calendar. The whole house, running together.</h2>
-        <p>Every family calendar app answers "what's happening." Ours answers the harder one: <b>who's actually carrying this, and does anyone else know?</b></p>
-        <p>Dinner sits on every single day with the allergy notes attached, so anybody can cook. Chore rotations flip themselves on Sunday and nobody gets nagged. An old tablet on the kitchen wall shows today, and when a kid checks off a chore from their phone it vanishes off the wall right in front of everyone. There's a Wins Wall for lost teeth and dance trophies and the dog finally passing obedience school. Phineas has his own column, because he has a busier social life than we do.</p>
-        <p class="app-kicker">It's been running our house for months. We're getting it ready for yours.</p>
-        <a class="btn big" href="app.html">See the app + get early access 🏠</a>
-        <span class="app-micro">Pay once, keep it forever. We are not building another $9-a-month thing.</span>
-      </div>
-      <div class="app-vs">
-        <div class="vs-row"><span class="vs-t">A family calendar app gives you</span><span class="vs-b">Shared events. A color per person. Reminders that still come from you.</span></div>
-        <div class="vs-row on"><span class="vs-t">homeroom gives you</span><span class="vs-b">Dinner claimed by a named cook. Chores that rotate on their own. Allergy swaps anyone can read. A wall the kids check instead of asking. Celebration built into the week.</span></div>
+<!-- ================= FEATURES ================= -->
+<div class="wrap">
+  <section id="features">
+    <div class="head">
+      <span class="label">What's inside</span>
+      <h2>Built for the way your house <em>actually works.</em></h2>
+      <p>One parent or two. A co-parent across town, grandparents in another state, a kid at college, the sitter on Thursdays, the dog. Everyone who's part of the house gets a color.</p>
+    </div>
+
+    <div class="leads">
+      <article class="lead first">
+        <div>
+          <div class="em">🙋</div>
+          <h3>Who's got it?</h3>
+          <p>homeroom asks, quietly, on the events that need someone, and one tap answers it. It works the way families actually do. Someone usually takes Tuesday soccer. The week they travel, one tap on that Tuesday hands it off without touching the rest of the season.</p>
+          <p style="margin-top:10px">Running the house solo? It's how a teenager with a license, a sitter, or grandma takes something off your plate without a single phone call. And it never asks about church, family dinner, or your own dentist appointment.</p>
+          <div class="quote-line">Every calendar shows you what's happening. homeroom shows you who's got it.</div>
+        </div>
+        <div class="demo series" aria-label="Example: soccer series with one date swapped">
+          <div class="row"><span class="d">Sept 22</span>Soccer<span class="who"><span class="dot" style="background:var(--vermilion)">D</span>David</span></div>
+          <div class="row changed"><span class="d">Sept 29</span>Soccer<span class="who"><span class="dot" style="background:var(--teal)">E</span>Endia</span></div>
+          <div class="row"><span class="d">Oct 6</span>Soccer<span class="who"><span class="dot" style="background:var(--vermilion)">D</span>David</span></div>
+          <div class="row"><span class="d">Oct 13</span>Soccer<span class="who"><span class="dot" style="background:var(--vermilion)">D</span>David</span></div>
+        </div>
+      </article>
+
+      <article class="lead">
+        <div class="em">📍</div>
+        <h3>The house goes where you go.</h3>
+        <p>The mental load doesn't stay in the kitchen, so homeroom doesn't either. Check the week from your desk, claim a pickup from the parking lot, and add oat milk from the office. Every change shows up on every screen in the house.</p>
+        <div class="demo">
+          <span class="pill">📱 iPhone</span><span class="pill">🤖 Android</span><span class="pill">💻 Any browser</span><span class="pill">📶 Works without signal</span>
+        </div>
+      </article>
+
+      <article class="lead">
+        <div class="em">🧒</div>
+        <h3>Kids join with no account.</h3>
+        <p>No email, no password, no setting up a login for a seven-year-old. They open the family link, tap their name, and they're in with their own color and their own chores.</p>
+        <div class="demo">
+          <span class="pill"><span class="dot" style="background:var(--rose)">Z</span>Zoë</span><span class="pill"><span class="dot" style="background:var(--moss)">J</span>Josiah</span><span class="pill"><span class="dot" style="background:var(--dusty)">C</span>Chase</span><span class="pill"><span class="dot" style="background:var(--biscuit)">🐾</span>Phineas</span>
+        </div>
+      </article>
+
+      <article class="lead">
+        <div class="em">🎁</div>
+        <h3>Private items stay private.</h3>
+        <p>Plan the birthday without the birthday kid seeing it. Private items are hidden everywhere: the calendar, the calendar feed, notifications, and the kitchen display.</p>
+        <div class="demo">
+          <div class="lock-row"><span>Sat · <span class="blurred">Surprise party setup</span></span><span>🔒</span></div>
+          <div class="lock-row"><span>Fri · <span class="blurred">Pick up the cake</span></span><span>🔒</span></div>
+        </div>
+      </article>
+
+      <article class="lead">
+        <div class="em">🔐</div>
+        <h3>Safe by design.</h3>
+        <p>Invite links expire. An adult approves every new join. Every delete has an undo. No ads, no tracking, and nothing about your family is ever sold.</p>
+        <div class="demo">Your household's information is only visible to your household.</div>
+      </article>
+    </div>
+
+    <div class="rest">
+      <span class="label">And everything you'd expect, done well</span>
+      <div class="rest-grid">
+        <div class="rest-item"><span class="e">🗓</span><div><b>Calendar</b><span>Week, month, day, and a per-person view. Repeats, end times, reminders, and addresses that open in Maps or Waze.</span></div></div>
+        <div class="rest-item"><span class="e">📲</span><div><b>Shows up in your calendar</b><span>Subscribe in Apple or Google Calendar: a feed for each person and one for the whole family, dinners included.</span></div></div>
+        <div class="rest-item"><span class="e">🍽</span><div><b>Meals</b><span>Breakfast, lunch, and dinner for the week, a favorites library, a recipe bank, and "copy last week" for the weeks you've got nothing left.</span></div></div>
+        <div class="rest-item"><span class="e">🛒</span><div><b>Groceries that build themselves</b><span>One tap turns the week's meals into a list sorted by aisle, live on every phone.</span></div></div>
+        <div class="rest-item"><span class="e">⏱</span><div><b>Chores with timers</b><span>One tap starts a countdown that follows you around the app. Streaks, progress, and confetti when it's done.</span></div></div>
+        <div class="rest-item"><span class="e">🎉</span><div><b>Wins wall</b><span>Lost teeth, good grades, the dog's diploma. If it made someone proud, it goes on the wall.</span></div></div>
+        <div class="rest-item"><span class="e">🧹</span><div><b>Services</b><span>Cleaners, grocery delivery, in-home appointments, with their schedule and arrival windows.</span></div></div>
+        <div class="rest-item"><span class="e">📋</span><div><b>Handoff sheets</b><span>A printable page for the sitter or dog-sitter, and a picture chart for kids who can't read yet.</span></div></div>
+        <div class="rest-item"><span class="e">📺</span><div><b>A free kitchen display</b><span>Any old iPad or Android tablet becomes the family wall calendar: big clock, today's schedule, tonight's dinner, tappable chores. No $300 screen to buy.</span></div></div>
       </div>
     </div>
   </section>
+</div>
 
-  <!-- ============ SYSTEMS TEASER ============ -->
-  <section>
-    <div class="sec-head">
-      <h2>The systems behind the calm(er).</h2>
-      <p>Four free frameworks for the work that quietly eats a household alive. Built by a mom, for the whole house. Steal all of it.</p>
+<hr class="dash">
+
+<!-- ================= TESTIMONIALS ================= -->
+<div class="wrap">
+  <section id="stories">
+    <div class="head center">
+      <span class="label">From homeroom families</span>
+      <h2>In their words.</h2>
     </div>
-    <div class="shelf">
-      <a class="prod" href="systems.html#laundry" style="text-decoration:none">
-        <div class="p-em">🧺</div><b>Laundry</b><div class="price">one day · one person · one loop</div>
-        <p>Give every load an owner and a bedtime, so clean clothes stop living in the basket for four days.</p></a>
-      <a class="prod" href="systems.html#maintenance" style="text-decoration:none">
-        <div class="p-em">🔧</div><b>Maintenance</b><div class="price">the expensive invisible work</div>
-        <p>Dryer vents, physicals, oil changes, HVAC. Out of your memory, onto a calendar, with a name attached.</p></a>
-      <a class="prod" href="systems.html#meals" style="text-decoration:none">
-        <div class="p-em">🍽️</div><b>Meals</b><div class="price">theme nights + claimed slots</div>
-        <p>Fifteen minutes on Sunday kills the question "what's for dinner" for the entire week.</p></a>
-      <a class="prod" href="systems.html#activities" style="text-decoration:none">
-        <div class="p-em">⚽</div><b>Activities</b><div class="price">budget capacity, then fill it</div>
-        <p>Every kid's yes is a parent's driving job. Decide the ceiling before signups, not during.</p></a>
+    <div class="quotes">
+      <figure class="q c1">
+        <blockquote>
+          <div class="pull">"The simple layout makes a huge impact for my household to remain on the same page."</div>
+          <p class="full">"homeroom literally saved my life! I am naturally scatter-brained and having two kids with two different schedules, along with working multiple jobs, I needed something to help keep us organized. Using this app allows me to keep communication open and clear with my support and again, with ensuring that I don't forget or overlook events. From laundry day, children's sports events, work changes in schedule, chores, the simple layout makes a huge impact for my household to remain on the same page. homeroom is easy to use, and can be easily tailored to everyone in the house. I absolutely love it!"</p>
+        </blockquote>
+        <figcaption class="who"><span class="em">👩‍👧‍👦</span><div><b>Mom of 2</b><span>Two kids, two schedules, multiple jobs</span></div></figcaption>
+      </figure>
+
+      <figure class="q c2">
+        <blockquote>
+          <div class="pull">"I now get to see how their days are flowing."</div>
+          <p class="full">"The best organizer I have ever used! Not living in the same state with my children and grandchildren makes it kind of hard to keep up with their busy days. NOT anymore! I now get to see how their days are flowing and find the best times to call for my daily updates. Love homeroom!"</p>
+        </blockquote>
+        <figcaption class="who"><span class="em">👵</span><div><b>Grandmother of 4</b><span>Keeping up from another state</span></div></figcaption>
+      </figure>
+
+      <figure class="q c3">
+        <blockquote>
+          <div class="pull">"'How can I help' is a question I don't have to ask anymore."</div>
+          <p class="full">"I can now see all of the household tasks, big picture, and all the details wheeling through my wife's brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time. It's a game changer, and gives me a new perspective of what my wife carries in her mind."</p>
+        </blockquote>
+        <figcaption class="who"><span class="em">👨‍👧‍👦</span><div><b>Father of 2</b><span>Jumping in where he's needed</span></div></figcaption>
+      </figure>
     </div>
   </section>
+</div>
 
-  <!-- ============ FOUNDER ============ -->
+<hr class="dash">
+
+<!-- ================= INSTALL ================= -->
+<div class="wrap">
+  <section id="install">
+    <div class="install">
+      <div>
+        <span class="label">Get the app</span>
+        <h2>On your phone in about ten minutes.</h2>
+        <p style="font-size:16.5px;color:var(--ink-soft);margin-top:14px">One adult sets up the household first. Everyone else joins with a link.</p>
+        <div class="no-store">
+          <b>No app store required.</b>
+          <p>homeroom installs straight from the web and lives on your home screen with its own icon, just like any other app. Use <strong>Safari</strong> on iPhone and iPad, or <strong>Chrome</strong> on Android. Other browsers can't add apps to your home screen.</p>
+        </div>
+        <div style="margin-top:22px"><a class="btn big js-start" href="https://app.homeroomforfamily.com">Open homeroom</a></div>
+      </div>
+
+      <div id="installSteps">
+        <div class="tabs" role="tablist" aria-label="Choose your phone">
+          <button role="tab" aria-selected="true" data-os="ios" id="tab-ios">iPhone &amp; iPad</button>
+          <button role="tab" aria-selected="false" data-os="android" id="tab-android">Android</button>
+        </div>
+        <ol class="steps" role="tabpanel" aria-labelledby="tab-ios">
+          <li><div><b>Open homeroom</b><p>Go to <code>app.homeroomforfamily.com</code> in <span class="only-ios">Safari</span><span class="only-android">Chrome</span>.</p></div></li>
+          <li><div><b>Sign in with your email</b><p>Tap <strong>Send me a sign-in link</strong>, then tap the link in your inbox. There's no password to create or forget.</p></div></li>
+          <li><div><b>Set up your household</b><p>Name it, add everyone who lives there (pets too), and give each person a color. Starter chore lists and meal ideas are there if you want them. <span class="js-trial-step"></span></p></div></li>
+          <li><div><b>Add it to your home screen</b>
+            <p class="only-ios">Tap the <span class="key">Share</span> button (the square with an arrow), scroll down, tap <span class="key">Add to Home Screen</span>, then <span class="key">Add</span>.</p>
+            <p class="only-android">Tap the <span class="key">⋮</span> menu at the top right, tap <span class="key">Install app</span> or <span class="key">Add to Home screen</span>, then <span class="key">Install</span>.</p>
+            <p>Open homeroom from the new icon from now on.</p></div></li>
+          <li><div><b>Invite your family</b><p>In the app, tap <span class="key">⚙</span> then <strong>Family invite link</strong> and copy it. Text it to everyone. They open it, add homeroom to their home screen, and tap their name. For kids, that's the whole setup.</p></div></li>
+        </ol>
+        <div class="extras">
+          <div class="extra"><div class="em">💻</div><b>Open it on your computer</b><p>At work or at home, sign in at <code style="font-weight:800">app.homeroomforfamily.com</code> in any browser. Same household, same week, nothing to install.</p></div>
+          <div class="extra"><div class="em">📺</div><b>Put it on the kitchen wall</b><p>On any tablet, open the family invite link, then go to <code style="font-weight:800">app.homeroomforfamily.com/wall</code>. On iPad, set Auto-Lock to Never and use Guided Access to keep little fingers inside homeroom.</p></div>
+          <div class="extra"><div class="em">📲</div><b>See it in your own calendar</b><p>Tap <span class="key">⚙</span> then <strong>Calendar subscriptions</strong> and tap Subscribe next to your name. homeroom events show up in Apple or Google Calendar, reminders included.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr class="dash">
+
+<!-- ================= PRICING ================= -->
+<div class="wrap">
+  <section id="pricing">
+    <div class="head center">
+      <span class="label">Pricing</span>
+      <h2>One plan. The whole house.</h2>
+      <p>Every person, every phone, every computer, and the kitchen display, all on one household subscription.</p>
+    </div>
+    <div class="price-wrap">
+      <div class="toggle" role="group" aria-label="Billing period">
+        <button aria-pressed="false" data-plan="monthly">Monthly</button>
+        <button aria-pressed="true" data-plan="annual">Yearly</button>
+      </div>
+      <div class="trial-badge js-trial-badge">7 days free</div>
+      <div class="amount"><span id="amt">$99</span><small id="per">/year</small></div>
+      <div class="save" id="save">Save $45 a year</div>
+      <ul>
+        <li>Unlimited family members, pets included, each with their own color</li>
+        <li>Who's got it, chores with timers, meals, groceries, the wins wall, and services</li>
+        <li>Every phone, every computer, and the kitchen display on a tablet you already own</li>
+        <li>Calendar feeds for Apple and Google Calendar</li>
+        <li>No ads, no tracking, and your data downloads any time</li>
+      </ul>
+      <a class="btn big js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
+      <button class="share js-share" type="button">📤 Send this to your partner or co-parent</button>
+      <div class="share-sub">or anyone who helps run the house</div>
+      <p class="terms" id="terms"></p>
+    </div>
+  </section>
+</div>
+
+<hr class="dash">
+
+<!-- ================= FOUNDER ================= -->
+<div class="wrap">
   <section>
     <div class="founder">
-      <p>"Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build systems for our 7-person family (and a dog), and the frequent visitors we host. It's made all the difference now that we all have visibility and input into the family load."</p>
-      <div class="sig">— Endia Leonard, Founder · Phineas posts Tuesdays 🐾</div>
+      <p>"Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build a system for our home. It's made all the difference now that we all have visibility and input into the family load."</p>
+      <div class="sig"><span class="dot" style="background:var(--teal)">E</span>Endia, founder · built by a mom, for the whole house</div>
     </div>
   </section>
+</div>
 
-  <section>
-    <div class="news">
-      <div class="news-copy">
-        <b>One email a week, from a real house.</b>
-        <p>Systems, dinners, lunchbox notes, and the occasional formal complaint from the dog. No fluff, no daily nagging.</p>
-      </div>
-      <div class="news-form">
-        <form class="form" data-hr-list="general" data-hr-ok="general">
-          <input type="email" required placeholder="you@family.com" aria-label="Email address">
-          <button class="btn big" type="submit">Subscribe</button>
-        </form>
-        <div class="success" id="ok-general">💛 Check your inbox to confirm and you're in.</div>
-        <p class="news-note">Free, and you can leave whenever. 🐾</p>
-      </div>
+<hr class="dash">
+
+<!-- ================= FAQ ================= -->
+<div class="wrap">
+  <section id="faq">
+    <div class="head center">
+      <span class="label">Questions</span>
+      <h2>Good to know.</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Does it work on Android?</summary><p>Yes. homeroom works the same on iPhone and Android. Install it from Chrome on Android and from Safari on iPhone. A household can mix both.</p></details>
+      <details><summary>Do my kids need email addresses or phones?</summary><p>No email and no password. Kids join with the family link and tap their name. Kids without a phone can use the kitchen display, and pre-readers get a printable picture chart.</p></details>
+      <details><summary>Does it work for single-parent households?</summary><p>Absolutely. homeroom takes the tracking out of your head so you're not the only place the plan lives. Kids see their own schedule and chores, and a co-parent, grandparent, or sitter can join to see exactly what they're covering. You decide who's in.</p></details>
+      <details><summary>Can I use it on my computer at work?</summary><p>Yes. Sign in at app.homeroomforfamily.com in any browser and you'll see the same household as everyone's phones. There's nothing to install.</p></details>
+      <details><summary>Can grandparents or a sitter join?</summary><p>Yes. Add them as a person and send the invite link. An adult in the household approves every new join. When a sitter moves on, remove them and reset the link so the old one stops working.</p></details>
+      <details><summary>How does it work with my Apple or Google Calendar?</summary><p>homeroom sends your events into Apple or Google Calendar through a calendar subscription, one feed per person plus one for the whole family. Changes you make in homeroom flow out to those calendars. Events you add directly in Apple or Google Calendar stay there and don't come into homeroom.</p></details>
+      <details><summary>Is my family's information private?</summary><p>Your household's data is only visible to your household. We don't show ads, don't track anyone, and never sell data. Read the full <a href="https://app.homeroomforfamily.com/privacy">privacy policy</a>.</p></details>
+      <details><summary>What happens after the free trial?</summary><p class="js-trial-faq"></p></details>
+      <details><summary>How do I cancel?</summary><p>From Settings in the app, any time. Your plan stays active until the end of the period you paid for.</p></details>
+      <details><summary>Can I get my data out?</summary><p>Any time. In the app, tap ⚙ then Your data then Download, and you'll get everything as a spreadsheet or a full backup file.</p></details>
+      <details><summary>Something isn't working. Who do I talk to?</summary><p>Email <a href="mailto:support@homeroomforfamily.com">support@homeroomforfamily.com</a>. Screenshots help a lot, and a real person reads every message.</p></details>
     </div>
   </section>
-
-  <footer>
-    <div class="f-logo"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span>r<span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></div>
-    <p>where the invisible work becomes visible · <a href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">@homeroomforfamily</a><br>
-    Meal-plan substitution notes are shared from our family's experience and aren't medical advice, so always double check ingredients for your household.<br>© 2026 homeroom for family, LLC</p>
-  </footer>
 </div>
 
-<canvas id="confetti"></canvas>
-<div class="win-pop" id="winpop" role="status" aria-live="polite">
-  <span class="w-band" id="wp-band"></span>
-  <button class="x" onclick="hideWin()" aria-label="Close">✕</button>
-  <div class="w-label" id="wp-label"></div>
-  <div class="w-head" id="wp-head"></div>
-  <div class="w-sub" id="wp-sub"></div>
-  <span class="w-chip" id="wp-chip"></span>
-  <button class="w-act" id="wp-act"></button>
+<!-- ================= FINAL CTA ================= -->
+<div class="wrap">
+  <section class="final" style="padding-top:20px">
+    <span class="label">Ten minutes from now</span>
+    <h2>Out of your head. <em>Onto every screen.</em></h2>
+    <p>Set up your household tonight. By tomorrow morning, the whole house knows the plan.</p>
+    <a class="btn big js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
+    <div><button class="share inline js-share" type="button">📤 Send this to your partner or co-parent</button></div>
+  </section>
 </div>
-<button class="win-again" id="winagain" onclick="nextCard()" title="See more from the homeroom house" aria-label="Show another live example">✨</button>
+
+<hr class="dash">
+
+<footer class="wrap">
+  <a class="logo" href="#" aria-label="homeroom home"><span style="color:var(--teal)">h</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span><span style="color:var(--rose)">e</span><span style="color:var(--ink)">r</span><span style="color:var(--teal)">o</span><span style="color:var(--vermilion)">o</span><span style="color:var(--mustard)">m</span></a>
+  <div class="tag">the family command center</div>
+  <div class="links">
+    <a href="https://app.homeroomforfamily.com">Sign in</a>
+    <a href="https://app.homeroomforfamily.com/privacy">Privacy</a>
+    <a href="https://app.homeroomforfamily.com/terms">Terms</a>
+    <a href="mailto:support@homeroomforfamily.com">Support</a>
+    <a href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="fine">© 2026 homeroom for family, LLC</div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn big js-start" href="https://app.homeroomforfamily.com">Start your free trial</a></div>
 
 <script>
-// ---------- interactive week ----------
-const M={all:{n:'Everyone',c:'#3E4A40',i:'✦'},e:{n:'Endia',c:'#2F6661',i:'E'},d:{n:'David',c:'#D9472B',i:'D'},
- n:{n:'Nia',c:'#DC9A27',i:'N'},z:{n:'Zoë',c:'#E78A9B',i:'Z'},j:{n:'Josiah',c:'#7A8B5C',i:'J'},
- c:{n:'Chase',c:'#5E8CA7',i:'C'},ch:{n:'Charli',c:'#9B6B9E',i:'C'},p:{n:'Phineas',c:'#B5803F',i:'🐾'}};
-const WEEK=[
- {d:'Mon',ev:[['n','Soccer 5:30'],['e','Client call 2:00'],['c','Reading log'],['p','Walk · Josiah']],din:['Taco night','cook: David']},
- {d:'Tue',ev:[['z','Dance 4:15'],['j','Piano 5:00'],['p','Nail trim 3:30 💅'],['d','Gym 6a']],din:['Sheet-pan chicken','cook: Nia']},
- {d:'Wed',ev:[['fam','Family walk 🚶'],['ch','Art club'],['e','Orders lock 8p ⏰']],din:['Hidden-veg pasta','cook: Endia']},
- {d:'Thu',ev:[['n','Ortho 7:45a'],['c','Swim 4:00'],['j','Book report due'],['p','Walk · Chase']],din:['Fried-rice-anything','cook: David']},
- {d:'Fri',ev:[['fam','Movie night 🍿'],['z','Sleepover 6:00'],['p','Bath day 🛁']],din:['Kid-pick pizza 🍕','picked: Josiah (streak!)']}
-];
-let sel='all';
-function chips(){
-  document.getElementById('chips').innerHTML=Object.entries(M).map(([k,m])=>
-   `<span class="chip ${k===sel?'on':''}" onclick="sel='${k}';chips();week()"><span class="dot" style="background:${m.c}">${m.i}</span>${m.n}</span>`).join('');
+/* ============ EDIT HERE: prices and the app link ============ */
+const CONFIG = {
+  appUrl: 'https://app.homeroomforfamily.com',
+  siteUrl: 'https://homeroomforfamily.com',
+  monthly: 12,   // dollars per month
+  annual: 99,    // dollars per year
+  trialDays: 7,
+  cardUpFront: false  // true if checkout asks for a card before the trial starts
+};
+/* ============================================================ */
+
+document.querySelectorAll('.js-start').forEach(a => a.href = CONFIG.appUrl);
+
+// ---- pricing toggle ----
+const fmt = n => '$' + (Number.isInteger(n) ? n : n.toFixed(2));
+function setPlan(plan){
+  document.querySelectorAll('.toggle button').forEach(b => b.setAttribute('aria-pressed', b.dataset.plan === plan));
+  const save = CONFIG.monthly * 12 - CONFIG.annual;
+  document.getElementById('amt').textContent = fmt(plan === 'annual' ? CONFIG.annual : CONFIG.monthly);
+  document.getElementById('per').textContent = plan === 'annual' ? '/year' : '/month';
+  const s = document.getElementById('save');
+  s.textContent = 'Save ' + fmt(save) + ' a year';
+  s.classList.toggle('hide', plan !== 'annual' || save <= 0);
 }
-function week(){
-  document.getElementById('week').innerHTML=WEEK.map(day=>`<div class="day">
-    <div class="d-name">${day.d}</div>
-    ${day.ev.map(([k,t])=>{
-      const fam=k==='fam';
-      const on=sel==='all'||k===sel||fam;
-      return `<div class="ev ${fam?'fam':''} ${on?'':'dim'}" ${fam?'':`style="background:${M[k].c}"`}>${t}</div>`;}).join('')}
-    <div class="dinner">🍽 ${day.din[0]}<span>${day.din[1]}</span></div>
+document.querySelectorAll('.toggle button').forEach(b => b.addEventListener('click', () => setPlan(b.dataset.plan)));
+setPlan('annual');
+
+// ---- free trial copy (all driven by CONFIG) ----
+function trialCopy(plan){
+  const d = CONFIG.trialDays, price = plan === 'monthly' ? fmt(CONFIG.monthly) + '/month' : fmt(CONFIG.annual) + '/year';
+  const both = fmt(CONFIG.annual) + '/year or ' + fmt(CONFIG.monthly) + '/month';
+  return CONFIG.cardUpFront ? {
+    line: `<b>${d} days free.</b> Cancel before day ${d} and you won't be charged.<br>Then ${both}.`,
+    terms: `Your ${d}-day free trial starts when you sign up. Unless you cancel before it ends, your subscription starts automatically at ${price} and renews at that rate until you cancel. Cancel any time from Settings in the app; a paid plan runs to the end of the period you paid for.`,
+    step: `Your ${d}-day free trial starts here.`,
+    faq: `Your subscription starts automatically on day ${d + 1} at the plan you picked. Cancel any time before then from Settings and you won't be charged.`
+  } : {
+    line: `<b>${d} days free. No card needed.</b><br>Then ${both}. Cancel anytime.`,
+    terms: `Your ${d}-day free trial needs no card. To keep going afterward, choose monthly or yearly in the app. Paid plans renew automatically at the same rate until you cancel. Cancel any time from Settings in the app; your plan runs to the end of the period you paid for.`,
+    step: `Your ${d}-day free trial starts here, no card needed.`,
+    faq: `After ${d} days, choose monthly or yearly in the app to keep going. Nothing is charged until you pick a plan. If you don't, your family's information stays yours: you can still see it and download it.`
+  };
+}
+function applyTrial(plan){
+  const t = trialCopy(plan);
+  document.querySelectorAll('.js-trial-line').forEach(e => e.innerHTML = t.line);
+  document.querySelectorAll('.js-trial-step').forEach(e => e.textContent = t.step);
+  document.querySelectorAll('.js-trial-faq').forEach(e => e.textContent = t.faq);
+  document.querySelectorAll('.js-trial-badge').forEach(e => e.textContent = CONFIG.trialDays + ' days free');
+  document.getElementById('terms').textContent = t.terms;
+}
+document.querySelectorAll('.toggle button').forEach(b => b.addEventListener('click', () => applyTrial(b.dataset.plan)));
+applyTrial('annual');
+
+// ---- share with a partner or co-parent ----
+document.querySelectorAll('.js-share').forEach(btn => btn.addEventListener('click', async () => {
+  const data = { title: 'homeroom', text: `Found a family command center I want us to try. Everyone in the house gets their own color. ${CONFIG.trialDays} days free:`, url: CONFIG.siteUrl };
+  const label = btn.textContent;
+  try {
+    if (navigator.share) { await navigator.share(data); return; }
+    await navigator.clipboard.writeText(data.text + ' ' + data.url);
+    btn.textContent = '✓ Link copied. Paste it in a text.';
+  } catch (e) {
+    if (e && e.name === 'AbortError') return;
+    window.location.href = 'sms:?&body=' + encodeURIComponent(data.text + ' ' + data.url);
+  }
+  setTimeout(() => btn.textContent = label, 2600);
+}));
+
+// ---- install tabs ----
+const stepsWrap = document.getElementById('installSteps');
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  stepsWrap.classList.toggle('android', b.dataset.os === 'android');
+  stepsWrap.querySelector('.steps').setAttribute('aria-labelledby', b.id);
+}));
+// open the right tab for the visitor's phone
+if (/android/i.test(navigator.userAgent)) document.getElementById('tab-android').click();
+
+// ---- hero: the week on the kitchen wall ----
+const M = {
+  all:{n:'Everyone',c:'var(--ink)',i:'✦'},
+  e:{n:'Endia',c:'var(--teal)',i:'E'}, d:{n:'David',c:'var(--vermilion)',i:'D'},
+  n:{n:'Nia',c:'var(--mustard)',i:'N',lt:1}, z:{n:'Zoë',c:'var(--rose)',i:'Z',lt:1},
+  j:{n:'Josiah',c:'var(--moss)',i:'J'}, c:{n:'Chase',c:'var(--dusty)',i:'C'},
+  ch:{n:'Charli',c:'var(--plum)',i:'C'}, p:{n:'Phineas',c:'var(--biscuit)',i:'🐾'}
+};
+// [who, label, got-it-by]  got: 'e'|'d' = claimed, '?' = still needs someone, undefined = no one needed
+const WEEK = [
+  {d:'Mon', ev:[['n','Soccer 5:30','d'],['e','Client call 2:00'],['c','Reading log'],['p','Walk · Josiah']], din:['Taco night','cook: David']},
+  {d:'Tue', today:1, ev:[['z','Dance 4:15','e'],['j','Piano 5:00','?'],['p','Nail trim 3:30'],['d','Gym 6a']], din:['Sheet-pan chicken','cook: Nia']},
+  {d:'Wed', ev:[['fam','Family walk 🚶'],['ch','Art club','d'],['e','Groceries lock 8p ⏰']], din:['Hidden-veg pasta','cook: Endia']},
+  {d:'Thu', ev:[['n','Ortho 7:45a','e'],['c','Swim 4:00','d'],['j','Book report due'],['p','Walk · Chase']], din:['Fried-rice-anything','cook: David']},
+  {d:'Fri', ev:[['fam','Movie night 🍿'],['z','Sleepover 6:00','d'],['p','Bath day 🛁']], din:['Kid-pick pizza 🍕','picked: Josiah (streak!)']},
+  {d:'Sat', ev:[['n','Soccer game 9a','e'],['fam','Cleaners 10 to 12 🧹'],['ch','Birthday party 1p','?']], din:['Grill night','cook: David']},
+  {d:'Sun', ev:[['fam','Church 10a'],['p','Long-walk crew'],['e','Wins wall 🎉']], din:['Slow-cooker chili','cook: Endia']}
+];
+const ADULTS = ['e','d'];
+let sel = 'all';
+const chipsEl = document.getElementById('chips'), weekEl = document.getElementById('week'), foot = document.getElementById('wkfoot');
+const DEFAULT_FOOT = "Everyone's week at a glance. Yes, the dog has a column 🐾";
+let footT;
+function setFoot(msg, hold){ foot.textContent = msg; clearTimeout(footT); if (hold) footT = setTimeout(() => setFoot(sel==='all' ? DEFAULT_FOOT : personFoot()), 3400); }
+function personFoot(){ return `${M[sel].n}'s week, one tap. No more "wait, what do I have today?"`; }
+
+function renderChips(){
+  chipsEl.innerHTML = Object.entries(M).map(([k,m]) =>
+    `<button class="chip" data-k="${k}" aria-pressed="${k===sel}"><span class="dot" style="background:${m.c}">${m.i}</span>${m.n}</button>`).join('');
+  chipsEl.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+    sel = b.dataset.k; renderChips(); renderWeek();
+    setFoot(sel==='all' ? DEFAULT_FOOT : personFoot());
+  }));
+}
+function gotHtml(got, di, ei){
+  if (!got) return '';
+  if (got === '?') return `<button class="askq" data-d="${di}" data-e="${ei}" aria-label="Who's got it? Tap to claim">Who's got it?</button>`;
+  return `<span class="gi"><span class="dot" style="background:${M[got].c}">${M[got].i}</span>${M[got].n}'s got it</span>`;
+}
+function renderWeek(){
+  weekEl.innerHTML = WEEK.map((day,di) => `<div class="day${day.today?' today':''}">
+    <div class="d-name">${day.today?'Today':day.d}</div>
+    ${day.ev.map(([k,t,got],ei) => {
+      const fam = k==='fam', m = M[k] || {};
+      const on = sel==='all' || fam || k===sel || got===sel;
+      return `<div class="ev${fam?' fam':''}${m.lt?' lt':''}${on?'':' dim'}" ${fam?'':`style="background:${m.c}"`}>${t}${gotHtml(got,di,ei)}</div>`;
+    }).join('')}
+    <div class="din">🍽 ${day.din[0]}<span>${day.din[1]}</span></div>
   </div>`).join('');
-  document.getElementById('wfoot').textContent = sel==='all'
-    ? "Everyone's week at a glance. Yes, the dog has a column 🐾"
-    : `${M[sel].n}'s week. One tap, zero "wait, what do I have today?"`;
+  weekEl.querySelectorAll('.askq').forEach(b => b.addEventListener('click', () => {
+    claim(+b.dataset.d, +b.dataset.e, 'e',
+      "Endia claimed it from her desk. It's already on David's phone.");
+  }));
 }
-chips();week();
-
-// ---------- auto-demo: show people that the chips are tappable ----------
-let userTouched=false, demoTimer=null, demoStep=0;
-const DEMO=['n','p','all'];
-function markHint(){
-  // pulse the first person chip (and Phineas) until someone interacts
-  document.querySelectorAll('#chips .chip').forEach((c,i)=>{
-    c.classList.toggle('hint', !userTouched && (i===1 || i===8));
-  });
+// the phone shows today, from the same data, so a claim on either screen updates both
+const TODAY_I = WEEK.findIndex(d => d.today);
+const PH = { 3:['6:00 AM','David · Gym'], 2:['3:30 PM','Phineas · Nail trim 💅'], 0:['4:15 PM','Zoë · Dance'], 1:['5:00 PM','Josiah · Piano'] };
+const phList = document.getElementById('phList');
+function renderPhone(){
+  const day = WEEK[TODAY_I];
+  phList.innerHTML = [3,2,0,1].map(ei => {
+    const [k,,got] = day.ev[ei], m = M[k];
+    let g = '';
+    if (got === '?') g = `<button class="askq" data-e="${ei}">Who's got it?</button>`;
+    else if (got) g = `<span class="gi"><span class="dot" style="background:${M[got].c}">${M[got].i}</span>${M[got].n}'s got it</span>`;
+    return `<div class="ph-ev"><span class="pb" style="background:${m.c}"></span><div><div class="t">${PH[ei][0]}</div><div class="n">${PH[ei][1]}</div>${g}</div></div>`;
+  }).join('') + `<div class="ph-din"><span class="label">Tonight's dinner</span><b>${day.din[0]}</b><span>${day.din[1].replace('cook: ','')}'s cooking</span></div>`;
+  phList.querySelectorAll('.askq').forEach(b => b.addEventListener('click', () => {
+    claim(TODAY_I, +b.dataset.e, 'd', "David claimed it from the pickup line. It's already on Endia's screen.");
+  }));
 }
-const _chips=chips;
-chips=function(){_chips();markHint();};
-function runDemo(){
-  if(userTouched) return;
-  sel=DEMO[demoStep%DEMO.length]; demoStep++;
-  chips(); week();
-  demoTimer=setTimeout(runDemo, sel==='all'?2600:2000);
+function claim(di, ei, who, msg){
+  WEEK[di].ev[ei][2] = who;
+  renderWeek(); renderPhone();
+  setFoot(msg, true);
 }
-document.getElementById('chips').addEventListener('click',()=>{
-  userTouched=true; clearTimeout(demoTimer);
-  document.querySelectorAll('#chips .chip').forEach(c=>c.classList.remove('hint'));
-  const sub=document.querySelector('.widget .w-sub'); if(sub){sub.style.animation='none';sub.style.opacity='.55';}
-},{once:false});
-// start the demo once the widget scrolls into view
-const _w=document.querySelector('.widget');
-if(_w&&'IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!userTouched&&!demoTimer){setTimeout(runDemo,1200);io.disconnect();}})},{threshold:.4});
-  io.observe(_w);
-} else { setTimeout(runDemo,1600); }
+renderPhone();
+renderChips(); renderWeek(); setFoot(DEFAULT_FOOT);
 
-// ---------- forms (wire these to your email/checkout provider) ----------
-function sub(f){document.getElementById('ok').style.display='block';f.querySelector('input').value='';return false;}
-function buy(b){b.textContent='Coming to the shop! 💛';setTimeout(()=>b.textContent=b.textContent.includes('pack')?'Get the pack':'Get the kit',1800);
-  document.getElementById('freebie').scrollIntoView({behavior:'smooth'});return false;}
-function joinList(b,which){return true;}
-
-// ---------- wins wall + confetti ----------
-const cv=document.getElementById('confetti'),ctx2=cv.getContext('2d');let PARTS=[],anim;
-function sizeC(){cv.width=innerWidth;cv.height=innerHeight;}sizeC();addEventListener('resize',sizeC);
-const CCOLS=['#2F6661','#D9472B','#DC9A27','#E78A9B','#7A8B5C','#5E8CA7','#9B6B9E','#B5803F'];
-function burst(x,y,cols){
-  const PAL=(cols&&cols.length)?cols:CCOLS;
-  for(let i=0;i<140;i++){const a=Math.random()*Math.PI*2,s=4+Math.random()*9;
-    PARTS.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6.5,g:.28,r:3+Math.random()*4.5,
-      c:PAL[i%PAL.length],rot:Math.random()*6,vr:(Math.random()-.5)*.35,l:70+Math.random()*45});}
-  cancelAnimationFrame(anim);
-  (function f(){ctx2.clearRect(0,0,cv.width,cv.height);PARTS=PARTS.filter(p=>p.l>0);
-    PARTS.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.rot+=p.vr;p.l--;
-      ctx2.save();ctx2.translate(p.x,p.y);ctx2.rotate(p.rot);ctx2.fillStyle=p.c;
-      ctx2.globalAlpha=Math.min(1,p.l/30);ctx2.fillRect(-p.r,-p.r/2,p.r*2,p.r);ctx2.restore();});
-    if(PARTS.length)anim=requestAnimationFrame(f);})();
-}
-// ---- live-from-the-house rotation ----
-const FAMC=CCOLS.slice();
-const CARDS=[
- {band:'var(--moss)',lab:'🎉 New on the Wins Wall',labc:'var(--moss)',
-  head:'Josiah got a 3.87 this term!',sub:'Posted by Dad · high-fives scheduled at dinner',
-  chip:'<span class="dot" style="background:var(--moss)">J</span>Josiah · chore streak day 15',
-  act:'Throw more confetti 🎉',actc:'var(--moss)',confetti:FAMC,
-  onact:(b,card)=>fireFrom(card,FAMC)},
- {band:'var(--biscuit)',lab:'🐾 Reminder · official dog business',labc:'var(--biscuit)',
-  head:'Phineas: vet appt Thu 3:30',sub:'He will act betrayed. He is fine. Treats budgeted for after.',
-  chip:'<span class="dot" style="background:var(--biscuit)">🐾</span>Ride: Endia · walk covered by Chase',
-  act:'Mark handled ✓',actc:'var(--biscuit)',confetti:null,
-  onact:(b,card)=>{b.textContent='Handled. The wall updated for everyone ✓';b.classList.add('done');
-    fireFrom(card,['#B5803F','#DC9A27','#FCF7F1']);}},
- {band:'var(--vermilion)',lab:'🍽 Tonight\'s dinner · claimed',labc:'var(--vermilion)',
-  head:'Sheet-pan chicken, David\'s cooking',sub:'He claimed the empty slot himself. Nobody asked. That\'s the system working.',
-  chip:'<span class="dot" style="background:var(--vermilion)">D</span>David · swap note: chickpeas for meatless',
-  act:'Send David a high-five 🖐',actc:'var(--vermilion)',confetti:null,
-  onact:(b,card)=>{hi5++;b.textContent='High-five sent 🖐 ×'+hi5+(hi5>2?', he\'s blushing':'');
-    fireFrom(card,['#D9472B','#E78A9B','#DC9A27']);}}
-];
-let curCard=Math.floor(Math.random()*CARDS.length),hi5=0;
-function fireFrom(el,cols){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+16,cols);}
-function renderCard(i){const c=CARDS[i],w=document.getElementById('winpop');
-  document.getElementById('wp-band').style.background=c.band;
-  const lb=document.getElementById('wp-label');lb.textContent=c.lab;lb.style.color=c.labc;
-  document.getElementById('wp-head').textContent=c.head;
-  document.getElementById('wp-sub').textContent=c.sub;
-  document.getElementById('wp-chip').innerHTML=c.chip;
-  const b=document.getElementById('wp-act');b.textContent=c.act;b.style.background=c.actc;
-  b.classList.remove('done');b.onclick=()=>c.onact(b,w);}
-function showCard(i){curCard=i;renderCard(i);const w=document.getElementById('winpop');
-  document.getElementById('winagain').style.display='none';w.classList.add('show');
-  if(CARDS[i].confetti)setTimeout(()=>fireFrom(w,CARDS[i].confetti),420);}
-function nextCard(){showCard((curCard+1)%CARDS.length);}
-function hideWin(){document.getElementById('winpop').classList.remove('show');
-  document.getElementById('winagain').style.display='block';}
-setTimeout(()=>showCard(curCard),1400);
-
-// ---------- mobile menu ----------
-(function(){
-  var t=document.getElementById('navtoggle'), n=document.getElementById('topnav');
-  if(!t||!n) return;
-  t.addEventListener('click',function(){
-    var open=n.classList.toggle('open');
-    t.classList.toggle('on',open);
-    t.setAttribute('aria-expanded',open?'true':'false');
-  });
-  n.addEventListener('click',function(e){
-    if(e.target.tagName==='A'){n.classList.remove('open');t.classList.remove('on');t.setAttribute('aria-expanded','false');}
-  });
-})();
+// ---- mobile sticky CTA after the hero ----
+const sticky = document.getElementById('sticky');
+const heroEnd = document.querySelector('.stage');
+const pricing = document.getElementById('pricing');
+new IntersectionObserver(([e]) => {
+  sticky.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0);
+}).observe(heroEnd);
+new IntersectionObserver(([e]) => { if (e.isIntersecting) sticky.classList.remove('show'); }, {threshold:.3}).observe(pricing);
 </script>
 </body>
 </html>
