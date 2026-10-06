@@ -195,6 +195,10 @@
   .q.c2::before{background:var(--plum);}
   .q.c3::before{background:var(--vermilion);}
   .q.c1{grid-row:span 2;}
+  .q.c4::before{background:var(--mustard);}
+  .q.c4{grid-column:1 / -1;}
+  .q.c4 blockquote{display:grid;grid-template-columns:1fr 1.25fr;gap:10px 34px;align-items:start;}
+  .q.c4 .full{margin-top:4px;}
   .q .pull{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.7vw,31px);line-height:1.15;letter-spacing:-.01em;}
   .q .full{font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.65;flex:1;}
   .q .who{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:16px;border-top:2px dashed var(--blush-deep);}
@@ -339,6 +343,8 @@
     .week1,.who-gets{grid-template-columns:1fr 1fr;}
     .quotes{grid-template-columns:1fr;}
     .q.c1{grid-row:auto;}
+    .q.c4 blockquote{display:block;}
+    .q.c4 .full{margin-top:14px;}
     .rest-grid{grid-template-columns:1fr 1fr;}
   }
   @media (max-width:640px){
@@ -587,6 +593,14 @@
           <p class="full">"I can now see all of the household tasks, big picture, and all the details wheeling through my wife's brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time. It's a game changer, and gives me a new perspective of what my wife carries in her mind."</p>
         </blockquote>
         <figcaption class="who"><span class="em">👨‍👧‍👦</span><div><b>Father of 2</b><span>Jumping in where he's needed</span></div></figcaption>
+      </figure>
+
+      <figure class="q c4">
+        <blockquote>
+          <div class="pull">"This app makes organizing a busy family's schedule WAYYY easier!"</div>
+          <p class="full">"This app makes organizing a busy family's schedule WAYYY easier! Having everyone's activities and commitments in one place helps us see who's available, avoid scheduling conflicts, and plan time together. It's a helpful way to keep everyone on the same page and take some of the stress out of coordinating family life."</p>
+        </blockquote>
+        <figcaption class="who"><span class="em">👩‍👦‍👦</span><div><b>Mom of 2</b><span>Seeing who's available at a glance</span></div></figcaption>
       </figure>
     </div>
   </section>
