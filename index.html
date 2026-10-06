@@ -187,24 +187,29 @@
   .rest-item b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16.5px;display:block;line-height:1.3;}
   .rest-item span{font-size:13.5px;color:var(--ink-soft);display:block;margin-top:3px;}
 
-  /* testimonials */
-  .quotes{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto;gap:18px;}
-  .q{background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:32px 32px 28px;position:relative;overflow:hidden;display:flex;flex-direction:column;}
-  .q::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;}
-  .q.c1::before{background:var(--teal);}
-  .q.c2::before{background:var(--plum);}
-  .q.c3::before{background:var(--vermilion);}
-  .q.c1{grid-row:span 2;}
-  .q.c4::before{background:var(--mustard);}
-  .q.c4{grid-column:1 / -1;}
-  .q.c4 blockquote{display:grid;grid-template-columns:1fr 1.25fr;gap:10px 34px;align-items:start;}
-  .q.c4 .full{margin-top:4px;}
-  .q .pull{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.7vw,31px);line-height:1.15;letter-spacing:-.01em;}
-  .q .full{font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.65;flex:1;}
+  /* testimonials: notes on the fridge, two staggered columns */
+  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;max-width:1040px;margin:0 auto;}
+  .qcol{display:flex;flex-direction:column;gap:40px;}
+  .qcol.offset{padding-top:90px;}
+  .q{--tilt:0deg;--tape:var(--teal);background:var(--cream);border-radius:24px;box-shadow:var(--shadow);padding:40px 34px 28px;position:relative;display:flex;flex-direction:column;
+    transform:rotate(var(--tilt));transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;}
+  .q::before{content:"";position:absolute;top:-13px;left:50%;width:104px;height:26px;margin-left:-52px;background:var(--tape);opacity:.88;border-radius:4px;
+    transform:rotate(calc(var(--tilt) * -2.5));box-shadow:0 1px 2px rgba(62,74,64,.12);}
+  .q:hover{transform:rotate(0deg) translateY(-6px);box-shadow:var(--lift);}
+  .q.c1{--tilt:-1.2deg;--tape:var(--teal);}
+  .q.c2{--tilt:1.4deg;--tape:var(--plum);}
+  .q.c3{--tilt:-.8deg;--tape:var(--vermilion);}
+  .q.c4{--tilt:1deg;--tape:var(--mustard);}
+  .q .pull{font-family:var(--serif);font-weight:400;font-size:clamp(23px,2.5vw,29px);line-height:1.16;letter-spacing:-.01em;}
+  .q .full{font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.65;}
   .q .who{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:16px;border-top:2px dashed var(--blush-deep);}
   .q .who .em{font-size:22px;}
   .q .who b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15.5px;display:block;}
   .q .who span{font-size:12.5px;color:var(--ink-soft);}
+  /* slide in as they scroll into view */
+  .js .q.reveal{opacity:0;transform:translateY(46px) rotate(calc(var(--tilt) * 3));}
+  .js .q.reveal.in{opacity:1;transform:rotate(var(--tilt));transition:opacity .6s ease,transform .8s cubic-bezier(.34,1.56,.64,1);transition-delay:var(--delay,0s);}
+  .js .q.reveal.in:hover{transform:rotate(0deg) translateY(-6px);transition-delay:0s;}
 
   /* install */
   .install{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:start;}
@@ -341,10 +346,9 @@
     .phone{transform:none;}
     .stage-cap{margin-top:34px;}
     .week1,.who-gets{grid-template-columns:1fr 1fr;}
-    .quotes{grid-template-columns:1fr;}
-    .q.c1{grid-row:auto;}
-    .q.c4 blockquote{display:block;}
-    .q.c4 .full{margin-top:14px;}
+    .quotes{grid-template-columns:1fr;gap:40px;}
+    .qcol.offset{padding-top:0;}
+    .q.c1{--tilt:-.6deg;} .q.c2{--tilt:.7deg;} .q.c3{--tilt:-.5deg;} .q.c4{--tilt:.6deg;}
     .rest-grid{grid-template-columns:1fr 1fr;}
   }
   @media (max-width:640px){
@@ -571,37 +575,38 @@
       <h2>In their words.</h2>
     </div>
     <div class="quotes">
-      <figure class="q c1">
+      <div class="qcol">
+      <figure style="--delay:0s" class="reveal q c1">
         <blockquote>
           <div class="pull">"The simple layout makes a huge impact for my household to remain on the same page."</div>
           <p class="full">"homeroom literally saved my life! I am naturally scatter-brained and having two kids with two different schedules, along with working multiple jobs, I needed something to help keep us organized. Using this app allows me to keep communication open and clear with my support and again, with ensuring that I don't forget or overlook events. From laundry day, children's sports events, work changes in schedule, chores, the simple layout makes a huge impact for my household to remain on the same page. homeroom is easy to use, and can be easily tailored to everyone in the house. I absolutely love it!"</p>
         </blockquote>
         <figcaption class="who"><span class="em">👩‍👧‍👦</span><div><b>Mom of 2</b><span>Two kids, two schedules, multiple jobs</span></div></figcaption>
       </figure>
-
-      <figure class="q c2">
-        <blockquote>
-          <div class="pull">"I now get to see how their days are flowing."</div>
-          <p class="full">"The best organizer I have ever used! Not living in the same state with my children and grandchildren makes it kind of hard to keep up with their busy days. NOT anymore! I now get to see how their days are flowing and find the best times to call for my daily updates. Love homeroom!"</p>
-        </blockquote>
-        <figcaption class="who"><span class="em">👵</span><div><b>Grandmother of 4</b><span>Keeping up from another state</span></div></figcaption>
-      </figure>
-
-      <figure class="q c3">
-        <blockquote>
-          <div class="pull">"It's a game changer, and gives me a new perspective of what my wife carries in her mind."</div>
-          <p class="full">"I can now see all of the household tasks, big picture, and all the details wheeling through my wife's brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time. It's a game changer, and gives me a new perspective of what my wife carries in her mind."</p>
-        </blockquote>
-        <figcaption class="who"><span class="em">👨‍👧‍👦</span><div><b>Father of 2</b><span>Jumping in where he's needed</span></div></figcaption>
-      </figure>
-
-      <figure class="q c4">
+      <figure style="--delay:0.15s" class="reveal q c4">
         <blockquote>
           <div class="pull">"This app makes organizing a busy family's schedule WAYYY easier!"</div>
           <p class="full">"This app makes organizing a busy family's schedule WAYYY easier! Having everyone's activities and commitments in one place helps us see who's available, avoid scheduling conflicts, and plan time together. It's a helpful way to keep everyone on the same page and take some of the stress out of coordinating family life."</p>
         </blockquote>
         <figcaption class="who"><span class="em">👩‍👦‍👦</span><div><b>Mom of 2</b><span>Seeing who's available at a glance</span></div></figcaption>
       </figure>
+      </div>
+      <div class="qcol offset">
+      <figure style="--delay:0.12s" class="reveal q c2">
+        <blockquote>
+          <div class="pull">"I now get to see how their days are flowing."</div>
+          <p class="full">"The best organizer I have ever used! Not living in the same state with my children and grandchildren makes it kind of hard to keep up with their busy days. NOT anymore! I now get to see how their days are flowing and find the best times to call for my daily updates. Love homeroom!"</p>
+        </blockquote>
+        <figcaption class="who"><span class="em">👵</span><div><b>Grandmother of 4</b><span>Keeping up from another state</span></div></figcaption>
+      </figure>
+      <figure style="--delay:0.24s" class="reveal q c3">
+        <blockquote>
+          <div class="pull">"It's a game changer, and gives me a new perspective of what my wife carries in her mind."</div>
+          <p class="full">"I can now see all of the household tasks, big picture, and all the details wheeling through my wife's brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time. It's a game changer, and gives me a new perspective of what my wife carries in her mind."</p>
+        </blockquote>
+        <figcaption class="who"><span class="em">👨‍👧‍👦</span><div><b>Father of 2</b><span>Jumping in where he's needed</span></div></figcaption>
+      </figure>
+      </div>
     </div>
   </section>
 </div>
@@ -917,6 +922,13 @@ function claim(di, ei, who, msg){
 }
 renderPhone();
 renderChips(); renderWeek(); setFoot(DEFAULT_FOOT);
+
+// ---- testimonials slide in as they reach the screen ----
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+  document.documentElement.classList.add('js');
+  const qio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); qio.unobserve(e.target); } }), {threshold:.18});
+  document.querySelectorAll('.q.reveal').forEach(q => qio.observe(q));
+}
 
 // ---- mobile sticky CTA after the hero ----
 // ---- live from the house: pop-up cards ----
