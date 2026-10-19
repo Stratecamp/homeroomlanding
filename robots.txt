@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The app lives on its own host and is all behind a sign-in. Nothing there
+# is useful to a crawler and some of it is per-household, so it is not
+# listed here and app.homeroomforfamily.com serves its own rules.
+Sitemap: https://homeroomforfamily.com/sitemap.xml
