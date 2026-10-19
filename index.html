@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>homeroom · the family command center</title>
 <meta name="description" content="Every calendar shows you what's happening. homeroom shows you who's got it. Schedules, chores, dinners and groceries for the whole house, color-coded by person, on every phone and the kitchen wall.">
-<meta name="theme-color" content="#FBFAF8">
+<meta name="theme-color" content="#FCFAF4">
 <meta name="color-scheme" content="light">
 <meta property="og:title" content="homeroom · the family command center">
 <meta property="og:description" content="Every calendar shows you what's happening. homeroom shows you who's got it. On every phone, every computer, and the kitchen wall.">
@@ -58,7 +58,7 @@
 
 :root{
   /* surfaces */
-  --paper:#FBFAF8; --stone:#F2F1EE; --card:#FFFFFF; --sunk:#F6F5F2;
+  --paper:#FCFAF4; --stone:#F4F1E8; --card:#FFFFFF; --sunk:#F8F5EC;
   --ink:#111412; --body:#3A403C; --muted:#5E655F; --soft:#676E66;
   --line:#ECE9E4; --line-2:#E7E4DF; --line-3:#E2DED8;
   /* dark band */
@@ -118,11 +118,23 @@ button{font:inherit;color:inherit}
 .btn.ghost:hover{color:#1F4A46;filter:none}
 .btn.wide{width:100%}
 
+/* ---------- Phineas walks the page with you ---------- */
+/* A 10,000px page wants a progress indicator. Making it the spectrum means
+   it is also the "everyone" mark, and the dog leading it is the one piece of
+   charm on this page that no competitor can copy. */
+.progress{position:fixed;left:0;right:0;top:0;height:16px;z-index:50;pointer-events:none;
+  opacity:0;transition:opacity .35s ease}
+.progress.on{opacity:1}
+.progress .track{position:absolute;left:0;right:0;top:7px;height:3px;background:rgba(17,20,18,.06)}
+.progress .fill{position:absolute;left:0;top:7px;height:3px;width:0}
+.progress .paw{position:absolute;top:0;left:0;width:17px;height:17px;margin-left:-8.5px;
+  color:var(--biscuit)}
+
 /* ---------- nav: floating glass capsule ---------- */
-.navbar{position:sticky;top:0;z-index:40;padding:12px max(16px,2vw) 0}
+.navbar{position:sticky;top:0;z-index:40;padding:17px max(16px,2vw) 0}
 .nav{max-width:var(--page);margin:0 auto;height:56px;padding:0 10px 0 22px;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  border-radius:999px;background:rgba(251,250,248,.92);
+  border-radius:999px;background:rgba(252,250,244,.92);
   backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
   border:1px solid rgba(255,255,255,.7);
   box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 8px 32px rgba(17,20,18,.08);
@@ -148,6 +160,15 @@ button{font:inherit;color:inherit}
   line-height:.98;font-weight:600;letter-spacing:-.048em}
 .hero .lede{margin:24px auto 0;max-width:640px;font-size:clamp(19px,2vw,24px);
   line-height:1.4;color:var(--muted);letter-spacing:-.012em}
+/* One hand mark on the page, around the four words the whole product is
+   about. One is a human touch; two would be a scrapbook. The loop is drawn
+   by script so that with reduced motion, or no script, it is simply there
+   rather than stuck at nothing. */
+.loop{position:relative;display:inline-block;white-space:nowrap;color:var(--ink)}
+.loop span{position:relative;z-index:1}
+.loop svg{position:absolute;left:-5%;top:-30%;width:110%;height:160%;overflow:visible}
+.loop path{fill:none;stroke:var(--action);stroke-width:2.4;stroke-linecap:round;
+  vector-effect:non-scaling-stroke}
 .hero-ctas{margin-top:36px;display:flex;justify-content:center;align-items:center;
   gap:12px 24px;flex-wrap:wrap}
 .fineprint{margin:14px auto 0;max-width:620px;font-size:13px;color:var(--soft)}
@@ -271,7 +292,7 @@ button{font:inherit;color:inherit}
 .person[aria-pressed="false"] .ring{filter:saturate(.92) brightness(.96)}
 .person:hover .ring{transform:translateY(-3px) scale(1.06);filter:none}
 .person[aria-pressed="true"] .ring{transform:scale(1.08);filter:none;
-  box-shadow:0 0 0 3px rgba(251,250,248,.20), 0 0 30px -2px var(--c)}
+  box-shadow:0 0 0 3px rgba(252,250,244,.20), 0 0 30px -2px var(--c)}
 .person .nm{font-size:16px;font-weight:600}
 .person .sw{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;
   color:var(--on-night-dim);transition:color .25s}
@@ -368,11 +389,19 @@ button{font:inherit;color:inherit}
 .list .row.is-done .box svg{opacity:1;transform:none}
 .list .row:hover .box{border-color:var(--teal)}
 .list .row:active .box{transform:scale(.88)}
-.list .txt{transition:color .22s}
+.list .txt{transition:color .22s;white-space:nowrap}
 .list .row.is-done .txt{color:var(--soft);text-decoration:line-through}
-.list .lock{margin-left:auto;font-size:12px;color:#B23A20;font-weight:500;padding-left:8px}
+.list .lock{margin-left:auto;font-size:12px;color:#B23A20;font-weight:500;padding-left:10px;
+  text-align:right;line-height:1.3}
 .list .lab{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft)}
-.streak{padding:18px;border-radius:var(--radius-lg);background:var(--moss);color:#fff}
+.streak{position:relative;padding:18px;border-radius:var(--radius-lg);background:var(--moss);color:#fff}
+/* Drawn the way a nine-year-old draws a star: uneven points, a crayon line,
+   no fill. The wins wall is the one card on the page that belongs to the
+   kids, so it should not look like the others. */
+.streak .top{padding-right:62px}
+.streak .crayon{position:absolute;right:14px;top:12px;transform:rotate(-12deg);
+  fill:none;stroke:#FBF6E6;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;
+  opacity:.62;pointer-events:none}
 
 /* ---------- founder ---------- */
 .founder{padding:clamp(80px,10vw,140px) 0}
@@ -385,10 +414,10 @@ button{font:inherit;color:inherit}
    section is for. At 96px it does the one job a founder photo has to do —
    confirm there is a person behind the claim — and the words lead. The
    spectrum ring is the same mark the all-family events carry. */
-.byline{display:flex;align-items:center;gap:16px}
-.byline .shot{width:96px;height:96px;border-radius:50%;flex:none;padding:3px;
+.byline{display:flex;align-items:center;gap:22px}
+.byline .shot{width:160px;height:160px;border-radius:50%;flex:none;padding:4px;
   background:conic-gradient(from 90deg,#2F6661 0 12.5%,#D9472B 12.5% 25%,#DC9A27 25% 37.5%,#E78A9B 37.5% 50%,#7A8B5C 50% 62.5%,#5E8CA7 62.5% 75%,#9B6B9E 75% 87.5%,#B5803F 87.5% 100%);
-  box-shadow:0 10px 24px -12px rgba(17,20,18,.45)}
+  box-shadow:0 16px 36px -16px rgba(17,20,18,.42)}
 .byline .shot img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;
   background:var(--sunk)}
 
@@ -474,6 +503,9 @@ footer{background:var(--paper);padding:48px 0 56px;border-top:1px solid var(--li
 .foot .left{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .foot .wordmark{font-size:22px}
 .foot .tagline{font-size:14px;color:var(--soft)}
+.pawmark{width:17px;height:17px;color:var(--biscuit);opacity:.85;cursor:help;
+  transition:transform .3s cubic-bezier(.2,1.4,.4,1)}
+.pawmark:hover{transform:rotate(-14deg) scale(1.15)}
 .foot .links{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;align-items:center}
 .foot .links a{color:var(--muted)}
 .foot .c{color:var(--soft)}
@@ -484,7 +516,7 @@ footer{background:var(--paper);padding:48px 0 56px;border-top:1px solid var(--li
    were already looking at. */
 .pop{position:fixed;left:24px;bottom:24px;z-index:55;width:360px;max-width:calc(100vw - 32px);
   padding:20px 18px 16px;border-radius:26px;overflow:hidden;
-  background:rgba(251,250,248,.93);
+  background:rgba(252,250,244,.93);
   backdrop-filter:blur(26px) saturate(190%);-webkit-backdrop-filter:blur(26px) saturate(190%);
   border:1px solid rgba(255,255,255,.8);
   box-shadow:0 1px 0 rgba(255,255,255,.9) inset, var(--lift);
@@ -510,7 +542,7 @@ footer{background:var(--paper);padding:48px 0 56px;border-top:1px solid var(--li
 .pop .act.done{background:var(--sunk)!important;color:var(--muted);cursor:default}
 .pop .more{display:block;margin-top:11px;text-align:center;font-size:13px;font-weight:500;color:var(--teal)}
 .pop-again{position:fixed;right:24px;bottom:24px;z-index:54;width:54px;height:54px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.8);background:rgba(251,250,248,.92);
+  border:1px solid rgba(255,255,255,.8);background:rgba(252,250,244,.92);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   box-shadow:var(--lift);cursor:pointer;display:none;font-size:22px;
   transition:transform .15s}
@@ -562,6 +594,12 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
+<div class="progress" id="progress" aria-hidden="true">
+  <span class="track"></span>
+  <span class="fill spectrum" id="progFill"></span>
+  <span class="paw" id="progPaw"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="4.2" ry="3.6" stroke="currentColor" stroke-width="2"/><circle cx="6.2" cy="10" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="9.6" cy="6.4" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="14.4" cy="6.4" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="17.8" cy="10" r="1.8" stroke="currentColor" stroke-width="2"/></svg></span>
+</div>
+
 <!-- ============ NAV ============ -->
 <div class="navbar" id="navbar">
   <nav class="nav" aria-label="Main">
@@ -589,7 +627,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="#3A403C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
   <h1 class="balance">The whole house, at a glance.</h1>
-  <p class="lede balance">Every calendar shows what&rsquo;s happening. homeroom shows who&rsquo;s got it.</p>
+  <p class="lede balance">Every calendar shows what&rsquo;s happening. homeroom shows <span class="loop"><span>who&rsquo;s got it</span><svg viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true"><path id="heroLoop" d="M268 20C236 7 150 2 86 9 30 15 6 29 14 41c9 14 90 18 162 14 60-4 112-15 116-28 2-8-8-14-24-16"/></svg></span>.</p>
   <div class="hero-ctas">
     <a class="btn js-start" href="https://app.homeroomforfamily.com"><span>Start your <span class="js-trial-days">7</span>-day free trial</span></a>
     <a class="btn ghost" href="#whos-got-it">See how it works
@@ -857,7 +895,8 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 
       <article class="cell" style="justify-content:space-between">
         <div class="streak">
-          <div style="display:flex;align-items:baseline;gap:8px"><span id="streakNum" style="font-size:48px;font-weight:600;letter-spacing:-.05em;line-height:1">15</span><span style="font-size:14px;font-weight:500;opacity:.9">day reading streak</span></div>
+          <svg class="crayon" width="56" height="56" viewBox="0 0 60 60" aria-hidden="true"><path d="M31 5 L38.5 21 L56 24.5 L43 36.5 L46.5 55 L30 45.5 L13 56 L17.5 37 L4 23 L23 20.5 Z"/></svg>
+          <div class="top" style="display:flex;align-items:baseline;gap:8px"><span id="streakNum" style="font-size:48px;font-weight:600;letter-spacing:-.05em;line-height:1">15</span><span style="font-size:14px;font-weight:500;opacity:.9">day reading streak</span></div>
           <div style="margin-top:10px;font-size:15px;line-height:1.4">Josiah is on a 15-day streak and unbearably smug about it.</div>
         </div>
         <div>
@@ -895,7 +934,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
       <span class="kicker">BUILT BY A MOM, FOR THE WHOLE HOUSE</span>
       <blockquote class="balance">&ldquo;Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build a system for our home. It&rsquo;s made all the difference now that we all have visibility and input into the family load.&rdquo;</blockquote>
       <div class="byline">
-        <span class="shot"><img src="/endia-round.jpg" width="420" height="420"
+        <span class="shot"><img src="/endia-round.jpg" width="512" height="512"
           loading="lazy" decoding="async" alt="Endia Leonard, founder of homeroom"></span>
         <span>
           <span style="display:block;font-size:17px;font-weight:600">Endia Leonard</span>
@@ -1043,6 +1082,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     <div class="left">
       <span class="wordmark"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span>
       <span class="tagline">household operations, shared.</span>
+      <span class="pawmark" role="img" aria-label="Phineas" title="Phineas"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="4.2" ry="3.6" stroke="currentColor" stroke-width="2"/><circle cx="6.2" cy="10" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="9.6" cy="6.4" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="14.4" cy="6.4" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="17.8" cy="10" r="1.8" stroke="currentColor" stroke-width="2"/></svg></span>
     </div>
     <div class="links">
       <a class="js-start" href="https://app.homeroomforfamily.com">Sign in</a>
@@ -1099,11 +1139,45 @@ body.pop-open .sticky{transform:translateY(160%)!important}
   all('.js-start').forEach(function (a) { a.href = CONFIG.appUrl; });
   all('.js-trial-days').forEach(function (e) { e.textContent = CONFIG.trialDays; });
 
-  // ── Nav shadow once you leave the top ────────────────────
-  var navbar = $('navbar');
-  var onScroll = function () { navbar.classList.toggle('stuck', window.scrollY > 8); };
+  // ── Nav shadow, and Phineas walking the page ─────────────
+  var navbar = $('navbar'), prog = $('progress'), progFill = $('progFill'), progPaw = $('progPaw');
+  var ticking = false;
+
+  function onScroll() {
+    navbar.classList.toggle('stuck', window.scrollY > 8);
+    prog.classList.toggle('on', window.scrollY > 90);
+    var room = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = room > 0 ? Math.min(1, Math.max(0, window.scrollY / room)) : 0;
+    progFill.style.width = (pct * 100) + '%';
+    progPaw.style.left = (pct * 100) + '%';
+    // a step every 2% of the page, so the paw reads as walking rather than sliding
+    if (!reduceMotion) {
+      progPaw.style.transform = 'rotate(' + (Math.floor(pct * 50) % 2 ? 13 : -13) + 'deg)';
+    }
+  }
+  function requestScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { onScroll(); ticking = false; });
+  }
   onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', requestScroll, { passive: true });
+  window.addEventListener('resize', requestScroll, { passive: true });
+
+  // ── The hand loop in the hero ────────────────────────────
+  // Drawn rather than hardcoded: the dash length is the real path length, and
+  // it is only applied when we are going to animate. With reduced motion or
+  // no script the loop is simply there, fully drawn.
+  var heroLoop = document.getElementById('heroLoop');
+  if (heroLoop && !reduceMotion && heroLoop.getTotalLength) {
+    var len = heroLoop.getTotalLength();
+    heroLoop.style.strokeDasharray = len;
+    heroLoop.style.strokeDashoffset = len;
+    requestAnimationFrame(function () {
+      heroLoop.style.transition = 'stroke-dashoffset 1.05s cubic-bezier(.4,0,.2,1) .5s';
+      heroLoop.style.strokeDashoffset = '0';
+    });
+  }
 
   // ── Pricing ──────────────────────────────────────────────
   var fmt = function (n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); };
@@ -1453,7 +1527,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
         b.textContent = '✓ Claimed. Everyone’s phone just updated.';
         b.classList.add('done');
         $('pop-chip').innerHTML = dot('#2F6661', 'E') + 'Endia’s got it';
-        burst(pop, ['#5E8CA7', '#2F6661', '#FBFAF8']);
+        burst(pop, ['#5E8CA7', '#2F6661', '#FCFAF4']);
       } },
 
     { band: '#7A8B5C', lab: '🎉 New on the wins wall',
@@ -1483,7 +1557,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
       go: function (b, pop) {
         b.textContent = 'Handled ✓ The whole house can see it.';
         b.classList.add('done');
-        burst(pop, ['#B5803F', '#DC9A27', '#FBFAF8']);
+        burst(pop, ['#B5803F', '#DC9A27', '#FCFAF4']);
       } }
   ];
 
