@@ -166,7 +166,11 @@ button{font:inherit;color:inherit}
    rather than stuck at nothing. */
 .loop{position:relative;display:inline-block;white-space:nowrap;color:var(--ink)}
 .loop span{position:relative;z-index:1}
-.loop svg{position:absolute;left:-5%;top:-30%;width:110%;height:160%;overflow:visible}
+/* max-width:none matters: the global img,svg rule was clamping this to
+   100% of the span, which is why the loop stopped halfway through the
+   last word instead of going round it. */
+.loop svg{position:absolute;left:-11%;top:-38%;width:122%;height:176%;
+  overflow:visible;max-width:none}
 .loop path{fill:none;stroke:var(--action);stroke-width:2.4;stroke-linecap:round;
   vector-effect:non-scaling-stroke}
 .hero-ctas{margin-top:36px;display:flex;justify-content:center;align-items:center;
@@ -231,8 +235,30 @@ button{font:inherit;color:inherit}
 /* the phone, bleeding off the right */
 .phone{position:absolute;right:-1.5%;bottom:0;width:25%;border-radius:46px;
   background:#161917;padding:10px;box-shadow:0 40px 80px -24px rgba(17,20,18,.45)}
-.phone-screen{border-radius:37px;background:var(--paper);overflow:hidden;
-  padding:46px 16px 18px;aspect-ratio:9/18.5}
+.phone-screen{position:relative;border-radius:37px;background:var(--paper);overflow:hidden;
+  padding:42px 14px 58px;aspect-ratio:9/18.5}
+/* A device shot has to show a full day. Half a screen of white says the
+   product is empty, which against a wall calendar is the worst thing it
+   could say. */
+.ph-sec{margin-top:11px;font-size:9.5px;font-weight:600;letter-spacing:.09em;color:var(--soft)}
+.ph-card{margin-top:6px;padding:9px 10px;border-radius:13px;background:var(--card);
+  box-shadow:0 1px 2px rgba(17,20,18,.06)}
+.ph-card .n{font-size:12.5px;font-weight:600;letter-spacing:-.01em}
+.ph-card .s{margin-top:2px;font-size:10.5px;color:var(--muted)}
+.ph-ask{display:inline-block;margin-top:5px;background:#FBEDE9;color:#A8341C;
+  border-radius:999px;padding:2px 8px;font-size:9.5px;font-weight:600}
+.ph-chore{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:11.5px}
+.ph-chore .who{margin-left:auto;font-size:9px;font-weight:600;letter-spacing:.06em;color:var(--soft)}
+.ph-box{width:14px;height:14px;border-radius:50%;border:1.6px solid #C9C5BE;flex:none;
+  display:grid;place-items:center}
+.ph-box.on{border-color:transparent;background:var(--teal)}
+.ph-done{color:var(--soft);text-decoration:line-through}
+.ph-tabs{position:absolute;left:12px;right:12px;bottom:10px;height:36px;border-radius:999px;
+  background:rgba(252,250,244,.94);border:1px solid var(--line);
+  box-shadow:0 4px 14px -6px rgba(17,20,18,.2);
+  display:grid;grid-template-columns:repeat(4,1fr);align-items:center;
+  font-size:8.5px;font-weight:600;text-align:center;color:var(--soft)}
+.ph-tabs .on{color:var(--teal)}
 .ph-date{font-size:12px;font-weight:500;color:var(--soft)}
 .ph-today{font-size:28px;font-weight:700;letter-spacing:-.035em;margin-top:2px}
 .ph-next{margin-top:14px;padding:12px;border-radius:18px;background:var(--card);
@@ -359,6 +385,52 @@ button{font:inherit;color:inherit}
 .serieshint{margin-top:14px;font-size:14px;color:var(--muted);min-height:1.4em}
 .serieshint b{color:var(--teal);font-weight:600}
 .bignum{font-size:clamp(64px,7vw,96px);font-weight:600;letter-spacing:-.06em;line-height:.9}
+
+/* ---------- the kitchen wall ---------- */
+/* Its own full-width row, because an iPad squeezed into a third of the grid
+   would be the same mistake as a half-empty phone: too small to show that
+   the thing is full of a real family's day. */
+.cell.wide{grid-column:1/-1}
+.cell.dark.wide{flex-direction:row;flex-wrap:wrap;align-items:center;
+  gap:clamp(24px,3vw,44px);padding:clamp(24px,3vw,40px)}
+.kd-copy{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.ipad{flex:1 1 420px;min-width:0;border-radius:24px;padding:11px;
+  background:linear-gradient(160deg,#30362F 0%,#141715 45%,#232823 100%);
+  box-shadow:0 34px 70px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.07)}
+.ipad-screen{aspect-ratio:4/3;border-radius:13px;background:var(--paper);color:var(--ink);
+  overflow:hidden;padding:13px 14px;display:flex;flex-direction:column;gap:9px}
+.wall-top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+  padding-bottom:9px;border-bottom:1px solid var(--line)}
+.wall-time{font-size:33px;font-weight:600;letter-spacing:-.045em;line-height:1}
+.wall-date{font-size:10px;color:var(--muted);margin-top:3px}
+.wall-people{display:flex;gap:3px}
+.wav{width:19px;height:19px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font-size:8.5px;font-weight:600;color:#fff}
+.wav.ink{color:var(--ink)}
+.wall-body{flex:1;display:grid;grid-template-columns:1.6fr 1fr;gap:12px;min-height:0}
+.wall-lab{font-size:8.5px;font-weight:600;letter-spacing:.11em;color:var(--soft)}
+.wall-row{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px}
+.wall-row .t{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:10px;
+  color:var(--muted);width:32px;flex:none}
+.wall-row .bar{width:3.5px;height:19px;border-radius:2px;flex:none}
+.wall-row .l{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wall-row .who{margin-left:auto;font-size:9.5px;font-weight:600;white-space:nowrap;padding-left:6px}
+.wall-ask{margin-left:auto;background:#FBEDE9;color:#A8341C;border-radius:999px;
+  padding:2px 8px;font-size:9px;font-weight:600;white-space:nowrap}
+.wall-side{display:flex;flex-direction:column;gap:9px;min-width:0}
+.wall-card{background:var(--card);border-radius:10px;padding:8px 9px;
+  box-shadow:0 1px 2px rgba(17,20,18,.07)}
+.wall-dish{margin-top:4px;font-size:12.5px;font-weight:600;letter-spacing:-.01em}
+.wall-sub{margin-top:2px;font-size:9.5px;color:var(--muted)}
+.wall-chore{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:11px}
+.wall-chore .w{margin-left:auto;font-size:9px;font-weight:600;color:var(--soft)}
+.wall-chore .done{color:var(--soft);text-decoration:line-through}
+.wall-row.past .l{text-decoration:line-through;color:var(--soft);font-weight:400}
+.wall-row.past .t,.wall-row.past .who{color:var(--soft)}
+.wall-row.past .bar{opacity:.4}
+.wall-box{width:13px;height:13px;border-radius:50%;border:1.5px solid #C9C5BE;flex:none;
+  display:grid;place-items:center}
+.wall-box.on{background:var(--teal);border-color:transparent}
 .joinlink{display:flex;align-items:center;gap:10px;height:48px;padding:0 8px 0 16px;
   border-radius:999px;background:var(--sunk);
   font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:13px;color:var(--body);min-width:0}
@@ -394,7 +466,13 @@ button{font:inherit;color:inherit}
 .list .lock{margin-left:auto;font-size:12px;color:#B23A20;font-weight:500;padding-left:10px;
   text-align:right;line-height:1.3}
 .list .lab{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft)}
-.streak{position:relative;padding:18px;border-radius:var(--radius-lg);background:var(--moss);color:#fff}
+.streak{position:relative;padding:18px;border-radius:var(--radius-lg);background:var(--moss);
+  color:#fff;display:block;width:100%;text-align:left;border:0;font:inherit;cursor:pointer;
+  transition:transform .18s cubic-bezier(.2,1.4,.4,1)}
+.streak:hover{transform:translateY(-2px)}
+.streak:active{transform:scale(.985)}
+.streak .crayon{transition:transform .5s cubic-bezier(.2,1.2,.3,1)}
+.streak:hover .crayon{transform:rotate(6deg) scale(1.06)}
 /* Drawn the way a nine-year-old draws a star: uneven points, a crayon line,
    no fill. The wins wall is the one card on the page that belongs to the
    kids, so it should not look like the others. */
@@ -758,6 +836,20 @@ body.pop-open .sticky{transform:translateY(160%)!important}
           <div class="ph-row"><span class="t">6:30</span><span class="bar" style="background:#DC9A27"></span><span class="l">Fajitas &middot; David cooks</span></div>
           <div class="ph-row"><span class="t">7:30</span><span class="bar" style="background:linear-gradient(180deg,#2F6661 0 25%,#D9472B 25% 50%,#DC9A27 50% 75%,#5E8CA7 75% 100%)"></span><span class="l">Movie night &middot; everyone</span></div>
         </div>
+
+        <div class="ph-sec">NEEDS SOMEONE</div>
+        <div class="ph-card">
+          <div class="n">Art club pickup &middot; 3:30</div>
+          <span class="ph-ask">Who&rsquo;s got it?</span>
+        </div>
+
+        <div class="ph-sec">DINNER TONIGHT</div>
+        <div class="ph-card">
+          <div class="n">Sheet-pan fajitas</div>
+          <div class="s">David cooks &middot; everything&rsquo;s in the house</div>
+        </div>
+
+        <div class="ph-tabs"><span class="on">Today</span><span>Week</span><span>Meals</span><span>Lists</span></div>
       </div>
     </div>
   </div>
@@ -818,15 +910,6 @@ body.pop-open .sticky{transform:translateY(160%)!important}
         </div>
       </article>
 
-      <article class="cell dark" id="display">
-        <span class="tag">KITCHEN DISPLAY</span>
-        <div>
-          <div class="bignum">$0</div>
-          <div style="margin-top:6px;font-size:15px;color:#A9AFA8">for the screen on your wall</div>
-        </div>
-        <p>Your old iPad is the kitchen display. Any tablet in a drawer becomes the family calendar: big clock, today&rsquo;s plan, tonight&rsquo;s dinner, chores you can tap.</p>
-      </article>
-
       <article class="cell">
         <div class="joinlink">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex:none"><path d="M10 14a4 4 0 005.66 0l3-3a4 4 0 00-5.66-5.66l-1 1M14 10a4 4 0 00-5.66 0l-3 3a4 4 0 005.66 5.66l1-1" stroke="#5E655F" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -836,6 +919,63 @@ body.pop-open .sticky{transform:translateY(160%)!important}
         <div>
           <h3>Kids join with a link.</h3>
           <p>No email, no password. They tap it and they&rsquo;re in, with their own color and their own chores.</p>
+        </div>
+      </article>
+
+      <article class="cell dark wide" id="display">
+        <div class="kd-copy">
+          <span class="tag">KITCHEN DISPLAY</span>
+          <div>
+            <div class="bignum">$0</div>
+            <div style="margin-top:6px;font-size:15px;color:#A9AFA8">for the screen on your wall</div>
+          </div>
+          <p>Your old iPad is the kitchen display. Any tablet in a drawer becomes the family wall calendar: the time in big numbers, the whole day, tonight&rsquo;s dinner, and chores anyone can tap on the way past.</p>
+        </div>
+
+        <div class="ipad" aria-hidden="true">
+          <div class="ipad-screen">
+            <div class="wall-top">
+              <div>
+                <div class="wall-time">4:12</div>
+                <div class="wall-date">Friday, October 16</div>
+              </div>
+              <div class="wall-people"><span class="wav" style="background:#2F6661">E</span><span class="wav" style="background:#D9472B">D</span><span class="wav ink" style="background:#DC9A27">N</span><span class="wav ink" style="background:#E78A9B">Z</span><span class="wav" style="background:#7A8B5C">J</span><span class="wav" style="background:#5E8CA7">C</span><span class="wav" style="background:#9B6B9E">C</span><span class="wav" style="background:#B5803F">P</span></div>
+            </div>
+
+            <div class="wall-body">
+              <div class="wall-main">
+                <div class="wall-lab">TODAY</div>
+                <div class="wall-row past"><span class="t">7:30</span><span class="bar" style="background:#D9472B"></span><span class="l">School drop-off</span><span class="who" style="color:#676E66">done</span></div>
+                <div class="wall-row past"><span class="t">9&ndash;12</span><span class="bar" style="background:#8A9088"></span><span class="l">Home cleaning</span><span class="who" style="color:#676E66">done</span></div>
+                <div class="wall-row"><span class="t">3:30</span><span class="bar" style="background:#5E8CA7"></span><span class="l">Soccer &middot; Chase</span><span class="who" style="color:#2F6661">Endia&rsquo;s got it</span></div>
+                <div class="wall-row"><span class="t">4:00</span><span class="bar" style="background:#E78A9B"></span><span class="l">Dance &middot; Zo&euml;</span><span class="who" style="color:#B23A20">David&rsquo;s got it</span></div>
+                <div class="wall-row"><span class="t">5:00</span><span class="bar" style="background:#9B6B9E"></span><span class="l">Piano &middot; Charli</span><span class="wall-ask">Who&rsquo;s got it?</span></div>
+                <div class="wall-row"><span class="t">6:30</span><span class="bar" style="background:#DC9A27"></span><span class="l">Fajitas</span><span class="who" style="color:#8F631C">David cooks</span></div>
+                <div class="wall-row"><span class="t">7:30</span><span class="bar" style="background:linear-gradient(180deg,#2F6661 0 12.5%,#D9472B 12.5% 25%,#DC9A27 25% 37.5%,#E78A9B 37.5% 50%,#7A8B5C 50% 62.5%,#5E8CA7 62.5% 75%,#9B6B9E 75% 87.5%,#B5803F 87.5% 100%)"></span><span class="l">Movie night</span><span class="who" style="color:#676E66">everyone</span></div>
+                <div class="wall-row"><span class="t">8:00</span><span class="bar" style="background:#8A9088"></span><span class="l">Grocery order locks</span><span class="who" style="color:#676E66">auto</span></div>
+              </div>
+
+              <div class="wall-side">
+                <div class="wall-card">
+                  <div class="wall-lab">DINNER</div>
+                  <div class="wall-dish">Sheet-pan fajitas</div>
+                  <div class="wall-sub">David cooks &middot; 6:30</div>
+                </div>
+                <div class="wall-card">
+                  <div class="wall-lab">CHORES</div>
+                  <div class="wall-chore"><span class="wall-box on"><svg width="7" height="7" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="done">Dishwasher</span><span class="w">D</span></div>
+                  <div class="wall-chore"><span class="wall-box"></span>Fold laundry<span class="w">N</span></div>
+                  <div class="wall-chore"><span class="wall-box"></span>Walk Phineas<span class="w">C</span></div>
+                  <div class="wall-chore"><span class="wall-box"></span>Trash out<span class="w">J</span></div>
+                </div>
+                <div class="wall-card">
+                  <div class="wall-lab">WINS THIS WEEK</div>
+                  <div class="wall-dish">Josiah &middot; 15-day streak</div>
+                  <div class="wall-sub">Posted by Grandma</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -894,11 +1034,11 @@ body.pop-open .sticky{transform:translateY(160%)!important}
       </article>
 
       <article class="cell" style="justify-content:space-between">
-        <div class="streak">
+        <button type="button" class="streak" id="winsCard" aria-label="Throw some confetti">
           <svg class="crayon" width="56" height="56" viewBox="0 0 60 60" aria-hidden="true"><path d="M31 5 L38.5 21 L56 24.5 L43 36.5 L46.5 55 L30 45.5 L13 56 L17.5 37 L4 23 L23 20.5 Z"/></svg>
           <div class="top" style="display:flex;align-items:baseline;gap:8px"><span id="streakNum" style="font-size:48px;font-weight:600;letter-spacing:-.05em;line-height:1">15</span><span style="font-size:14px;font-weight:500;opacity:.9">day reading streak</span></div>
           <div style="margin-top:10px;font-size:15px;line-height:1.4">Josiah is on a 15-day streak and unbearably smug about it.</div>
-        </div>
+        </button>
         <div>
           <h3>The wins wall.</h3>
           <p>If it made someone proud, it goes on the wall.</p>
@@ -1434,9 +1574,17 @@ body.pop-open .sticky{transform:translateY(160%)!important}
       r.classList.toggle('is-done', now);
       r.setAttribute('aria-pressed', String(now));
       countItems();
+      // clearing the list is the other moment a house cheers
+      if (all('.list .row.is-done').length === all('.list .js-tick').length) {
+        burst(document.querySelector('.list'), ['#2F6661', '#7A8B5C', '#DC9A27']);
+      }
     });
   });
   countItems();
+
+  // The wins wall is the celebration feature. Tapping it should celebrate.
+  var wins = $('winsCard');
+  if (wins) wins.addEventListener('click', function () { burst(wins, ALL); });
 
   // Two numbers that run once when they come into view and then stop. A
   // timer that counts forever on a marketing page is a distraction; one
