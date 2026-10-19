@@ -224,20 +224,82 @@ button{font:inherit;color:inherit}
 .ph-row .l{font-size:12px;font-weight:500}
 
 /* ---------- dark statement band ---------- */
-.night{background:var(--night);color:var(--on-night);padding:clamp(80px,11vw,160px) 0}
+/* This section is the emotional argument of the page, so it should not be a
+   flat black rectangle with eight stickers on it. Two things give it life:
+   a slow wash of the family's own colours behind everything, and the people
+   themselves, which are buttons. Tap one and the band becomes that person's
+   Friday — which is exactly what the product does. */
+.night{position:relative;overflow:hidden;background:var(--night);color:var(--on-night);
+  padding:clamp(80px,11vw,160px) 0}
+.aurora{position:absolute;inset:-25% -12%;pointer-events:none;opacity:.55;filter:blur(72px);
+  background:
+    radial-gradient(28% 34% at 16% 26%, rgba(47,102,97,.60), transparent 70%),
+    radial-gradient(26% 30% at 72% 16%, rgba(217,71,43,.34), transparent 70%),
+    radial-gradient(30% 36% at 84% 74%, rgba(155,107,158,.42), transparent 70%),
+    radial-gradient(24% 28% at 34% 88%, rgba(220,154,39,.30), transparent 70%);
+  animation:drift 38s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-2%,-1%,0) scale(1)}
+                 to{transform:translate3d(3%,2%,0) scale(1.09)}}
+.night .wrap{position:relative;z-index:1}
 .night h2{font-size:clamp(40px,6.4vw,88px);line-height:1.02;font-weight:600;
   letter-spacing:-.045em;max-width:920px}
-.night h2 em{font-style:normal;color:#6E756F}
+/* takes on the colour of whoever is selected */
+.night h2 em{font-style:normal;color:#6E756F;transition:color .45s ease}
 .night .lede{margin-top:28px;max-width:620px;font-size:clamp(18px,1.8vw,22px);
   line-height:1.45;color:var(--on-night-muted)}
-.people{margin-top:clamp(56px,7vw,96px);display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:28px 16px}
-.person{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.tapline{margin-top:20px;display:inline-flex;align-items:center;gap:9px;font-size:15px;
+  color:var(--on-night-dim)}
+.tapline svg{animation:nudge 2.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+
+.house{margin-top:clamp(44px,5.5vw,76px);display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+  gap:clamp(28px,4vw,56px);align-items:start}
+.people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 12px}
+.person{appearance:none;-webkit-appearance:none;border:0;background:none;padding:0;
+  cursor:pointer;text-align:left;font:inherit;color:inherit;
+  display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+/* the entrance is opt-in from script, so if script never runs the people are
+   simply there rather than invisible */
+.people.pending .person{opacity:0;transform:translateY(14px)}
+.people.in .person{opacity:1;transform:none}
 .person .ring{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;
-  font-size:22px;font-weight:600;color:#fff}
+  font-size:22px;font-weight:600;color:#fff;
+  transition:transform .3s cubic-bezier(.2,.9,.2,1),box-shadow .3s ease,filter .3s ease}
 .person .ring.on-light{color:var(--ink)}
+.person[aria-pressed="false"] .ring{filter:saturate(.92) brightness(.96)}
+.person:hover .ring{transform:translateY(-3px) scale(1.06);filter:none}
+.person[aria-pressed="true"] .ring{transform:scale(1.08);filter:none;
+  box-shadow:0 0 0 3px rgba(251,250,248,.20), 0 0 30px -2px var(--c)}
 .person .nm{font-size:16px;font-weight:600}
-.person .sw{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;color:var(--on-night-dim)}
+.person .sw{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;
+  color:var(--on-night-dim);transition:color .25s}
+.person:hover .sw,.person[aria-pressed="true"] .sw{color:var(--on-night-muted)}
+.person .paw{transition:transform .3s}
+.person:hover .paw{transform:rotate(-14deg)}
+
+.daycard{border-radius:var(--radius-xl);border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);padding:clamp(22px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:18px;min-height:368px}
+.daycard .who{display:flex;align-items:center;gap:13px}
+.daycard .who .ring{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  font-size:17px;font-weight:600;color:#fff;flex:none;overflow:hidden}
+.daycard .who .ring.on-light{color:var(--ink)}
+.daycard .nm{font-size:19px;font-weight:600;letter-spacing:-.02em}
+.daycard .dt{font-size:13px;color:var(--on-night-dim);margin-top:1px}
+.dayitems{display:flex;flex-direction:column;gap:9px}
+.item{position:relative;display:flex;align-items:center;gap:12px;overflow:hidden;
+  padding:12px 14px 12px 17px;border-radius:16px;background:rgba(255,255,255,.055);
+  animation:itemIn .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes itemIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.item .edge{position:absolute;left:0;top:0;bottom:0;width:3px}
+.item .t{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11.5px;
+  color:var(--on-night-muted);width:44px;flex:none}
+.item .l{font-size:15px;font-weight:500}
+.item .by{margin-left:auto;font-size:12px;font-weight:600;white-space:nowrap;padding-left:8px}
+.item.chore .l{color:var(--on-night-muted);font-weight:400}
+.daycard .note{margin-top:auto;font-size:13.5px;line-height:1.5;color:var(--on-night-muted)}
 .night .foot{margin-top:40px;font-size:15px;color:#9AA096}
 
 /* ---------- bento ---------- */
@@ -297,12 +359,22 @@ button{font:inherit;color:inherit}
 
 /* ---------- founder ---------- */
 .founder{padding:clamp(80px,10vw,140px) 0}
-.founder .inner{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-.founder blockquote{font-size:clamp(26px,3.4vw,42px);line-height:1.18;font-weight:500;
-  letter-spacing:-.03em}
-.byline{display:flex;align-items:center;gap:14px}
-.byline .ring{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;
-  display:grid;place-items:center;font-weight:600}
+.founder .inner{max-width:1020px;margin:0 auto;display:grid;
+  grid-template-columns:minmax(0,360px) minmax(0,1fr);
+  gap:clamp(28px,4.5vw,60px);align-items:center}
+/* The photo sits on a card with a shadow, like the devices elsewhere, so the
+   white studio background reads as a deliberate edge rather than a shape
+   fading into the paper. The spectrum along the bottom is the same mark the
+   all-family events carry: she is one of the colours too. */
+.portrait{position:relative;margin:0;border-radius:var(--radius-xl);overflow:hidden;
+  background:var(--sunk);
+  box-shadow:0 30px 64px -30px rgba(17,20,18,.36), 0 0 0 1px rgba(17,20,18,.05)}
+.portrait img{width:100%;height:auto;display:block}
+.portrait .bar{position:absolute;left:0;right:0;bottom:0;height:6px}
+.said{display:flex;flex-direction:column;gap:24px;min-width:0}
+.founder blockquote{font-size:clamp(23px,2.7vw,33px);line-height:1.22;font-weight:500;
+  letter-spacing:-.028em}
+.byline{display:flex;flex-direction:column;gap:2px}
 
 /* ---------- stories ---------- */
 .stories{background:var(--stone);padding:clamp(80px,10vw,140px) 0}
@@ -438,6 +510,16 @@ body.pop-open .sticky{transform:translateY(160%)!important}
   .cell.span2{grid-column:auto}
   .series{grid-template-columns:repeat(3,minmax(0,1fr))}
   .series div:nth-child(n+4){display:none}
+  .house{grid-template-columns:1fr}
+  .daycard{min-height:0}
+}
+@media (max-width:520px){
+  .people{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 10px}
+  .person .ring{width:56px;height:56px;font-size:19px}
+}
+@media (max-width:820px){
+  .founder .inner{grid-template-columns:1fr;max-width:620px;gap:28px}
+  .portrait{max-width:280px}
 }
 @media (max-width:860px){
   .navlinks{display:none}
@@ -633,21 +715,31 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 
 <!-- ============ THE LOAD ============ -->
 <section class="night" id="whos-got-it">
+  <div class="aurora" aria-hidden="true"></div>
   <div class="wrap">
     <h2 class="balance">The load isn&rsquo;t tasks. <em>It&rsquo;s tracking.</em></h2>
     <p class="lede">Who&rsquo;s driving, who&rsquo;s cooking, whether anyone fed the dog. homeroom puts all of it where everyone can see it, so one person stops carrying it in their head.</p>
-    <div class="people">
-      <div class="person"><span class="ring" style="background:#2F6661">E</span><span class="nm">Endia</span><span class="sw">TEAL</span></div>
-      <div class="person"><span class="ring" style="background:#D9472B">D</span><span class="nm">David</span><span class="sw">VERMILION</span></div>
-      <div class="person"><span class="ring on-light" style="background:#DC9A27">N</span><span class="nm">Nia</span><span class="sw">MUSTARD</span></div>
-      <div class="person"><span class="ring on-light" style="background:#E78A9B">Z</span><span class="nm">Zo&euml;</span><span class="sw">ROSE</span></div>
-      <div class="person"><span class="ring" style="background:#7A8B5C">J</span><span class="nm">Josiah</span><span class="sw">MOSS</span></div>
-      <div class="person"><span class="ring" style="background:#5E8CA7">C</span><span class="nm">Chase</span><span class="sw">DUSTY BLUE</span></div>
-      <div class="person"><span class="ring" style="background:#9B6B9E">C</span><span class="nm">Charli</span><span class="sw">PLUM</span></div>
-      <div class="person"><span class="ring" style="background:#B5803F">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="4.2" ry="3.6" stroke="#fff" stroke-width="1.7"/><circle cx="6.2" cy="10" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="9.6" cy="6.4" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="14.4" cy="6.4" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="17.8" cy="10" r="1.8" stroke="#fff" stroke-width="1.7"/></svg>
-      </span><span class="nm">Phineas</span><span class="sw">BISCUIT &middot; DOG</span></div>
+    <p class="tapline">Tap anyone to see their Friday. Yes, the dog.
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </p>
+
+    <div class="house">
+      <div class="people" id="people" role="group" aria-label="Everyone in this household">
+        <button class="person" type="button" data-k="E" aria-pressed="false" style="--c:#2F6661"><span class="ring" style="background:#2F6661">E</span><span class="nm">Endia</span><span class="sw">TEAL</span></button>
+        <button class="person" type="button" data-k="D" aria-pressed="false" style="--c:#D9472B"><span class="ring" style="background:#D9472B">D</span><span class="nm">David</span><span class="sw">VERMILION</span></button>
+        <button class="person" type="button" data-k="N" aria-pressed="false" style="--c:#DC9A27"><span class="ring on-light" style="background:#DC9A27">N</span><span class="nm">Nia</span><span class="sw">MUSTARD</span></button>
+        <button class="person" type="button" data-k="Z" aria-pressed="false" style="--c:#E78A9B"><span class="ring on-light" style="background:#E78A9B">Z</span><span class="nm">Zo&euml;</span><span class="sw">ROSE</span></button>
+        <button class="person" type="button" data-k="J" aria-pressed="false" style="--c:#7A8B5C"><span class="ring" style="background:#7A8B5C">J</span><span class="nm">Josiah</span><span class="sw">MOSS</span></button>
+        <button class="person" type="button" data-k="C" aria-pressed="false" style="--c:#5E8CA7"><span class="ring" style="background:#5E8CA7">C</span><span class="nm">Chase</span><span class="sw">DUSTY BLUE</span></button>
+        <button class="person" type="button" data-k="H" aria-pressed="false" style="--c:#9B6B9E"><span class="ring" style="background:#9B6B9E">C</span><span class="nm">Charli</span><span class="sw">PLUM</span></button>
+        <button class="person" type="button" data-k="P" aria-pressed="false" style="--c:#B5803F"><span class="ring" style="background:#B5803F">
+          <svg class="paw" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="4.2" ry="3.6" stroke="#fff" stroke-width="1.7"/><circle cx="6.2" cy="10" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="9.6" cy="6.4" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="14.4" cy="6.4" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="17.8" cy="10" r="1.8" stroke="#fff" stroke-width="1.7"/></svg>
+        </span><span class="nm">Phineas</span><span class="sw">BISCUIT &middot; DOG</span></button>
+      </div>
+
+      <div class="daycard" id="daycard" aria-live="polite"></div>
     </div>
+
     <p class="foot">Everyone gets a color. The dog has a calendar column. We are not sorry.</p>
   </div>
 </section>
@@ -785,11 +877,18 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 <section class="founder">
   <div class="wrap">
     <div class="inner">
-      <span class="kicker">BUILT BY A MOM, FOR THE WHOLE HOUSE</span>
-      <blockquote class="balance">&ldquo;Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build a system for our home. It&rsquo;s made all the difference now that we all have visibility and input into the family load.&rdquo;</blockquote>
-      <div class="byline">
-        <span class="ring">E</span>
-        <div><div style="font-size:15px;font-weight:600">Endia Leonard</div><div style="font-size:14px;color:#676E66">Founder, homeroom</div></div>
+      <figure class="portrait">
+        <img src="/endia.jpg" width="1000" height="1250" loading="lazy" decoding="async"
+             alt="Endia Leonard, founder of homeroom">
+        <span class="bar spectrum" aria-hidden="true"></span>
+      </figure>
+      <div class="said">
+        <span class="kicker">BUILT BY A MOM, FOR THE WHOLE HOUSE</span>
+        <blockquote class="balance">&ldquo;Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build a system for our home. It&rsquo;s made all the difference now that we all have visibility and input into the family load.&rdquo;</blockquote>
+        <div class="byline">
+          <span style="font-size:16px;font-weight:600">Endia Leonard</span>
+          <span style="font-size:14px;color:#676E66">Founder, homeroom &middot; Washington, D.C.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1081,6 +1180,125 @@ body.pop-open .sticky{transform:translateY(160%)!important}
       }
     });
   });
+
+  // ── The house: tap a person, the band becomes their Friday ──
+  //
+  // The dark band used to be eight stickers on black. These are the same
+  // eight people, now the control for the section. It is the per-person view
+  // the app actually has, so the section demonstrates the product instead of
+  // describing it — and it gives a kid a reason to touch the page.
+  //
+  // `ring` is the member colour as a fill, with a white or ink letter on it.
+  // `text` is the lighter variant from the dark side of tokens.css: a fill
+  // colour used as text on near-black is unreadable, so the two are never
+  // the same value. Teal #2F6661 on #0B0D0C is 1.4:1; #5FA39B is 7.6:1.
+  var SPECTRUM = 'linear-gradient(180deg,#2F6661 0 12.5%,#D9472B 12.5% 25%,'
+    + '#DC9A27 25% 37.5%,#E78A9B 37.5% 50%,#7A8B5C 50% 62.5%,#5E8CA7 62.5% 75%,'
+    + '#9B6B9E 75% 87.5%,#B5803F 87.5% 100%)';
+  var MOVIE = { t: '7:30', l: 'Movie night', all: true, by: 'everyone' };
+
+  var HOUSE = {
+    all: { nm: 'The whole house', ring: SPECTRUM, letter: '', text: '#6E756F', wide: true,
+      note: 'Eight people and one Friday, with nobody having to ask who is doing what.',
+      items: [
+        { t: '3:30', l: 'Soccer · Chase', c: '#7FAACB', by: 'Endia’s got it', bc: '#5FA39B' },
+        { t: '5:00', l: 'Piano · Charli', c: '#B98BBC' },
+        { t: '6:30', l: 'Fajitas', c: '#F0603F', by: 'David cooks', bc: '#F0603F' },
+        MOVIE ] },
+
+    E: { nm: 'Endia', ring: '#2F6661', letter: 'E', text: '#5FA39B',
+      note: 'She used to hold all of this in her head. Now it is on seven other screens.',
+      items: [ { t: '3:30', l: 'Drive Chase to soccer', by: 'she’s got it' },
+               MOVIE, { t: '', l: 'Kitchen reset', chore: true } ] },
+
+    D: { nm: 'David', ring: '#D9472B', letter: 'D', text: '#F0603F',
+      note: 'He claimed dinner from his phone while sitting in the pickup line.',
+      items: [ { t: '6:30', l: 'Fajitas', by: 'cooking' },
+               MOVIE, { t: '', l: 'Dishwasher', chore: true } ] },
+
+    N: { nm: 'Nia', ring: '#DC9A27', letter: 'N', ink: true, text: '#E8B04F',
+      note: 'Her chores have a timer on them. The timer is not up for discussion.',
+      items: [ { t: '3:00', l: 'Study group' },
+               MOVIE, { t: '15 min', l: 'Fold the laundry', chore: true } ] },
+
+    Z: { nm: 'Zoë', ring: '#E78A9B', letter: 'Z', ink: true, text: '#F09AAA',
+      note: 'Seven years old. No email, no password, her own color.',
+      items: [ { t: '6:00', l: 'Dance' },
+               MOVIE, { t: '', l: 'Feed Phineas', chore: true } ] },
+
+    J: { nm: 'Josiah', ring: '#7A8B5C', letter: 'J', text: '#9AAD78',
+      note: 'Fifteen days running. It is on the wins wall and he has mentioned it.',
+      items: [ { t: '4:00', l: 'Reading · day 15' },
+               MOVIE, { t: '', l: 'Recycling out', chore: true } ] },
+
+    C: { nm: 'Chase', ring: '#5E8CA7', letter: 'C', text: '#7FAACB',
+      note: 'He can see who is driving him without texting anybody to find out.',
+      items: [ { t: '3:30', l: 'Soccer practice', by: 'Endia’s got it' },
+               MOVIE, { t: '', l: 'Walk Phineas', chore: true } ] },
+
+    H: { nm: 'Charli', ring: '#9B6B9E', letter: 'C', text: '#B98BBC',
+      note: 'Piano is a series. One Friday can move without moving the rest of it.',
+      items: [ { t: '5:00', l: 'Piano lesson' },
+               MOVIE, { t: '', l: 'Water the plants', chore: true } ] },
+
+    P: { nm: 'Phineas', ring: '#B5803F', letter: '🐾', text: '#D19F5E',
+      note: 'He has a calendar column. He has no idea. He is thriving.',
+      items: [ { t: '7:00', l: 'Morning walk', by: 'Chase', bc: '#7FAACB' },
+               { t: '6:00', l: 'Dinner', by: 'Zoë', bc: '#F09AAA' },
+               { t: '7:30', l: 'Movie night', all: true, by: 'prime couch' } ] }
+  };
+
+  var daycard = $('daycard'), people = $('people');
+  var em = document.querySelector('.night h2 em');
+  var esc = function (s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); };
+
+  function showPerson(key) {
+    var p = HOUSE[key] || HOUSE.all;
+    all('#people .person').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.k === key));
+    });
+    em.style.color = p.text;
+
+    var ring = '<span class="ring' + (p.ink ? ' on-light' : '') + '" style="background:'
+      + p.ring + '">' + esc(p.letter) + '</span>';
+
+    var items = p.items.map(function (it, i) {
+      var edge = it.all ? SPECTRUM : (it.c || p.ring);
+      return '<div class="item' + (it.chore ? ' chore' : '') + '" style="animation-delay:'
+        + (i * 55) + 'ms">'
+        + '<span class="edge" style="background:' + edge + '"></span>'
+        + '<span class="t">' + esc(it.t || (it.chore ? 'CHORE' : '')) + '</span>'
+        + '<span class="l">' + esc(it.l) + '</span>'
+        + (it.by ? '<span class="by" style="color:'
+            + (it.bc || (it.all ? '#C3CCC2' : p.text)) + '">'
+            + esc(it.by) + '</span>' : '')
+        + '</div>';
+    }).join('');
+
+    daycard.innerHTML =
+      '<div class="who">' + ring + '<div><div class="nm">' + esc(p.nm) + '</div>'
+      + '<div class="dt">Friday, October 16</div></div></div>'
+      + '<div class="dayitems">' + items + '</div>'
+      + '<p class="note">' + esc(p.note) + '</p>';
+  }
+
+  all('#people .person').forEach(function (b) {
+    b.addEventListener('click', function () {
+      // tapping the selected person again goes back to the whole house
+      showPerson(b.getAttribute('aria-pressed') === 'true' ? 'all' : b.dataset.k);
+    });
+  });
+  showPerson('all');
+
+  // Stagger the people in on arrival. The hidden state is added here rather
+  // than in the stylesheet, so without script they are simply visible.
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    people.classList.add('pending');
+    all('#people .person').forEach(function (b, i) { b.style.transitionDelay = (i * 55) + 'ms'; });
+    new IntersectionObserver(function (es, obs) {
+      if (es[0].isIntersecting) { people.classList.add('in'); obs.disconnect(); }
+    }, { threshold: .25 }).observe(people);
+  }
 
   // ── Confetti ─────────────────────────────────────────────
   var cv = $('confetti'), cx = cv.getContext('2d'), parts = [], raf = 0;
