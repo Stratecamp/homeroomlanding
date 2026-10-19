@@ -6,7 +6,7 @@
 <title>homeroom · the family command center</title>
 <meta name="description" content="Every calendar shows you what's happening. homeroom shows you who's got it. Schedules, chores, dinners and groceries for the whole house, color-coded by person, on every phone and the kitchen wall.">
 <meta name="theme-color" content="#FBFAF8">
-
+<meta name="color-scheme" content="light">
 <meta property="og:title" content="homeroom · the family command center">
 <meta property="og:description" content="Every calendar shows you what's happening. homeroom shows you who's got it. On every phone, every computer, and the kitchen wall.">
 <meta property="og:type" content="website">
@@ -14,27 +14,33 @@
 <meta property="og:image" content="https://homeroomforfamily.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="homeroom, the family command center: a week of a family's schedule, color-coded by person, with a Who's got it? button">
+<meta property="og:image:alt" content="homeroom, the family command center: a phone showing today for one family, color-coded by person, with an unanswered Who's got it?">
 <meta property="og:site_name" content="homeroom">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="homeroom · the family command center">
 <meta name="twitter:description" content="Every calendar shows you what's happening. homeroom shows you who's got it.">
 <meta name="twitter:image" content="https://homeroomforfamily.com/og-image.png">
 <link rel="canonical" href="https://homeroomforfamily.com/">
-
 <link rel="icon" href="/favicon-32.png" sizes="32x32">
 <link rel="icon" href="/favicon-16.png" sizes="16x16">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <style>
-/* Self-hosted, so these pages make no request to a third party.
-   The app has always self-hosted (next/font); the landing pages were the
-   one place still calling fonts.googleapis.com, which contradicted what
-   the privacy policy says about fonts.
+/* ============================================================
+   homeroom for family — homepage
+   ------------------------------------------------------------
+   Design language v2, tech-forward layout (19 Oct).
 
-   Fredoka is subset to the five distinct letters in "homeroom" - h, o, m,
-   e, r - because the wordmark is the only thing on these pages that uses
-   it. 159KB becomes 7KB. Licences ship beside the files in fonts/. */
+   Fonts are self-hosted from /fonts. Nothing on this page calls a
+   third party: no Google Fonts, no analytics, no embeds. A family
+   app that promises "no tracking" on the pricing card cannot load a
+   font from someone else's server on the way to saying it.
+
+   The design mockup carried its values as inline styles. They live
+   here as tokens and classes instead, so a colour changes in one
+   place rather than two hundred.
+   ============================================================ */
+
 @font-face{
   font-family:'Geist';src:url('/fonts/Geist-Variable.woff2') format('woff2-variations');
   font-weight:100 900;font-style:normal;font-display:swap;
@@ -43,1025 +49,918 @@
   font-family:'Geist Mono';src:url('/fonts/GeistMono-Variable.woff2') format('woff2-variations');
   font-weight:100 900;font-style:normal;font-display:swap;
 }
+/* Subset to the eight letters of the wordmark. 7 KB, and it is the
+   only thing on the site set in Fredoka. */
 @font-face{
   font-family:'Fredoka';src:url('/fonts/Fredoka-wordmark.ttf') format('truetype-variations');
   font-weight:700;font-style:normal;font-display:swap;
 }
-</style>
-
-<!-- Analytics: Cloudflare dashboard → Analytics & Logs → Web Analytics → Add a
-     site → homeroomforfamily.com, automatic setup. Cookieless, collects no
-     personal data, and Cloudflare injects the script, so nothing goes here. -->
-
-<style>
-/* ═══════════════════════════════════════════════════════════════════
-   homeroom for family · homeroomforfamily.com
-
-   v3 of this page was built on the v1 palette — oat, blush, DM Serif
-   Display, Nunito, Fredoka for every heading. v2 retired all of that:
-   Geist throughout, Geist Mono for times and counts, Fredoka for the
-   wordmark and nothing else, and Paper/Stone/white in place of the
-   warm grounds. The copy, the demo and the testimonials are v3's and
-   are kept word for word; the surface they sit on is new.
-
-   Every colour is a v2 token from the app's app/tokens.css LIGHT theme,
-   so the page and the product cannot drift. The student page is the
-   same system in dark — see marketing/students/.
-
-   No cream band behind the wordmark here, unlike the student page.
-   That band exists there because the ground is near-black and four of
-   the eight wordmark colours disappear into it. On paper they read as
-   drawn, so adding the band would be cargo-culting a fix for a problem
-   this page does not have.
-   ═══════════════════════════════════════════════════════════════════ */
 
 :root{
-  /* Grounds */
-  --paper:#FBFAF8;
-  --stone:#F2F1EE;
-  --surface:#FFFFFF;
-  --surface-2:#F6F5F2;
-  --sunken:#E8E6E1;
-  --hairline:#ECE9E4;
-  --hairline-strong:#E2DED8;
-
-  /* Text */
-  --ink:#111412;
-  --ink-2:#3A403C;
-  --graphite:#5E655F;
-  --muted:#6B7268;
-
-  /* Action. #C63F22, not raw vermilion: white on #D9472B is 4.3:1 and
-     fails at button size. */
+  /* surfaces */
+  --paper:#FBFAF8; --stone:#F2F1EE; --card:#FFFFFF; --sunk:#F6F5F2;
+  --ink:#111412; --body:#3A403C; --muted:#5E655F; --soft:#676E66;
+  --line:#ECE9E4; --line-2:#E7E4DF; --line-3:#E2DED8;
+  /* dark band */
+  --night:#0B0D0C; --night-2:#111412; --on-night:#F2F1EE;
+  --on-night-muted:#A9AFA8; --on-night-dim:#7E857E;
+  /* everyone gets a colour */
+  --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
+  --moss:#7A8B5C; --dusty:#5E8CA7; --plum:#9B6B9E; --biscuit:#B5803F;
+  --service:#8A9088; --amber-text:#8F631C;
+  /* the one button colour. Raw vermilion fails contrast at button
+     size on paper; this is the darkened fill that passes. */
   --action:#C63F22;
-  --action-pressed:#A9341B;
-  --on-action:#FFFFFF;
-  --link:#2F6661;
-
-  /* The eight. Identity, unchanged since v1.1 — these are the people. */
-  --teal:#2F6661;      --on-teal:#FFFFFF;
-  --vermilion:#D9472B; --on-vermilion:#FFFFFF;
-  --mustard:#DC9A27;   --on-mustard:#111412;
-  --rose:#E78A9B;      --on-rose:#111412;
-  --moss:#7A8B5C;      --on-moss:#111412;
-  --dusty:#5E8CA7;     --on-dusty:#111412;
-  --plum:#9B6B9E;      --on-plum:#FFFFFF;
-  --biscuit:#B5803F;   --on-biscuit:#111412;
-  --service:#8A9088;
-  /* Mustard as TEXT needs its own value: #DC9A27 on white is 2.0:1. */
-  --mustard-text:#8A5E12;
-
-  /* Fills that CARRY TEXT. Six of the eight pair with ink and clear 4.5:1
-     easily. Vermilion and plum carry white, and white on #D9472B is 4.30:1
-     and on #9B6B9E is 4.21:1 — measured, at the sizes used on this page,
-     none of which is large text. Darkened just enough to clear the bar.
-     These are the same two exceptions, and the same values, as the app's
-     --hr-btn-vermilion and --hr-btn-plum in app/tokens.css.
-     Pure swatches — the spectrum, the kicker bars, the tape on a note —
-     keep the real colour, because nothing is written on them. */
-  --fill-vermilion:#C84128;   /* 4.95:1 with white */
-  --fill-plum:#8C608E;        /* 5.03:1 with white */
-
-  /* Everyone, as a mark. Hard stops, not a gradient wash. */
-  --spectrum:linear-gradient(90deg,
-    var(--teal) 0 12.5%, var(--vermilion) 12.5% 25%,
-    var(--mustard) 25% 37.5%, var(--rose) 37.5% 50%,
-    var(--moss) 50% 62.5%, var(--dusty) 62.5% 75%,
-    var(--plum) 75% 87.5%, var(--biscuit) 87.5% 100%);
-  /* The vertical cut, for anywhere the mark is taller than it is wide — the
-     3px rule on a family event, the dot on the "Everyone" chip. A horizontal
-     spectrum sliced into a 3px-wide border samples one stop and reads as a
-     single colour, which says the opposite of what the mark means. */
-  --spectrum-v:linear-gradient(180deg,
-    var(--teal) 0 12.5%, var(--vermilion) 12.5% 25%,
-    var(--mustard) 25% 37.5%, var(--rose) 37.5% 50%,
-    var(--moss) 50% 62.5%, var(--dusty) 62.5% 75%,
-    var(--plum) 75% 87.5%, var(--biscuit) 87.5% 100%);
-
-  --font:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;
-  --mono:'Geist Mono',ui-monospace,Menlo,monospace;
-  --wordmark:'Fredoka',ui-rounded,system-ui,sans-serif;
-
-  --r-card:22px;
-  --r-tile:30px;
-  --r-row:12px;
-  --r-pill:999px;
-
-  --shadow:0 1px 2px rgba(17,20,18,.05);
-  --lift:0 18px 44px -18px rgba(17,20,18,.22);
-
-  --gutter:max(16px,4vw);
-  --maxw:1120px;
+  --radius-xl:30px; --radius-lg:22px; --radius-md:18px; --radius-sm:12px;
+  --lift:0 24px 60px -20px rgba(17,20,18,.35);
+  --page:1120px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-/* The UA rule for [hidden] has zero specificity, so any class that sets
-   display beats it. One rule beats chasing it per element. */
-[hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip}
+/* the spectrum: eight hard stops, never a blend. It means
+   "everyone", and it is the only place all eight colours appear
+   together. */
+.spectrum{background:linear-gradient(90deg,
+  var(--teal) 0 12.5%, var(--vermilion) 12.5% 25%, var(--mustard) 25% 37.5%,
+  var(--rose) 37.5% 50%, var(--moss) 50% 62.5%, var(--dusty) 62.5% 75%,
+  var(--plum) 75% 87.5%, var(--biscuit) 87.5% 100%)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px;-webkit-text-size-adjust:100%}
 body{
-  background:var(--paper);color:var(--ink);font-family:var(--font);
-  -webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:clip;
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:clip; /* not `hidden`: that makes html a scroll container and kills position:sticky */
 }
-a{color:inherit}
-h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
-img,svg{display:block}
-::selection{background:var(--teal);color:#fff}
-:where(a,button,summary,[role="radio"]):focus-visible{
-  outline:3px solid var(--link);outline-offset:3px;border-radius:8px;
-}
-.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
-.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+img,svg{display:block;max-width:100%}
+a{color:var(--teal);text-decoration:none}
+a:hover{color:#1F4A46}
+h1,h2,h3,p,blockquote,figure{margin:0}
+button{font:inherit;color:inherit}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.wrap{max-width:var(--page);margin:0 auto;padding-inline:max(16px,4vw)}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--soft)}
+.balance{text-wrap:balance}
 
-/* ── Type scale ────────────────────────────────────────────── */
-.h1{font-size:clamp(42px,7.4vw,96px);line-height:.98;letter-spacing:-.048em}
-.h2{font-size:clamp(34px,4.8vw,58px);line-height:1.02;letter-spacing:-.04em}
-.h3{font-size:clamp(22px,3vw,32px);line-height:1.15;letter-spacing:-.03em}
-.lede{
-  font-size:clamp(19px,2.3vw,27px);line-height:1.3;letter-spacing:-.015em;
-  color:var(--graphite);font-weight:400;
-}
-.lede b{color:var(--ink);font-weight:600}
-.label{
-  font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--muted);
-}
-.body{font-size:16px;line-height:1.6;color:var(--graphite)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:8px;z-index:100}
+.skip:focus{left:16px;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px}
 
-/* ── Buttons ───────────────────────────────────────────────── */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  min-height:52px;padding:0 28px;border:0;border-radius:var(--r-pill);
-  background:var(--action);color:var(--on-action);
-  font:600 16px/1 var(--font);letter-spacing:-.01em;cursor:pointer;
-  text-decoration:none;transition:transform .16s cubic-bezier(.2,.8,.2,1),background .16s;
-}
-.btn:hover{transform:translateY(-2px);background:var(--action-pressed);color:#fff}
-.btn--lg{min-height:58px;padding:0 34px;font-size:17px}
-.btn--quiet{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--hairline-strong)}
-.btn--quiet:hover{background:var(--surface-2);color:var(--ink)}
-.btn--ink{background:var(--ink);color:var(--paper)}
-.btn--ink:hover{background:#000;color:var(--paper)}
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:52px;padding:0 28px;border-radius:999px;border:0;cursor:pointer;
+  font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1;
+  background:var(--action);color:#fff;transition:transform .15s,filter .15s}
+.btn:hover{color:#fff;filter:brightness(1.06);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.sm{height:38px;padding:0 18px;font-size:14px;background:var(--ink)}
+.btn.ghost{background:transparent;color:var(--teal);padding:0 4px}
+.btn.ghost:hover{color:#1F4A46;filter:none}
+.btn.wide{width:100%}
 
-/* ── Furniture ─────────────────────────────────────────────── */
-.card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card)}
-.rule{height:1px;background:var(--hairline);border:0;margin:0}
-.spectrum{height:4px;border-radius:999px;background:var(--spectrum)}
-.dot{
-  width:22px;height:22px;border-radius:50%;flex:none;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:600;
-}
-section{padding:clamp(56px,8vw,96px) 0}
-.head{max-width:700px;margin-bottom:clamp(28px,4vw,42px)}
-.head.center{margin-inline:auto;text-align:center}
-.head .h2{margin-top:10px}
-.head .body{margin-top:14px}
+/* ---------- nav: floating glass capsule ---------- */
+.navbar{position:sticky;top:0;z-index:40;padding:12px max(16px,2vw) 0}
+.nav{max-width:var(--page);margin:0 auto;height:56px;padding:0 10px 0 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-radius:999px;background:rgba(251,250,248,.92);
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 8px 32px rgba(17,20,18,.08);
+  transition:box-shadow .25s}
+.navbar.stuck .nav{box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 10px 40px rgba(17,20,18,.14)}
+.wordmark{font-family:'Fredoka',ui-rounded,system-ui,sans-serif;font-weight:700;
+  font-size:24px;letter-spacing:-.01em;line-height:1}
+.navlinks{display:flex;gap:28px;font-size:14px;font-weight:500}
+.navlinks a{color:var(--body)}
+.navlinks a:hover{color:var(--ink)}
+.navcta{display:flex;align-items:center;gap:8px}
+.navcta .signin{font-size:14px;font-weight:500;color:var(--body);padding:0 12px}
 
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *{animation:none!important;transition:none!important}
-  .btn:hover{transform:none}
-}
+/* ---------- hero ---------- */
+.hero{padding:clamp(56px,9vw,120px) max(16px,4vw) 0;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 6px;
+  border-radius:999px;background:var(--card);border:1px solid var(--line-2);
+  font-size:13px;font-weight:500;color:var(--body)}
+.badge b{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;
+  background:var(--teal);color:#fff;font-size:12px;font-weight:600}
+.badge svg{margin-right:6px}
+.hero h1{margin:28px auto 0;max-width:980px;font-size:clamp(48px,8.4vw,116px);
+  line-height:.98;font-weight:600;letter-spacing:-.048em}
+.hero .lede{margin:24px auto 0;max-width:640px;font-size:clamp(19px,2vw,24px);
+  line-height:1.4;color:var(--muted);letter-spacing:-.012em}
+.hero-ctas{margin-top:36px;display:flex;justify-content:center;align-items:center;
+  gap:12px 24px;flex-wrap:wrap}
+.fineprint{margin:14px auto 0;max-width:620px;font-size:13px;color:var(--soft)}
 
-/* ── Nav ───────────────────────────────────────────────────── */
-.navwrap{
-  position:sticky;top:0;z-index:30;
-  background:color-mix(in srgb,var(--paper) 86%,transparent);
-  -webkit-backdrop-filter:blur(18px) saturate(180%);
-  backdrop-filter:blur(18px) saturate(180%);
-  border-bottom:1px solid var(--hairline);
-}
-.nav{
-  max-width:var(--maxw);margin:0 auto;min-height:64px;padding-inline:var(--gutter);
-  display:flex;align-items:center;gap:18px;
-}
-.wordmark{
-  font-family:var(--wordmark);font-weight:700;font-size:28px;line-height:1;
-  letter-spacing:-.01em;text-decoration:none;
-}
-.nav-links{margin-left:auto;display:flex;align-items:center;gap:22px}
-.nav-links a.txt{font-size:14px;font-weight:500;color:var(--graphite);text-decoration:none}
-.nav-links a.txt:hover{color:var(--ink)}
-.nav .btn{min-height:40px;padding:0 18px;font-size:14px}
+/* ---------- hero device composition ---------- */
+.stage{position:relative;max-width:var(--page);margin:clamp(48px,7vw,88px) auto 0;
+  padding-bottom:clamp(40px,6vw,90px);text-align:left}
+.tablet{position:relative;border-radius:clamp(20px,3vw,38px);background:#161917;
+  padding:clamp(8px,1.1vw,14px);
+  box-shadow:0 40px 80px -30px rgba(17,20,18,.35), 0 0 0 1px rgba(17,20,18,.06)}
+.tablet-screen{border-radius:clamp(14px,2vw,26px);background:var(--card);overflow:hidden;
+  padding:clamp(12px,2vw,26px)}
+.wk-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.wk-title{font-size:clamp(18px,2.4vw,30px);font-weight:600;letter-spacing:-.03em}
+.avatars{display:flex;gap:4px}
+.av{width:22px;height:22px;border-radius:50%;color:#fff;font-size:10px;font-weight:600;
+  display:grid;place-items:center;flex:none}
+.av.on-light{color:var(--ink)}
+.week{margin-top:clamp(10px,1.6vw,20px);display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:clamp(4px,.7vw,10px)}
+.day{min-width:0;padding:8px 6px;border-radius:16px}
+.day.today{background:#FBF3EF;outline:1.5px solid rgba(217,71,43,.2)}
+.day-head{display:flex;align-items:center;gap:6px;padding:2px 2px 8px}
+.day-name{font-size:11px;font-weight:500;color:var(--soft);text-transform:uppercase;letter-spacing:.06em}
+.day-num{font-size:14px;font-weight:600;color:var(--ink)}
+.day.today .day-num{min-width:24px;height:24px;padding:0 4px;border-radius:999px;
+  background:var(--vermilion);color:#fff;font-size:12px;display:grid;place-items:center}
+.evs{display:flex;flex-direction:column;gap:5px}
+.ev{display:flex;flex-direction:column;gap:2px;padding:7px 8px;border-radius:10px}
+.ev .t{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:10px;color:#5E655F}
+.ev .l{font-size:clamp(9px,.95vw,12px);font-weight:500;line-height:1.25;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev.all{position:relative;background:#F1F0ED;padding-top:9px;overflow:hidden}
+.ev.all .edge{position:absolute;top:0;left:0;right:0;height:3px}
+.dinner{margin-top:8px;padding:7px 8px;border-radius:10px;border:1px dashed var(--line-3)}
+.dinner b{display:block;font-size:9px;font-weight:600;letter-spacing:.08em;color:var(--amber-text)}
+.dinner span{display:block;font-size:clamp(9px,.95vw,12px);font-weight:500;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ── Hero ──────────────────────────────────────────────────── */
-.hero{text-align:center;padding:clamp(44px,6vw,80px) 0 0}
-.hero .h1{margin:16px auto 0;max-width:980px}
-.hero .h1 em{font-style:normal;color:var(--teal)}
-.hero .lede{margin:22px auto 0;max-width:760px}
-.hero-ctas{
-  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
-  gap:14px 22px;margin-top:30px;
-}
-.trial-line{
-  font-size:14px;line-height:1.5;color:var(--graphite);text-align:left;max-width:360px;
-}
-.trial-line b{color:var(--ink);font-weight:600}
+/* the glass "Who's got it?" sheet, floating over the week */
+.sheet{position:absolute;left:clamp(12px,4%,48px);bottom:clamp(0px,2vw,30px);
+  width:360px;max-width:78%;padding:18px 18px 16px;border-radius:26px;
+  background:rgba(255,255,255,.58);
+  backdrop-filter:blur(22px) saturate(190%);-webkit-backdrop-filter:blur(22px) saturate(190%);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, var(--lift)}
+.sheet-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sheet-lab{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--teal)}
+.sheet-when{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted)}
+.sheet-what{margin-top:6px;font-size:19px;font-weight:600;letter-spacing:-.02em}
+.claims{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.claim{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 5px;
+  border-radius:999px;font-size:14px;font-weight:600;background:var(--teal);color:#fff}
+.claim i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-size:11px;font-style:normal;background:rgba(255,255,255,.22)}
+.claim.alt{background:rgba(255,255,255,.7);color:var(--body);font-weight:500}
+.claim.alt i{background:var(--vermilion);color:#fff;font-weight:600}
+.sheet-note{margin-top:10px;font-size:12px;color:var(--muted)}
 
-/* ── The stage: one house, two screens ─────────────────────── */
-.stage{
-  position:relative;width:min(1180px,calc(100vw - 2*var(--gutter)));
-  margin:clamp(36px,5vw,56px) auto 0;
-}
-.device-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--surface);border:1px solid var(--hairline);
-  border-radius:var(--r-pill);padding:4px 14px 4px 4px;
-  font-size:13px;font-weight:500;margin:0 0 10px 6px;
-}
-.laptop{width:calc(100% - 210px)}
-.lap-screen{background:#232925;border-radius:20px 20px 6px 6px;padding:11px 11px 13px;box-shadow:var(--lift)}
-.browser{background:var(--surface);border-radius:12px;overflow:hidden}
-.chrome{display:flex;align-items:center;gap:6px;background:var(--surface-2);padding:9px 12px}
-.chrome i{width:10px;height:10px;border-radius:50%;background:var(--hairline-strong);flex:none}
-.chrome .url{
-  margin:0 auto;background:var(--surface);border-radius:var(--r-pill);
-  padding:3px 18px;font-size:11.5px;font-weight:500;color:var(--muted);
-}
-.lap-base{height:15px;background:var(--hairline-strong);border-radius:0 0 18px 18px;width:108%;margin-left:-4%;position:relative}
-.lap-base::after{
-  content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
-  width:118px;height:6px;background:var(--sunken);border-radius:0 0 10px 10px;
-}
-.wk{background:var(--surface);padding:20px 20px 14px;text-align:left}
-.wk-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.wk-title{font-size:18px;font-weight:600;letter-spacing:-.02em}
-.wk-range{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.wk-hint{
-  margin-left:auto;background:var(--surface-2);color:var(--mustard-text);
-  border-radius:var(--r-pill);padding:5px 13px;font-size:12px;font-weight:600;
-  box-shadow:inset 0 0 0 1px var(--hairline-strong);
-}
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
-.chip{
-  display:inline-flex;align-items:center;gap:7px;
-  background:var(--surface-2);border:1px solid transparent;border-radius:var(--r-pill);
-  padding:4px 13px 4px 4px;font:500 13px/1 var(--font);color:var(--ink);cursor:pointer;
-  transition:transform .15s,border-color .15s,background .15s;
-}
-.chip:hover{transform:translateY(-2px)}
-.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--surface)}
-.chip .dot{width:20px;height:20px;font-size:10px}
-.grid-scroll{overflow-x:auto;margin:0 -4px;padding:0 4px 4px;scrollbar-width:none}
-.grid-scroll::-webkit-scrollbar{display:none}
-.week{display:grid;grid-template-columns:repeat(7,minmax(100px,1fr));gap:7px;min-width:740px}
-.day{
-  background:var(--surface-2);border-radius:16px;padding:10px 8px;
-  display:flex;flex-direction:column;gap:6px;min-height:268px;
-}
-.day.today{box-shadow:0 0 0 2px var(--action) inset}
-.d-name{
-  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--muted);text-align:center;margin-bottom:2px;
-}
-.day.today .d-name{color:var(--action)}
-.ev{
-  border-radius:10px;padding:6px 8px;font-size:12px;font-weight:500;line-height:1.3;
-  transition:opacity .2s,filter .2s;
-}
-/* "Everyone" is the spectrum, not a ninth colour — a family event belongs to
-   all eight people, which is exactly what the mark says. It is a RULE rather
-   than a fill: white on the spectrum is 1.8:1 against its lightest stop, and
-   a text-shadow makes that look survivable without making it legible. */
-.ev.fam{
-  background:var(--surface);color:var(--ink);
-  box-shadow:inset 0 0 0 1px var(--hairline-strong);
-  border-left:3px solid transparent;
-  border-image:var(--spectrum-v) 1;
-  padding-left:9px;
-}
-.ev.dim{opacity:.16;filter:grayscale(.6)}
-.ev .gi{
-  white-space:nowrap;display:flex;align-items:center;gap:4px;margin-top:4px;
-  font-size:10px;font-weight:600;opacity:.95;
-}
-.ev .gi .dot{width:15px;height:15px;font-size:8px;box-shadow:0 0 0 1.5px rgba(255,255,255,.8)}
-.ev .askq{
-  all:unset;cursor:pointer;display:inline-flex;align-items:center;margin-top:5px;
-  background:var(--surface);color:var(--action);border-radius:var(--r-pill);
-  padding:2px 9px;font-size:10.5px;font-weight:600;white-space:nowrap;
-  animation:nudge 2.6s ease-in-out infinite;
-}
-.ev .askq:focus-visible{outline:2px solid var(--ink)}
-@keyframes nudge{0%,80%,100%{transform:none}86%{transform:rotate(-4deg)}92%{transform:rotate(4deg)}}
-.din{
-  margin-top:auto;background:var(--surface);border:1px solid var(--hairline);
-  border-radius:10px;padding:6px 8px;font-size:11.5px;font-weight:500;line-height:1.3;
-}
-.din span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
-.wk-foot{text-align:center;font-size:13px;color:var(--graphite);margin-top:14px;min-height:20px}
+/* the phone, bleeding off the right */
+.phone{position:absolute;right:-1.5%;bottom:0;width:25%;border-radius:46px;
+  background:#161917;padding:10px;box-shadow:0 40px 80px -24px rgba(17,20,18,.45)}
+.phone-screen{border-radius:37px;background:var(--paper);overflow:hidden;
+  padding:46px 16px 18px;aspect-ratio:9/18.5}
+.ph-date{font-size:12px;font-weight:500;color:var(--soft)}
+.ph-today{font-size:28px;font-weight:700;letter-spacing:-.035em;margin-top:2px}
+.ph-next{margin-top:14px;padding:12px;border-radius:18px;background:var(--card);
+  box-shadow:0 1px 2px rgba(17,20,18,.06)}
+.ph-k{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--soft)}
+.ph-rows{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.ph-row{display:flex;gap:10px;align-items:center}
+.ph-row .t{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:10px;color:var(--soft);width:32px;flex:none}
+.ph-row .bar{width:3px;height:26px;border-radius:2px;flex:none}
+.ph-row .l{font-size:12px;font-weight:500}
 
-.phone-wrap{position:absolute;right:0;bottom:-26px;width:240px;text-align:left}
-.phone{background:#232925;border-radius:38px;padding:9px;box-shadow:var(--lift);transform:rotate(2deg)}
-.ph-screen{background:var(--paper);border-radius:30px;padding:12px 12px 14px;min-height:448px}
-.ph-notch{width:80px;height:20px;background:#232925;border-radius:var(--r-pill);margin:0 auto 12px}
-.ph-head{
-  display:flex;align-items:baseline;gap:8px;padding:0 4px 10px;
-  border-bottom:1px solid var(--hairline-strong);margin-bottom:10px;
-}
-.ph-head b{font-size:19px;font-weight:600;letter-spacing:-.03em}
-.ph-head span{font-family:var(--mono);font-size:11px;color:var(--muted)}
-.ph-ev{
-  background:var(--surface);border:1px solid var(--hairline);border-radius:14px;
-  padding:8px 10px;display:flex;gap:9px;margin-bottom:8px;
-}
-.ph-ev .pb{width:5px;border-radius:5px;flex:none}
-.ph-ev .t{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
-.ph-ev .n{font-size:14px;font-weight:600;line-height:1.25;letter-spacing:-.01em}
-.ph-ev .gi{
-  display:inline-flex;align-items:center;gap:5px;margin-top:5px;
-  background:var(--surface-2);border-radius:var(--r-pill);
-  padding:2px 10px 2px 2px;font-size:11px;font-weight:500;white-space:nowrap;
-}
-.ph-ev .gi .dot{width:17px;height:17px;font-size:8.5px}
-.ph-ev .askq{
-  all:unset;cursor:pointer;display:inline-block;margin-top:5px;
-  background:var(--action);color:var(--on-action);border-radius:var(--r-pill);
-  padding:3px 11px;font-size:12px;font-weight:600;
-  animation:nudge 2.6s ease-in-out infinite;
-}
-.ph-din{background:var(--mustard);color:var(--on-mustard);border-radius:14px;padding:8px 11px}
-.ph-din .label{font-size:9.5px;color:var(--on-mustard);opacity:.72}
-.ph-din b{font-size:15px;font-weight:600;display:block;letter-spacing:-.01em}
-.ph-din span{font-size:11px;font-weight:500}
+/* ---------- dark statement band ---------- */
+.night{background:var(--night);color:var(--on-night);padding:clamp(80px,11vw,160px) 0}
+.night h2{font-size:clamp(40px,6.4vw,88px);line-height:1.02;font-weight:600;
+  letter-spacing:-.045em;max-width:920px}
+.night h2 em{font-style:normal;color:#6E756F}
+.night .lede{margin-top:28px;max-width:620px;font-size:clamp(18px,1.8vw,22px);
+  line-height:1.45;color:var(--on-night-muted)}
+.people{margin-top:clamp(56px,7vw,96px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:28px 16px}
+.person{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.person .ring{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;
+  font-size:22px;font-weight:600;color:#fff}
+.person .ring.on-light{color:var(--ink)}
+.person .nm{font-size:16px;font-weight:600}
+.person .sw{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;color:var(--on-night-dim)}
+.night .foot{margin-top:40px;font-size:15px;color:#9AA096}
 
-.stage-cap{
-  text-align:center;font-size:clamp(18px,2.1vw,24px);line-height:1.3;
-  letter-spacing:-.02em;color:var(--graphite);margin:54px auto 0;max-width:740px;
-}
-.proof{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:30px auto 0}
-.proof span{
-  background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-pill);
-  padding:9px 18px;font-size:14px;font-weight:500;
-}
+/* ---------- bento ---------- */
+.bento-wrap{background:var(--stone);padding:clamp(80px,10vw,140px) 0}
+.bento-wrap h2{font-size:clamp(36px,5vw,64px);line-height:1.04;font-weight:600;
+  letter-spacing:-.04em;max-width:760px}
+.bento{margin-top:clamp(40px,5vw,64px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.cell{background:var(--card);border-radius:var(--radius-xl);
+  padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:22px;min-width:0}
+.cell.span2{grid-column:span 2;padding:clamp(24px,3vw,40px);gap:28px}
+.cell.dark{background:var(--night-2);color:var(--on-night);justify-content:space-between;gap:24px}
+.cell h3{font-size:24px;line-height:1.15;font-weight:600;letter-spacing:-.025em}
+.cell .tag + h3{margin-top:10px}
+.cell h3 + p{margin-top:12px}
+.cell.span2 h3{font-size:clamp(26px,3vw,36px);line-height:1.1;letter-spacing:-.03em;max-width:520px}
+.cell p{font-size:16px;line-height:1.5;color:var(--muted)}
+.cell.span2 p{font-size:17px;max-width:520px}
+.cell.dark p{color:#D8DAD5;font-size:17px}
+.cell .tag{font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--teal)}
+.cell.dark .tag{color:#7FB8B0}
+.cell .tag.amber{color:var(--amber-text)}
+.series{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.series div{padding:14px 10px;border-radius:var(--radius-md);background:var(--sunk);
+  display:flex;flex-direction:column;align-items:center;gap:10px}
+.series div.pick{background:rgba(47,102,97,.08);outline:2px solid var(--teal);outline-offset:-2px}
+.series .d{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;color:var(--soft)}
+.series .pick .d{color:var(--teal);font-weight:500}
+.series .who{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  font-weight:600;color:#fff}
+.bignum{font-size:clamp(64px,7vw,96px);font-weight:600;letter-spacing:-.06em;line-height:.9}
+.joinlink{display:flex;align-items:center;gap:10px;height:48px;padding:0 8px 0 16px;
+  border-radius:999px;background:var(--sunk);
+  font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:13px;color:var(--body);min-width:0}
+.joinlink span.u{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.joinlink span.who{height:32px;padding:0 12px;border-radius:999px;background:var(--rose);
+  color:var(--ink);font-family:'Geist',sans-serif;font-size:13px;font-weight:600;
+  display:inline-flex;align-items:center}
+.privrow{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px}
+.privrow.shown{background:rgba(220,154,39,.13)}
+.privrow.hidden-row{background:var(--sunk);color:var(--soft)}
+.privrow .when{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:11px;color:#5E655F}
+.timerline{display:flex;align-items:center;gap:18px}
+.meals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.meals div{padding:12px;border-radius:16px;background:var(--sunk)}
+.meals div.tonight{background:rgba(220,154,39,.15)}
+.meals .d{font-family:'Geist Mono',ui-monospace,Menlo,monospace;font-size:10px;color:var(--soft)}
+.meals .tonight .d{color:var(--amber-text)}
+.meals .n{margin-top:4px;font-size:14px;font-weight:600}
+.list{flex:1 1 260px;min-width:0;padding:20px;border-radius:var(--radius-lg);
+  background:var(--sunk);display:flex;flex-direction:column;gap:14px}
+.list .row{display:flex;align-items:center;gap:10px;font-size:15px}
+.list .box{width:20px;height:20px;border-radius:50%;border:1.8px solid #C9C5BE;flex:none}
+.list .box.done{border:0;background:var(--teal);display:grid;place-items:center}
+.list .lab{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--soft)}
+.streak{padding:18px;border-radius:var(--radius-lg);background:var(--moss);color:#fff}
 
-/* ── Pull quote ────────────────────────────────────────────── */
-.lift-quote{max-width:880px;margin:clamp(48px,6vw,76px) auto 0;text-align:center}
-.lift-quote blockquote{
-  font-size:clamp(23px,3.1vw,36px);line-height:1.2;letter-spacing:-.03em;
-  font-weight:500;color:var(--ink);
-}
-.lift-quote figcaption{
-  margin-top:16px;font-size:14px;color:var(--muted);
-  display:flex;gap:8px 12px;justify-content:center;align-items:center;flex-wrap:wrap;
-}
-.lift-quote a{color:var(--link);font-weight:500}
+/* ---------- founder ---------- */
+.founder{padding:clamp(80px,10vw,140px) 0}
+.founder .inner{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+.founder blockquote{font-size:clamp(26px,3.4vw,42px);line-height:1.18;font-weight:500;
+  letter-spacing:-.03em}
+.byline{display:flex;align-items:center;gap:14px}
+.byline .ring{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;
+  display:grid;place-items:center;font-weight:600}
 
-/* ── The load ──────────────────────────────────────────────── */
-.load{
-  background:var(--stone);border-radius:var(--r-tile);
-  padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:1fr 1.15fr;
-  gap:clamp(24px,4vw,44px);align-items:center;
-}
-.load .big{font-size:clamp(28px,4vw,46px);line-height:1.05;letter-spacing:-.04em;font-weight:600}
-.load .big em{font-style:normal;color:var(--teal)}
-.load p + p{margin-top:12px}
+/* ---------- stories ---------- */
+.stories{background:var(--stone);padding:clamp(80px,10vw,140px) 0}
+.stories h2{font-size:clamp(36px,5vw,60px);line-height:1.04;font-weight:600;letter-spacing:-.04em}
+.quotes{margin-top:clamp(36px,4vw,56px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.quote{background:var(--card);border-radius:var(--radius-xl);padding:clamp(24px,3vw,34px);
+  display:flex;flex-direction:column;gap:18px}
+.quote .pull{font-size:21px;line-height:1.25;font-weight:600;letter-spacing:-.02em}
+.quote p{font-size:15px;line-height:1.55;color:var(--muted)}
+.quote .who{display:flex;align-items:center;gap:10px;margin-top:auto;font-size:14px}
+.quote .who i{width:10px;height:10px;border-radius:50%;flex:none;font-style:normal}
+.quote .who b{font-weight:600}
+.quote .who span{color:var(--soft)}
 
-/* ── Features ──────────────────────────────────────────────── */
-.leads{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.lead{padding:clamp(24px,3vw,32px);display:flex;flex-direction:column}
-.lead h3{margin:0 0 8px;font-size:22px;letter-spacing:-.025em}
-.lead p{font-size:15px;line-height:1.6;color:var(--graphite)}
-.lead .demo{
-  margin-top:20px;background:var(--surface-2);border-radius:var(--r-row);
-  padding:14px 16px;font-size:13px;
-}
-.lead.first{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,38px);align-items:center}
-.lead.first h3{font-size:clamp(24px,3.2vw,34px)}
-.lead .kicker{
-  display:block;width:52px;height:4px;border-radius:999px;margin-bottom:16px;
-}
-.quote-line{
-  font-size:18px;font-weight:600;letter-spacing:-.02em;color:var(--teal);
-  margin-top:16px;line-height:1.35;
-}
-.series{display:flex;flex-direction:column;gap:7px}
-.series .row{
-  display:flex;align-items:center;gap:10px;background:var(--surface);
-  border:1px solid var(--hairline);border-radius:var(--r-row);
-  padding:8px 12px;font-size:13px;font-weight:500;
-}
-.series .row .d{font-family:var(--mono);width:66px;color:var(--muted);flex:none;font-size:12px}
-.series .row.changed{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
-.series .row .who{margin-left:auto;display:flex;align-items:center;gap:6px}
-.wall-mini{background:var(--ink);border-radius:16px;padding:8px}
-.wall-mini .in{
-  background:var(--paper);border-radius:10px;padding:12px 14px;
-  display:grid;grid-template-columns:auto 1fr;gap:3px 14px;align-items:center;
-}
-.wall-mini .clock{font-family:var(--mono);font-weight:500;font-size:28px;grid-row:span 2;letter-spacing:-.02em}
-.wall-mini .l1{font-size:12px;font-weight:600}
-.wall-mini .l2{font-size:11.5px;color:var(--muted)}
-.pill{
-  display:inline-flex;align-items:center;gap:7px;border-radius:var(--r-pill);
-  padding:4px 12px 4px 4px;background:var(--surface);border:1px solid var(--hairline);
-  font-size:12.5px;font-weight:500;margin:0 6px 6px 0;
-}
-.pill.plain{padding-left:12px}
-.blurred{filter:blur(3.5px);user-select:none}
-.lock-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px}
-.lock-row + .lock-row{margin-top:8px;padding-top:8px;border-top:1px dashed var(--hairline-strong)}
+/* ---------- install ---------- */
+.install{padding:clamp(80px,10vw,140px) 0}
+.install h2{font-size:clamp(36px,5vw,60px);line-height:1.04;font-weight:600;letter-spacing:-.04em}
+.install .lede{margin-top:18px;max-width:620px;font-size:18px;line-height:1.5;color:var(--muted)}
+.tabs{margin-top:32px;display:inline-flex;padding:4px;border-radius:999px;background:var(--stone);gap:4px}
+.tabs button{height:40px;padding:0 20px;border-radius:999px;border:0;background:transparent;
+  font-size:15px;font-weight:600;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);
+  box-shadow:0 1px 2px rgba(17,20,18,.1)}
+.steps{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.step{background:var(--card);border-radius:var(--radius-lg);padding:24px;
+  border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.step .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:14px;font-weight:600}
+.step h3{font-size:18px;font-weight:600;letter-spacing:-.02em}
+.step p{font-size:15px;line-height:1.5;color:var(--muted)}
+.step kbd{font-family:'Geist',sans-serif;font-weight:600;color:var(--ink);background:var(--sunk);
+  border-radius:6px;padding:1px 6px;font-size:14px}
 
-.rest{margin-top:16px;padding:clamp(26px,3vw,34px)}
-.rest .label{display:block;margin-bottom:18px}
-.rest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 30px}
-.rest-item b{font-size:16px;font-weight:600;display:block;line-height:1.3;letter-spacing:-.015em}
-.rest-item span{font-size:13.5px;color:var(--graphite);display:block;margin-top:4px;line-height:1.5}
-.rest-item .bar{display:block;width:26px;height:3px;border-radius:999px;margin-bottom:10px}
+/* ---------- pricing ---------- */
+.pricing{background:var(--stone);padding:clamp(80px,10vw,140px) 0}
+.pricing .top{display:flex;flex-wrap:wrap;gap:40px;align-items:center;justify-content:space-between}
+.pricing h2{font-size:clamp(40px,5.6vw,72px);line-height:1;font-weight:600;letter-spacing:-.045em}
+.pricing .top p{margin-top:20px;font-size:19px;line-height:1.5;color:var(--muted);max-width:520px}
+.plan{flex:0 1 420px;min-width:0;padding:28px;border-radius:var(--radius-xl);background:var(--card);
+  display:flex;flex-direction:column;gap:18px}
+.toggle{display:inline-flex;padding:4px;border-radius:999px;background:var(--stone);gap:4px;align-self:flex-start}
+.toggle button{height:36px;padding:0 16px;border-radius:999px;border:0;background:transparent;
+  font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(17,20,18,.1)}
+.amount{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.amount .n{font-size:clamp(46px,6vw,64px);font-weight:600;letter-spacing:-.05em;line-height:1}
+.amount .per{font-size:18px;color:var(--muted)}
+.save{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;
+  background:rgba(122,139,92,.16);color:#4E5C38;font-size:13px;font-weight:600}
+.includes{display:flex;flex-direction:column;gap:10px;font-size:15px}
+.includes div{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.includes svg{flex:none;margin-top:2px}
+.terms{margin-top:22px;font-size:12.5px;line-height:1.6;color:var(--soft);max-width:760px}
 
-/* ── First week ────────────────────────────────────────────── */
-.week1{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.week1 li{padding:20px 18px 22px}
-.week1 .dy{
-  display:inline-block;border-radius:var(--r-pill);padding:3px 12px;
-  font-size:12px;font-weight:600;margin-bottom:12px;
-}
-.week1 b{display:block;font-size:16.5px;font-weight:600;line-height:1.3;letter-spacing:-.015em}
-.week1 p{font-size:13.5px;color:var(--graphite);margin-top:6px;line-height:1.5}
-.who-gets{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
-.who-gets div{background:var(--stone);border-radius:var(--r-card);padding:18px;font-size:13.5px;color:var(--graphite)}
-.who-gets b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+/* ---------- faq ---------- */
+.faq{padding:clamp(80px,10vw,140px) 0}
+.faq h2{font-size:clamp(36px,5vw,60px);line-height:1.04;font-weight:600;letter-spacing:-.04em}
+.qa{margin-top:36px;border-top:1px solid var(--line)}
+.qa details{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;position:relative;
+  font-size:18px;font-weight:600;letter-spacing:-.015em}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:'';position:absolute;right:10px;top:50%;width:11px;height:11px;
+  border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);
+  transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+.qa details[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+.qa .a{padding:0 0 22px;font-size:16px;line-height:1.6;color:var(--muted);max-width:760px}
 
-/* ── Testimonials ──────────────────────────────────────────── */
-.quotes{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;max-width:1040px;margin:0 auto}
-.qcol{display:flex;flex-direction:column;gap:28px}
-.qcol.offset{padding-top:72px}
-.q{
-  --tape:var(--teal);
-  position:relative;padding:38px 30px 26px;display:flex;flex-direction:column;
-  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;
-}
-/* A strip of tape, in somebody's colour. Four notes, four of the eight. */
-.q::before{
-  content:"";position:absolute;top:-10px;left:50%;width:96px;height:20px;margin-left:-48px;
-  background:var(--tape);border-radius:3px;
-}
-.q:hover{transform:translateY(-4px);box-shadow:var(--lift)}
-.q .pull{font-size:clamp(21px,2.4vw,27px);line-height:1.2;letter-spacing:-.03em;font-weight:600}
-.q .full{font-size:15px;color:var(--graphite);margin-top:14px;line-height:1.65}
-.q .who{
-  display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:16px;
-  border-top:1px solid var(--hairline-strong);
-}
-.q .who b{font-size:15px;font-weight:600;display:block}
-.q .who span{font-size:12.5px;color:var(--muted)}
-.js .q.reveal{opacity:0;transform:translateY(40px)}
-.js .q.reveal.in{
-  opacity:1;transform:none;
-  transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1);
-  transition-delay:var(--delay,0s);
-}
+/* ---------- closing ---------- */
+.closing{background:var(--night);color:var(--on-night);padding:clamp(80px,10vw,140px) 0;text-align:center}
+.closing h2{font-size:clamp(38px,5.6vw,76px);line-height:1;font-weight:600;letter-spacing:-.045em}
+.closing h2 em{font-style:normal;color:#6E756F}
+.closing p{margin:22px auto 0;max-width:520px;font-size:19px;line-height:1.5;color:var(--on-night-muted)}
+.closing .row{margin-top:34px;display:flex;justify-content:center;gap:12px 20px;flex-wrap:wrap}
+.closing .btn.ghost{color:#8FC7BF}
 
-/* ── Install ───────────────────────────────────────────────── */
-.install{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(24px,4vw,44px);align-items:start}
-.no-store{background:var(--stone);border-radius:var(--r-card);padding:24px 26px;margin-top:22px}
-.no-store b{font-size:17px;font-weight:600;display:block;margin-bottom:6px;letter-spacing:-.02em}
-.no-store p{font-size:14.5px;color:var(--graphite);line-height:1.6}
-.tabs{display:inline-flex;background:var(--sunken);border-radius:var(--r-pill);padding:3px;margin-bottom:18px}
-.tabs button{
-  border:0;background:none;color:var(--graphite);padding:9px 20px;
-  border-radius:var(--r-pill);cursor:pointer;font:500 15px/1 var(--font);
-}
-.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow)}
-.steps{padding:4px 28px;list-style:none;counter-reset:s}
-.steps li{
-  counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:14px;
-  padding:20px 0;border-bottom:1px solid var(--hairline);
-}
-.steps li:last-child{border-bottom:none}
-.steps li::before{
-  content:counter(s);width:34px;height:34px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;font-weight:600;
-}
-.steps li:nth-child(1)::before{background:var(--teal);color:var(--on-teal)}
-.steps li:nth-child(2)::before{background:var(--fill-vermilion);color:var(--on-vermilion)}
-.steps li:nth-child(3)::before{background:var(--mustard);color:var(--on-mustard)}
-.steps li:nth-child(4)::before{background:var(--fill-plum);color:var(--on-plum)}
-.steps li:nth-child(5)::before{background:var(--moss);color:var(--on-moss)}
-.steps b{font-size:16.5px;font-weight:600;display:block;line-height:1.3;letter-spacing:-.015em}
-.steps p{font-size:14.5px;color:var(--graphite);margin-top:4px;line-height:1.6}
-.steps code,.extra code{
-  font-family:var(--mono);font-size:13px;color:var(--ink);
-  background:var(--surface-2);border-radius:6px;padding:1px 7px;
-}
-.key{
-  display:inline-block;background:var(--surface);border:1px solid var(--hairline-strong);
-  border-radius:6px;padding:0 7px;font-weight:600;font-size:13px;
-}
-.only-android{display:none}
-.android .only-ios{display:none}
-.android .only-android{display:inline}
-.extras{display:grid;gap:12px;margin-top:12px}
-.extra{padding:22px 24px}
-.extra b{font-size:16.5px;font-weight:600;display:block;margin-bottom:6px;letter-spacing:-.015em}
-.extra p{font-size:14px;color:var(--graphite);line-height:1.6}
+/* ---------- footer ---------- */
+footer{background:var(--paper);padding:48px 0 56px;border-top:1px solid var(--line)}
+.foot{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.foot .left{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.foot .wordmark{font-size:22px}
+.foot .tagline{font-size:14px;color:var(--soft)}
+.foot .links{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;align-items:center}
+.foot .links a{color:var(--muted)}
+.foot .c{color:var(--soft)}
 
-/* ── Pricing ───────────────────────────────────────────────── */
-.price-wrap{max-width:560px;margin:0 auto;padding:34px 36px 30px;text-align:center;box-shadow:var(--lift)}
-.toggle{display:inline-flex;background:var(--sunken);border-radius:var(--r-pill);padding:3px;margin-bottom:20px}
-.toggle button{
-  border:0;background:none;color:var(--graphite);padding:9px 20px;
-  border-radius:var(--r-pill);cursor:pointer;font:500 15px/1 var(--font);
-}
-.toggle button[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow)}
-.trial-badge{
-  display:table;margin:0 auto 14px;background:var(--teal);color:var(--on-teal);
-  border-radius:var(--r-pill);padding:5px 16px;font-size:14px;font-weight:600;
-}
-.amount{font-family:var(--mono);font-weight:500;font-size:68px;line-height:1;letter-spacing:-.04em}
-.amount small{font-size:21px;color:var(--muted)}
-.per-month{font-size:15px;color:var(--graphite);margin-top:8px}
-.save{
-  display:inline-block;margin-top:10px;background:var(--surface-2);
-  color:var(--mustard-text);border-radius:var(--r-pill);padding:4px 14px;
-  font-size:13px;font-weight:600;min-height:26px;
-  box-shadow:inset 0 0 0 1px var(--hairline-strong);
-}
-.price-wrap ul{list-style:none;text-align:left;margin:26px 0 24px;display:grid;gap:10px}
-.price-wrap li{display:flex;gap:10px;font-size:15px;line-height:1.5}
-.price-wrap li svg{flex:none;margin-top:3px}
-.price-wrap .btn{width:100%}
-.assure{
-  display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;margin-top:14px;
-  font-size:13.5px;font-weight:500;color:var(--link);
-}
-.terms{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6;text-align:left}
-.share{
-  all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;
-  justify-content:center;gap:8px;width:100%;margin-top:12px;
-  border:1px dashed var(--hairline-strong);border-radius:var(--r-pill);
-  padding:13px 18px;font:500 15px/1 var(--font);color:var(--ink);
-  transition:background .15s,border-color .15s;
-}
-.share:hover{background:var(--surface-2);border-color:var(--rose)}
-.share.inline{width:auto;display:inline-flex;margin:16px auto 0}
-.share-sub{font-size:12.5px;color:var(--muted);margin-top:6px}
+/* ---------- the pop-ups: moments from a homeroom house ---------- */
+/* Same four cards as before, rebuilt as the glass sheet the hero
+   uses, so the thing that interrupts you looks like the thing you
+   were already looking at. */
+.pop{position:fixed;left:24px;bottom:24px;z-index:55;width:360px;max-width:calc(100vw - 32px);
+  padding:20px 18px 16px;border-radius:26px;overflow:hidden;
+  background:rgba(251,250,248,.93);
+  backdrop-filter:blur(26px) saturate(190%);-webkit-backdrop-filter:blur(26px) saturate(190%);
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, var(--lift);
+  opacity:0;transform:translateY(16px) scale(.98);pointer-events:none;
+  transition:opacity .28s ease, transform .28s cubic-bezier(.2,.8,.2,1)}
+.pop.show{opacity:1;transform:none;pointer-events:auto}
+.pop .band{position:absolute;top:0;left:0;right:0;height:4px}
+.pop .x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;
+  border:0;background:rgba(17,20,18,.06);color:var(--muted);cursor:pointer;
+  font-size:14px;line-height:1;display:grid;place-items:center}
+.pop .x:hover{background:rgba(17,20,18,.12);color:var(--ink)}
+.pop .lab{font-size:12px;font-weight:600;letter-spacing:.05em;padding-right:28px}
+.pop .phd{margin-top:6px;font-size:19px;font-weight:600;letter-spacing:-.022em;line-height:1.2}
+.pop .psub{margin-top:7px;font-size:14px;line-height:1.45;color:var(--muted)}
+.pop .pchip{margin-top:13px;display:inline-flex;align-items:center;gap:8px;height:34px;
+  padding:0 14px 0 5px;border-radius:999px;background:rgba(255,255,255,.86);
+  font-size:13px;font-weight:500;color:var(--body);max-width:100%}
+.pop .pchip .dot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  color:#fff;font-size:10px;font-weight:600;flex:none}
+.pop .act{margin-top:14px;width:100%;height:44px;border:0;border-radius:999px;color:#fff;
+  font-size:15px;font-weight:600;cursor:pointer;transition:filter .15s}
+.pop .act:hover{filter:brightness(1.07)}
+.pop .act.done{background:var(--sunk)!important;color:var(--muted);cursor:default}
+.pop .more{display:block;margin-top:11px;text-align:center;font-size:13px;font-weight:500;color:var(--teal)}
+.pop-again{position:fixed;right:24px;bottom:24px;z-index:54;width:54px;height:54px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.8);background:rgba(251,250,248,.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--lift);cursor:pointer;display:none;font-size:22px;
+  transition:transform .15s}
+.pop-again:hover{transform:scale(1.08) rotate(-8deg)}
+#confetti{position:fixed;inset:0;z-index:56;pointer-events:none}
 
-/* ── Founder ───────────────────────────────────────────────── */
-.founder{max-width:780px;margin:0 auto;text-align:center}
-.founder p{font-size:clamp(22px,3vw,32px);line-height:1.28;letter-spacing:-.03em;font-weight:500}
-.founder .sig{
-  font-size:14px;color:var(--muted);margin-top:20px;
-  display:flex;align-items:center;justify-content:center;gap:9px;
-}
-
-/* ── FAQ ───────────────────────────────────────────────────── */
-.faq{max-width:780px;margin:0 auto}
-details{border-bottom:1px solid var(--hairline)}
-summary{
-  font-size:17px;font-weight:600;letter-spacing:-.02em;padding:18px 4px;cursor:pointer;
-  list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;
-}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--mono);font-size:20px;color:var(--action);transition:transform .2s}
-details[open] summary::after{transform:rotate(45deg)}
-details p{padding:0 4px 20px;font-size:15px;color:var(--graphite);line-height:1.65}
-details a{color:var(--link);font-weight:500}
-
-/* ── Final + footer ────────────────────────────────────────── */
-.final{text-align:center}
-.final .h2{max-width:720px;margin:10px auto 0}
-.final .body{margin:16px auto 28px;max-width:520px}
-footer{border-top:1px solid var(--hairline);padding:40px 0 56px;text-align:center}
-footer .wordmark{font-size:24px}
-footer .tag{font-size:13.5px;color:var(--muted);margin-top:6px}
-footer .links{margin-top:18px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;font-size:13.5px}
-footer .links a{color:var(--graphite);text-decoration:none}
-footer .links a:hover{color:var(--ink)}
-footer .fine{font-size:12px;color:var(--muted);margin-top:16px}
-
-/* ── Mobile sticky CTA ─────────────────────────────────────── */
+/* mobile sticky CTA */
 .sticky{display:none}
+body.pop-open .sticky{transform:translateY(160%)!important}
 
-/* ── Narrow ────────────────────────────────────────────────── */
-@media (max-width:920px){
-  .lap-screen{padding:8px 8px 10px;border-radius:16px 16px 6px 6px}
-  .wk{padding:14px 12px 12px}
-  .wk-title{font-size:16px}
-  .wk-hint{margin-left:0}
-  .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
-  .chips::-webkit-scrollbar{display:none}
-  .chip{flex:none}
-  .week{grid-template-columns:repeat(7,120px);min-width:0}
-  .laptop{width:100%}
-  .stage{display:flex;flex-direction:column-reverse}
-  .phone-wrap{position:relative;right:auto;bottom:auto;margin:0 auto 32px}
-  .phone{transform:none}
-  .stage-cap{margin-top:32px}
-  .load,.lead.first,.install{grid-template-columns:1fr}
-  .week1,.who-gets{grid-template-columns:1fr 1fr}
-  .quotes{grid-template-columns:1fr;gap:28px}
-  .qcol.offset{padding-top:0}
-  .rest-grid{grid-template-columns:1fr 1fr}
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .cell.span2{grid-column:auto}
+  .series{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .series div:nth-child(n+4){display:none}
 }
-@media (max-width:640px){
-  .nav-links a.txt{display:none}
-  .leads,.extras,.rest-grid,.week1,.who-gets{grid-template-columns:1fr}
-  .steps{padding:4px 20px}
-  .price-wrap{padding:28px 20px 24px}
-  .sticky{
-    display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:40;
-    transform:translateY(140%);transition:transform .3s;
-  }
+@media (max-width:860px){
+  .navlinks{display:none}
+  .hide-sm{display:none!important}
+  .week{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .day:nth-child(n+4){display:none}
+  .sheet{position:static;width:auto;max-width:none;margin-top:16px}
+  .stage{padding-bottom:0}
+  .meals{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .navcta .signin{display:none}
+  .pop{left:12px;right:12px;width:auto;bottom:12px}
+  .pop-again{right:14px;bottom:96px;width:48px;height:48px;font-size:19px}
+  .sticky{display:block;position:fixed;left:14px;right:14px;bottom:14px;z-index:45;
+    transform:translateY(160%);transition:transform .3s}
   .sticky.show{transform:none}
   .sticky .btn{width:100%;box-shadow:var(--lift)}
-  footer{padding-bottom:96px}
+  footer{padding-bottom:110px}
+  .pricing .top{gap:28px}
 }
-@media (prefers-contrast:more){
-  :root{--graphite:#3A403C;--muted:#3A403C}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
-
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="navwrap">
+<!-- ============ NAV ============ -->
+<div class="navbar" id="navbar">
   <nav class="nav" aria-label="Main">
-    <a class="wordmark" href="#top" aria-label="homeroom, home"><span aria-hidden="true"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span></a>
-    <div class="nav-links">
-      <a class="txt" href="#features">Features</a>
-      <a class="txt" href="#stories">Families</a>
-      <a class="txt" href="#install">Get the app</a>
-      <a class="txt" href="#pricing">Pricing</a>
-      <a class="btn js-start" href="https://app.homeroomforfamily.com">Try it free</a>
+    <a href="#top" class="wordmark" aria-label="homeroom, home"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></a>
+    <div class="navlinks">
+      <a href="#whos-got-it">Who&rsquo;s got it</a>
+      <a href="#display">Kitchen display</a>
+      <a href="#features">Features</a>
+      <a href="#install">Get the app</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="navcta">
+      <a class="signin js-start" href="https://app.homeroomforfamily.com">Sign in</a>
+      <a class="btn sm js-start" href="https://app.homeroomforfamily.com">Start free trial</a>
     </div>
   </nav>
 </div>
 
-<!-- ═════ HERO ═════ -->
-<div class="wrap" id="top">
-  <header class="hero">
-    <span class="label">The family command center</span>
-    <h1 class="h1">Sometimes the hardest load is <em>the mental load.</em></h1>
-    <p class="lede">homeroom is household operations, shared. <b>Not a prettier calendar.</b></p>
-    <div class="hero-ctas">
-      <a class="btn btn--lg js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
-      <span class="trial-line js-trial-line"></span>
-    </div>
-  </header>
+<main id="main">
 
-  <!-- The signature: one house, two screens, and a claim on either one
-       lands on the other. This is the product's whole argument, so it is
-       demonstrated rather than described. -->
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <a class="badge" href="#whos-got-it">
+    <b>New</b> Who&rsquo;s got it? is live
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="#3A403C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <h1 class="balance">The whole house, at a glance.</h1>
+  <p class="lede balance">Every calendar shows what&rsquo;s happening. homeroom shows who&rsquo;s got it.</p>
+  <div class="hero-ctas">
+    <a class="btn js-start" href="https://app.homeroomforfamily.com"><span>Start your <span class="js-trial-days">7</span>-day free trial</span></a>
+    <a class="btn ghost" href="#whos-got-it">See how it works
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+  <p class="fineprint js-fine"></p>
+
+  <!-- device composition -->
   <div class="stage">
-    <div class="laptop">
-      <span class="device-tag"><span class="dot" style="background:var(--teal);color:var(--on-teal)">E</span>Endia · at her desk</span>
-      <div class="lap-screen">
-        <div class="browser">
-          <div class="chrome"><i></i><i></i><i></i><span class="url">app.homeroomforfamily.com</span></div>
-          <div class="wk" aria-label="Interactive example of a homeroom week on a computer">
-            <div class="wk-head">
-              <span class="wk-title">This week at the homeroom house</span>
-              <span class="wk-range">SEPT 28 – OCT 4</span>
-              <span class="wk-hint">Tap a person</span>
+    <div class="tablet">
+      <div class="tablet-screen">
+        <div class="wk-head">
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <span class="wk-title">October 12 &ndash; 18</span>
+            <span class="mono hide-sm" style="font-size:12px;color:#676E66">WEEK 42</span>
+          </div>
+          <div class="avatars" aria-label="Everyone in this household">
+            <span class="av" style="background:#2F6661">E</span>
+            <span class="av" style="background:#D9472B">D</span>
+            <span class="av on-light" style="background:#DC9A27">N</span>
+            <span class="av on-light" style="background:#E78A9B">Z</span>
+            <span class="av" style="background:#7A8B5C">J</span>
+            <span class="av" style="background:#5E8CA7">C</span>
+            <span class="av" style="background:#9B6B9E">C</span>
+            <span class="av" style="background:#B5803F">P</span>
+          </div>
+        </div>
+        <div class="week">
+
+          <div class="day">
+            <div class="day-head"><span class="day-name">Mon</span><span class="day-num">12</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#D9472B24"><span class="t">7:30</span><span class="l">Drop-off</span></div>
+              <div class="ev" style="background:#E78A9B24"><span class="t">4:00</span><span class="l">Dentist &middot; Zo&euml;</span></div>
+              <div class="ev" style="background:#2F666124"><span class="t">7:00</span><span class="l">Book club</span></div>
             </div>
-            <div class="chips" id="chips" role="group" aria-label="Show one person's week"></div>
-            <div class="grid-scroll"><div class="week" id="week"></div></div>
-            <div class="wk-foot" id="wkfoot" aria-live="polite"></div>
+            <div class="dinner"><b>DINNER</b><span>Tacos</span></div>
           </div>
+
+          <div class="day">
+            <div class="day-head"><span class="day-name">Tue</span><span class="day-num">13</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#B5803F24"><span class="t">8:00</span><span class="l">Vet &middot; Phineas</span></div>
+              <div class="ev" style="background:#5E8CA724"><span class="t">3:30</span><span class="l">Soccer &middot; Chase</span></div>
+              <div class="ev" style="background:#9B6B9E24"><span class="t">5:00</span><span class="l">Piano &middot; Charli</span></div>
+            </div>
+            <div class="dinner"><b>DINNER</b><span>Pasta night</span></div>
+          </div>
+
+          <div class="day">
+            <div class="day-head"><span class="day-name">Wed</span><span class="day-num">14</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#8A90881F"><span class="t">9&ndash;12</span><span class="l">Home cleaning</span></div>
+              <div class="ev" style="background:#DC9A2724"><span class="t">4:00</span><span class="l">Debate &middot; Nia</span></div>
+              <div class="ev" style="background:#7A8B5C24"><span class="t">7:00</span><span class="l">Study group</span></div>
+            </div>
+            <div class="dinner"><b>DINNER</b><span>Leftovers</span></div>
+          </div>
+
+          <div class="day">
+            <div class="day-head"><span class="day-name">Thu</span><span class="day-num">15</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#5E8CA724"><span class="t">3:30</span><span class="l">Soccer &middot; Chase</span></div>
+              <div class="ev" style="background:#E78A9B24"><span class="t">6:00</span><span class="l">Dance &middot; Zo&euml;</span></div>
+              <div class="ev" style="background:#8A90881F"><span class="t">8:00</span><span class="l">Grocery order locks</span></div>
+            </div>
+            <div class="dinner"><b>DINNER</b><span>Stir-fry</span></div>
+          </div>
+
+          <div class="day today">
+            <div class="day-head"><span class="day-name">Fri</span><span class="day-num">16</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#5E8CA724"><span class="t">3:30</span><span class="l">Soccer &middot; Chase</span></div>
+              <div class="ev" style="background:#9B6B9E24"><span class="t">5:00</span><span class="l">Piano &middot; Charli</span></div>
+              <div class="ev all"><span class="edge spectrum" aria-hidden="true"></span><span class="t">7:30</span><span class="l">Movie night</span></div>
+            </div>
+            <div class="dinner"><b>DINNER</b><span>Fajitas</span></div>
+          </div>
+
+          <div class="day">
+            <div class="day-head"><span class="day-name">Sat</span><span class="day-num">17</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#8A90881F"><span class="t">10&ndash;11</span><span class="l">Grocery delivery</span></div>
+              <div class="ev" style="background:#2F666124"><span class="t">11:00</span><span class="l">Nails at home</span></div>
+              <div class="ev" style="background:#DC9A2724"><span class="t">2:00</span><span class="l">Party &middot; Nia</span></div>
+            </div>
+            <div class="dinner"><b>DINNER</b><span>Pizza</span></div>
+          </div>
+
+          <div class="day">
+            <div class="day-head"><span class="day-name">Sun</span><span class="day-num">18</span></div>
+            <div class="evs">
+              <div class="ev" style="background:#B5803F24"><span class="t">9:00</span><span class="l">Long walk &middot; Phineas</span></div>
+              <div class="ev" style="background:#7A8B5C24"><span class="t">3:00</span><span class="l">Game &middot; Josiah</span></div>
+              <div class="ev all"><span class="edge spectrum" aria-hidden="true"></span><span class="t">5:00</span><span class="l">Family dinner</span></div>
+            </div>
+            <div class="dinner"><b>DINNER</b><span>Roast chicken</span></div>
+          </div>
+
         </div>
       </div>
-      <div class="lap-base" aria-hidden="true"></div>
     </div>
 
-    <div class="phone-wrap">
-      <span class="device-tag"><span class="dot" style="background:var(--fill-vermilion);color:var(--on-vermilion)">D</span>David · in the pickup line</span>
-      <div class="phone" aria-label="Interactive example of today in homeroom on a phone">
-        <div class="ph-screen">
-          <div class="ph-notch" aria-hidden="true"></div>
-          <div class="ph-head"><b>Today</b><span>TUE, SEPT 29</span></div>
-          <div id="phList"></div>
+    <div class="sheet">
+      <div class="sheet-top">
+        <span class="sheet-lab">WHO&rsquo;S GOT IT?</span>
+        <span class="sheet-when">FRI &middot; 3:30 PM</span>
+      </div>
+      <div class="sheet-what">Chase &middot; soccer practice</div>
+      <div class="claims">
+        <span class="claim"><i>E</i>Endia&rsquo;s got it</span>
+        <span class="claim alt"><i>D</i>David</span>
+      </div>
+      <div class="sheet-note">Just this Friday. The rest of the series stays with David.</div>
+    </div>
+
+    <div class="phone hide-sm" aria-hidden="true">
+      <div class="phone-screen">
+        <div class="ph-date">Friday, October 16</div>
+        <div class="ph-today">Today</div>
+        <div class="ph-next">
+          <div class="ph-k">UP NEXT &middot; 3:30</div>
+          <div style="font-size:14px;font-weight:600;margin-top:3px">Soccer practice</div>
+          <div style="margin-top:6px;display:flex;align-items:center;gap:6px;font-size:11px;color:#2F6661;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:#2F6661"></span>Endia&rsquo;s got it</div>
+        </div>
+        <div class="ph-rows">
+          <div class="ph-row"><span class="t">5:00</span><span class="bar" style="background:#9B6B9E"></span><span class="l">Piano &middot; Charli</span></div>
+          <div class="ph-row"><span class="t">6:30</span><span class="bar" style="background:#DC9A27"></span><span class="l">Fajitas &middot; David cooks</span></div>
+          <div class="ph-row"><span class="t">7:30</span><span class="bar" style="background:linear-gradient(180deg,#2F6661 0 25%,#D9472B 25% 50%,#DC9A27 50% 75%,#5E8CA7 75% 100%)"></span><span class="l">Movie night &middot; everyone</span></div>
         </div>
       </div>
     </div>
   </div>
+</header>
 
-  <p class="stage-cap">Same house, same minute. Claim something on either screen and watch the other one update.</p>
-
-  <div class="proof">
-    <span>Every phone in the house, iPhone or Android</span>
-    <span>Any computer, right in the browser</span>
-    <span>The kitchen wall, on the tablet you already own</span>
+<!-- ============ THE LOAD ============ -->
+<section class="night" id="whos-got-it">
+  <div class="wrap">
+    <h2 class="balance">The load isn&rsquo;t tasks. <em>It&rsquo;s tracking.</em></h2>
+    <p class="lede">Who&rsquo;s driving, who&rsquo;s cooking, whether anyone fed the dog. homeroom puts all of it where everyone can see it, so one person stops carrying it in their head.</p>
+    <div class="people">
+      <div class="person"><span class="ring" style="background:#2F6661">E</span><span class="nm">Endia</span><span class="sw">TEAL</span></div>
+      <div class="person"><span class="ring" style="background:#D9472B">D</span><span class="nm">David</span><span class="sw">VERMILION</span></div>
+      <div class="person"><span class="ring on-light" style="background:#DC9A27">N</span><span class="nm">Nia</span><span class="sw">MUSTARD</span></div>
+      <div class="person"><span class="ring on-light" style="background:#E78A9B">Z</span><span class="nm">Zo&euml;</span><span class="sw">ROSE</span></div>
+      <div class="person"><span class="ring" style="background:#7A8B5C">J</span><span class="nm">Josiah</span><span class="sw">MOSS</span></div>
+      <div class="person"><span class="ring" style="background:#5E8CA7">C</span><span class="nm">Chase</span><span class="sw">DUSTY BLUE</span></div>
+      <div class="person"><span class="ring" style="background:#9B6B9E">C</span><span class="nm">Charli</span><span class="sw">PLUM</span></div>
+      <div class="person"><span class="ring" style="background:#B5803F">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="4.2" ry="3.6" stroke="#fff" stroke-width="1.7"/><circle cx="6.2" cy="10" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="9.6" cy="6.4" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="14.4" cy="6.4" r="1.8" stroke="#fff" stroke-width="1.7"/><circle cx="17.8" cy="10" r="1.8" stroke="#fff" stroke-width="1.7"/></svg>
+      </span><span class="nm">Phineas</span><span class="sw">BISCUIT &middot; DOG</span></div>
+    </div>
+    <p class="foot">Everyone gets a color. The dog has a calendar column. We are not sorry.</p>
   </div>
+</section>
 
-  <figure class="lift-quote">
-    <blockquote>“‘How can I help’ is a question I don’t have to ask anymore. … I can open the app, and choose where I can jump in and own some of the load at any time.”</blockquote>
-    <figcaption><span>Father of 2</span><a href="#stories">More from homeroom families</a></figcaption>
-  </figure>
-</div>
+<!-- ============ FEATURES ============ -->
+<section class="bento-wrap" id="features">
+  <div class="wrap">
+    <h2 class="balance">Everything the house runs on. In one place.</h2>
+    <div class="bento">
 
-<!-- ═════ THE LOAD ═════ -->
-<div class="wrap">
-  <section>
-    <div class="load">
-      <div class="big">The load isn’t the tasks. <em>It’s the tracking.</em></div>
-      <div>
-        <p class="body">Who’s driving, what’s for dinner, whose turn it is, when the cleaners come. Whether you’re running the house solo or alongside a partner, a co-parent, or a grandparent, all of that tends to live in somebody’s head. Usually yours.</p>
-        <p class="body">homeroom gets it out of your head and onto every screen in the house. The kids can own their part, anyone in your corner can see where to jump in, and it asks the one question every other family app skips.</p>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ═════ FEATURES ═════ -->
-<div class="wrap">
-  <section id="features">
-    <div class="head">
-      <span class="label">What’s inside</span>
-      <h2 class="h2">Built for the way your house <em style="font-style:normal;color:var(--teal)">actually works.</em></h2>
-      <p class="body">One parent or two. A co-parent across town, grandparents in another state, a kid at college, the sitter on Thursdays, the dog. Everyone who’s part of the house gets a color.</p>
-    </div>
-
-    <div class="leads">
-      <article class="lead card first">
+      <article class="cell span2">
         <div>
-          <span class="kicker" style="background:var(--spectrum)"></span>
-          <h3>Who’s got it?</h3>
-          <p>homeroom asks, quietly, on the events that need someone, and one tap answers it. It works the way families actually do. Someone usually takes Tuesday soccer. The week they travel, one tap on that Tuesday hands it off without touching the rest of the season.</p>
-          <p style="margin-top:10px">Running the house solo? It’s how a teenager with a license, a sitter, or grandma takes something off your plate without a single phone call. And it never asks about church, family dinner, or your own dentist appointment.</p>
-          <div class="quote-line">Every calendar shows you what’s happening. homeroom shows you who’s got it.</div>
+          <span class="tag">WHO&rsquo;S GOT IT?</span>
+          <h3 class="balance">One tap says who&rsquo;s carrying it this week.</h3>
+          <p>David usually takes Tuesday soccer. The week he travels, one tap on that Tuesday says Endia without touching the rest of the series. And it never asks about family dinner, or your own dentist appointment.</p>
         </div>
-        <div class="demo series" aria-label="Example: a soccer series with one date handed off">
-          <div class="row"><span class="d">SEPT 22</span>Soccer<span class="who"><span class="dot" style="background:var(--fill-vermilion);color:var(--on-vermilion)">D</span>David</span></div>
-          <div class="row changed"><span class="d">SEPT 29</span>Soccer<span class="who"><span class="dot" style="background:var(--teal);color:var(--on-teal)">E</span>Endia</span></div>
-          <div class="row"><span class="d">OCT 6</span>Soccer<span class="who"><span class="dot" style="background:var(--fill-vermilion);color:var(--on-vermilion)">D</span>David</span></div>
-          <div class="row"><span class="d">OCT 13</span>Soccer<span class="who"><span class="dot" style="background:var(--fill-vermilion);color:var(--on-vermilion)">D</span>David</span></div>
+        <div class="series">
+          <div><span class="d mono">OCT 6</span><span class="who" style="background:#D9472B">D</span></div>
+          <div><span class="d mono">OCT 13</span><span class="who" style="background:#D9472B">D</span></div>
+          <div class="pick"><span class="d mono">OCT 20</span><span class="who" style="background:#2F6661">E</span></div>
+          <div><span class="d mono">OCT 27</span><span class="who" style="background:#D9472B">D</span></div>
+          <div><span class="d mono">NOV 3</span><span class="who" style="background:#D9472B">D</span></div>
         </div>
       </article>
 
-      <article class="lead card">
-        <span class="kicker" style="background:var(--dusty)"></span>
-        <h3>Your old iPad is the $300 kitchen display.</h3>
-        <p>Any tablet in a drawer becomes the family wall calendar: big clock, today’s schedule, tonight’s dinner, chores you can tap. It is part of the plan, not a piece of hardware to buy.</p>
-        <div class="demo wall-mini">
-          <div class="in">
-            <span class="clock">4:15</span>
-            <span class="l1">Zoë · Dance</span>
-            <span class="l2">Tonight: sheet-pan chicken · Nia’s cooking</span>
+      <article class="cell dark" id="display">
+        <span class="tag">KITCHEN DISPLAY</span>
+        <div>
+          <div class="bignum">$0</div>
+          <div style="margin-top:6px;font-size:15px;color:#A9AFA8">for the screen on your wall</div>
+        </div>
+        <p>Your old iPad is the kitchen display. Any tablet in a drawer becomes the family calendar: big clock, today&rsquo;s plan, tonight&rsquo;s dinner, chores you can tap.</p>
+      </article>
+
+      <article class="cell">
+        <div class="joinlink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex:none"><path d="M10 14a4 4 0 005.66 0l3-3a4 4 0 00-5.66-5.66l-1 1M14 10a4 4 0 00-5.66 0l-3 3a4 4 0 005.66 5.66l1-1" stroke="#5E655F" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="u">homeroom.app/join/r7k2</span>
+          <span class="who">Zo&euml;</span>
+        </div>
+        <div>
+          <h3>Kids join with a link.</h3>
+          <p>No email, no password. They tap it and they&rsquo;re in, with their own color and their own chores.</p>
+        </div>
+      </article>
+
+      <article class="cell">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="privrow shown">
+            <span class="when mono">SAT 2:00</span>
+            <span style="font-size:14px;font-weight:600">Nia&rsquo;s surprise party</span>
+          </div>
+          <div class="privrow hidden-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5" stroke="#676E66" stroke-width="1.8"/><path d="M8.5 11V8a3.5 3.5 0 017 0v3" stroke="#676E66" stroke-width="1.8"/></svg>
+            <span style="font-size:14px;font-weight:500">What Nia sees: nothing</span>
           </div>
         </div>
-      </article>
-
-      <article class="lead card">
-        <span class="kicker" style="background:var(--rose)"></span>
-        <h3>Kids join with no account.</h3>
-        <p>No email, no password, no setting up a login for a seven-year-old. They open the family link, tap their name, and they’re in with their own color and their own chores.</p>
-        <div class="demo">
-          <span class="pill"><span class="dot" style="background:var(--rose);color:var(--on-rose)">Z</span>Zoë</span><span class="pill"><span class="dot" style="background:var(--moss);color:var(--on-moss)">J</span>Josiah</span><span class="pill"><span class="dot" style="background:var(--dusty);color:var(--on-dusty)">C</span>Chase</span><span class="pill"><span class="dot" style="background:var(--biscuit);color:var(--on-biscuit)">P</span>Phineas</span>
+        <div>
+          <h3>Private when it needs to be.</h3>
+          <p>Plan the party without the birthday kid finding out. Hidden on their phone, their calendar feed and the kitchen display.</p>
         </div>
       </article>
 
-      <article class="lead card">
-        <span class="kicker" style="background:var(--plum)"></span>
-        <h3>Private items stay private.</h3>
-        <p>Plan the birthday without the birthday kid seeing it. Private items are hidden everywhere: the calendar, the calendar feed, notifications, and the kitchen display.</p>
-        <div class="demo">
-          <div class="lock-row"><span>Sat · <span class="blurred">Surprise party setup</span></span><span class="mono">private</span></div>
-          <div class="lock-row"><span>Fri · <span class="blurred">Pick up the cake</span></span><span class="mono">private</span></div>
+      <article class="cell">
+        <div class="timerline">
+          <svg width="92" height="92" viewBox="0 0 92 92" role="img" aria-label="Timer, 9 of 15 minutes left" style="flex:none"><circle cx="46" cy="46" r="38" fill="none" stroke="#F1EEE6" stroke-width="9"/><circle cx="46" cy="46" r="38" fill="none" stroke="#DC9A27" stroke-width="9" stroke-linecap="round" stroke-dasharray="238.8" stroke-dashoffset="95.5" transform="rotate(-90 46 46)"/><text x="46" y="51" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="#111412">9:00</text></svg>
+          <div style="min-width:0">
+            <div style="font-size:15px;font-weight:600">Unload the dishwasher</div>
+            <div style="margin-top:4px;display:flex;align-items:center;gap:6px;font-size:13px;color:#5E655F"><span style="width:8px;height:8px;border-radius:50%;background:#DC9A27"></span>Nia &middot; 15 min</div>
+          </div>
+        </div>
+        <div>
+          <h3>Chores with a clock on them.</h3>
+          <p>One tap starts the timer. It follows you around the app, so nobody reaches for their phone&rsquo;s clock instead.</p>
         </div>
       </article>
 
-      <article class="lead card">
-        <span class="kicker" style="background:var(--teal)"></span>
+      <article class="cell span2" style="flex-direction:row;flex-wrap:wrap;gap:32px">
+        <div style="flex:1 1 280px;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:24px">
+          <div>
+            <span class="tag amber">MEALS AND GROCERIES</span>
+            <h3 class="balance">Dinner is decided. The list writes itself.</h3>
+            <p>Plan the week&rsquo;s meals, then one tap turns them into a grocery list sorted by aisle, live on every phone.</p>
+          </div>
+          <div class="meals">
+            <div><div class="d">THU</div><div class="n">Stir-fry</div></div>
+            <div class="tonight"><div class="d">FRI &middot; TONIGHT</div><div class="n">Fajitas</div></div>
+            <div><div class="d">SAT</div><div class="n">Pizza night</div></div>
+          </div>
+        </div>
+        <div class="list">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;font-weight:600">Groceries</span><span class="mono" style="font-size:11px;color:#676E66">14 ITEMS</span></div>
+          <div class="lab">PRODUCE</div>
+          <div class="row"><span class="box done"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span style="color:#676E66;text-decoration:line-through">Bell peppers, 3</span></div>
+          <div class="row"><span class="box"></span>Limes, 4</div>
+          <div class="lab">DAIRY</div>
+          <div class="row"><span class="box"></span>Oat milk<span style="margin-left:auto;font-size:12px;color:#B23A20;font-weight:500">Order locks Thu 8 PM</span></div>
+        </div>
+      </article>
+
+      <article class="cell" style="justify-content:space-between">
+        <div class="streak">
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-.05em;line-height:1">15</span><span style="font-size:14px;font-weight:500;opacity:.9">day reading streak</span></div>
+          <div style="margin-top:10px;font-size:15px;line-height:1.4">Josiah is on a 15-day streak and unbearably smug about it.</div>
+        </div>
+        <div>
+          <h3>The wins wall.</h3>
+          <p>If it made someone proud, it goes on the wall.</p>
+        </div>
+      </article>
+
+      <article class="cell" style="gap:14px">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3.5" stroke="#111412" stroke-width="1.6"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke="#111412" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>In the calendar they already use.</h3>
+        <p>Subscribe in Apple or Google Calendar: a live feed for each person, plus one for the whole family with dinner included.</p>
+      </article>
+
+      <article class="cell" style="gap:14px">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11l8-6.5 8 6.5V19a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 19v-8z" stroke="#111412" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 20.5v-5h4v5" stroke="#111412" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <h3>The people who help, on the calendar.</h3>
+        <p>Cleaners, grocery delivery, the nail appointment at home. Each with its cadence and arrival window.</p>
+      </article>
+
+      <article class="cell" style="gap:14px">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5l7-3z" stroke="#111412" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.4-4.4" stroke="#111412" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <h3>Safe by design.</h3>
-        <p>Invite links expire. An adult approves every new join. Every delete has an undo. No ads, no tracking, and nothing about your family is ever sold.</p>
-        <div class="demo">Your household’s information is only visible to your household.</div>
+        <p>Invite links expire and an adult approves every new join. No ads, no tracking, and nothing about your family is ever sold.</p>
       </article>
-    </div>
 
-    <div class="rest card">
-      <span class="label">And everything you’d expect, done well</span>
-      <div class="rest-grid">
-        <div class="rest-item"><span class="bar" style="background:var(--teal)"></span><b>Calendar</b><span>Week, month, day, and a per-person view. Repeats, end times, reminders, and addresses that open in Maps or Waze.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--vermilion)"></span><b>Shows up in your calendar</b><span>Subscribe in Apple or Google Calendar: a feed for each person and one for the whole family, dinners included.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--mustard)"></span><b>Meals</b><span>Breakfast, lunch and dinner for the week, a favorites library, a recipe bank, and “copy last week” for the weeks you’ve got nothing left.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--rose)"></span><b>Groceries that build themselves</b><span>One tap turns the week’s meals into a list sorted by aisle, live on every phone.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--moss)"></span><b>Chores with timers</b><span>One tap starts a countdown that follows you around the app. Streaks, progress, and confetti when it’s done.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--dusty)"></span><b>Wins wall</b><span>Lost teeth, good grades, the dog’s diploma. If it made someone proud, it goes on the wall.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--plum)"></span><b>Services</b><span>Cleaners, grocery delivery, in-home appointments, with their schedule and arrival windows.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--biscuit)"></span><b>Handoff sheets</b><span>A printable page for the sitter or dog-sitter, and a picture chart for kids who can’t read yet.</span></div>
-        <div class="rest-item"><span class="bar" style="background:var(--service)"></span><b>Works without signal</b><span>Check chores off in the pickup line. It syncs when you’re back.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="founder">
+  <div class="wrap">
+    <div class="inner">
+      <span class="kicker">BUILT BY A MOM, FOR THE WHOLE HOUSE</span>
+      <blockquote class="balance">&ldquo;Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build a system for our home. It&rsquo;s made all the difference now that we all have visibility and input into the family load.&rdquo;</blockquote>
+      <div class="byline">
+        <span class="ring">E</span>
+        <div><div style="font-size:15px;font-weight:600">Endia Leonard</div><div style="font-size:14px;color:#676E66">Founder, homeroom</div></div>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
-<hr class="rule">
-
-<!-- ═════ GETTING EVERYONE ON BOARD ═════ -->
-<div class="wrap">
-  <section id="onboard">
-    <div class="head">
-      <span class="label">Getting everyone on board</span>
-      <h2 class="h2">An app the whole house <em style="font-style:normal;color:var(--teal)">actually opens.</em></h2>
-      <p class="body">Most family calendars end up with one person using them. homeroom is built for everyone else in the house too. Here’s a first week that works.</p>
-    </div>
-    <ol class="week1">
-      <li class="card"><span class="dy" style="background:var(--teal);color:var(--on-teal)">Day 1</span><b>Everyone gets a color</b><p>Add the house, pets included, and text the family link. Kids tap their name. No email, no password.</p></li>
-      <li class="card"><span class="dy" style="background:var(--fill-vermilion);color:var(--on-vermilion)">Day 2</span><b>Empty your head</b><p>Put in the week you’re already carrying. homeroom asks “Who’s got it?” on anything that needs someone.</p></li>
-      <li class="card"><span class="dy" style="background:var(--mustard);color:var(--on-mustard)">Day 3</span><b>Hand out the chores</b><p>Kids see their own list, start a timer, and check it off. Streaks and confetti do the nagging.</p></li>
-      <li class="card"><span class="dy" style="background:var(--fill-plum);color:var(--on-plum)">Day 5</span><b>Meet them where they look</b><p>Everyone subscribes their own calendar feed, and the old tablet goes up in the kitchen.</p></li>
-      <li class="card"><span class="dy" style="background:var(--moss);color:var(--on-moss)">Day 7</span><b>Celebrate one win</b><p>Post something on the Wins Wall. If it made someone proud, it goes on the wall.</p></li>
-    </ol>
-    <div class="who-gets">
-      <div><b>Kids</b>Their own color, their own chores, and confetti when they finish.</div>
-      <div><b>Teens</b>Their schedule in the calendar app they already use.</div>
-      <div><b>A partner or co-parent</b>Every open “Who’s got it?” in one place, so helping doesn’t start with asking.</div>
-      <div><b>Grandparents and sitters</b>The week they’re helping with, from one link.</div>
-    </div>
-  </section>
-</div>
-
-<hr class="rule">
-
-<!-- ═════ TESTIMONIALS ═════ -->
-<div class="wrap">
-  <section id="stories">
-    <div class="head center">
-      <span class="label">From homeroom families</span>
-      <h2 class="h2">In their words.</h2>
-    </div>
+<!-- ============ STORIES ============ -->
+<section class="stories" id="stories">
+  <div class="wrap">
+    <span class="kicker">FROM HOMEROOM FAMILIES</span>
+    <h2 style="margin-top:12px">In their words.</h2>
     <div class="quotes">
-      <div class="qcol">
-        <figure class="q card reveal" style="--tape:var(--teal);--delay:0s">
-          <blockquote>
-            <div class="pull">“The simple layout makes a huge impact for my household to remain on the same page.”</div>
-            <p class="full">“homeroom literally saved my life! I am naturally scatter-brained and having two kids with two different schedules, along with working multiple jobs, I needed something to help keep us organized. Using this app allows me to keep communication open and clear with my support and again, with ensuring that I don’t forget or overlook events. From laundry day, children’s sports events, work changes in schedule, chores, the simple layout makes a huge impact for my household to remain on the same page. homeroom is easy to use, and can be easily tailored to everyone in the house. I absolutely love it!”</p>
-          </blockquote>
-          <figcaption class="who"><div><b>Mom of 2</b><span>Two kids, two schedules, multiple jobs</span></div></figcaption>
-        </figure>
-        <figure class="q card reveal" style="--tape:var(--mustard);--delay:.15s">
-          <blockquote>
-            <div class="pull">“This app makes organizing a busy family’s schedule WAYYY easier!”</div>
-            <p class="full">“This app makes organizing a busy family’s schedule WAYYY easier! Having everyone’s activities and commitments in one place helps us see who’s available, avoid scheduling conflicts, and plan time together. It’s a helpful way to keep everyone on the same page and take some of the stress out of coordinating family life.”</p>
-          </blockquote>
-          <figcaption class="who"><div><b>Mom of 2</b><span>Seeing who’s available at a glance</span></div></figcaption>
-        </figure>
-      </div>
-      <div class="qcol offset">
-        <figure class="q card reveal" style="--tape:var(--plum);--delay:.12s">
-          <blockquote>
-            <div class="pull">“I now get to see how their days are flowing.”</div>
-            <p class="full">“The best organizer I have ever used! Not living in the same state with my children and grandchildren makes it kind of hard to keep up with their busy days. NOT anymore! I now get to see how their days are flowing and find the best times to call for my daily updates. Love homeroom!”</p>
-          </blockquote>
-          <figcaption class="who"><div><b>Grandmother of 4</b><span>Keeping up from another state</span></div></figcaption>
-        </figure>
-        <figure class="q card reveal" style="--tape:var(--vermilion);--delay:.24s">
-          <blockquote>
-            <div class="pull">“It’s a game changer, and gives me a new perspective of what my wife carries in her mind.”</div>
-            <p class="full">“I can now see all of the household tasks, big picture, and all the details wheeling through my wife’s brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time. It’s a game changer, and gives me a new perspective of what my wife carries in her mind.”</p>
-          </blockquote>
-          <figcaption class="who"><div><b>Father of 2</b><span>Jumping in where he’s needed</span></div></figcaption>
-        </figure>
-      </div>
+
+      <figure class="quote">
+        <div class="pull">&ldquo;It&rsquo;s a game changer, and gives me a new perspective of what my wife carries in her mind.&rdquo;</div>
+        <p>&ldquo;I can now see all of the household tasks, big picture, and all the details wheeling through my wife&rsquo;s brain as she carries the mental load of our family. I can open the app, and choose where I can jump in and own some of the load at any time.&rdquo;</p>
+        <figcaption class="who"><i style="background:#D9472B"></i><b>Father of 2</b><span>Jumping in where he&rsquo;s needed</span></figcaption>
+      </figure>
+
+      <figure class="quote">
+        <div class="pull">&ldquo;The simple layout makes a huge impact for my household to remain on the same page.&rdquo;</div>
+        <p>&ldquo;I am naturally scatter-brained and having two kids with two different schedules, along with working multiple jobs, I needed something to help keep us organized. From laundry day, children&rsquo;s sports events, work changes in schedule, chores, the simple layout makes a huge impact. I absolutely love it!&rdquo;</p>
+        <figcaption class="who"><i style="background:#2F6661"></i><b>Mom of 2</b><span>Two kids, two schedules, multiple jobs</span></figcaption>
+      </figure>
+
+      <figure class="quote">
+        <div class="pull">&ldquo;I now get to see how their days are flowing.&rdquo;</div>
+        <p>&ldquo;The best organizer I have ever used! Not living in the same state with my children and grandchildren makes it kind of hard to keep up with their busy days. NOT anymore! I now get to see how their days are flowing and find the best times to call for my daily updates. Love homeroom!&rdquo;</p>
+        <figcaption class="who"><i style="background:#9B6B9E"></i><b>Grandmother of 4</b><span>Keeping up from another state</span></figcaption>
+      </figure>
+
+      <figure class="quote">
+        <div class="pull">&ldquo;This app makes organizing a busy family&rsquo;s schedule WAYYY easier!&rdquo;</div>
+        <p>&ldquo;Having everyone&rsquo;s activities and commitments in one place helps us see who&rsquo;s available, avoid scheduling conflicts, and plan time together. It&rsquo;s a helpful way to keep everyone on the same page and take some of the stress out of coordinating family life.&rdquo;</p>
+        <figcaption class="who"><i style="background:#DC9A27"></i><b>Mom of 2</b><span>Seeing who&rsquo;s available at a glance</span></figcaption>
+      </figure>
+
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
-<hr class="rule">
+<!-- ============ INSTALL ============ -->
+<section class="install" id="install">
+  <div class="wrap">
+    <span class="kicker">GET THE APP</span>
+    <h2 style="margin-top:12px" class="balance">On your phone in about ten minutes.</h2>
+    <p class="lede">One adult sets up the household first. Everyone else joins with a link. homeroom installs straight from the web and lives on your home screen with its own icon &mdash; no app store, and nothing to update.</p>
 
-<!-- ═════ INSTALL ═════ -->
-<div class="wrap">
-  <section id="install">
-    <div class="install">
-      <div>
-        <span class="label">Get the app</span>
-        <h2 class="h2" style="margin-top:10px">On your phone in about ten minutes.</h2>
-        <p class="body" style="margin-top:14px">One adult sets up the household first. Everyone else joins with a link.</p>
-        <div class="no-store">
-          <b>No app store required.</b>
-          <p>homeroom installs straight from the web and lives on your home screen with its own icon, just like any other app. Use <strong>Safari</strong> on iPhone and iPad, or <strong>Chrome</strong> on Android. Other browsers can’t add apps to your home screen.</p>
+    <div class="tabs" role="tablist" aria-label="Choose your phone">
+      <button role="tab" id="tab-ios" aria-selected="true" aria-controls="panel-ios">iPhone &amp; iPad</button>
+      <button role="tab" id="tab-android" aria-selected="false" aria-controls="panel-android">Android</button>
+    </div>
+
+    <div class="steps" id="panel-ios" role="tabpanel" aria-labelledby="tab-ios">
+      <div class="step"><span class="n">1</span><h3>Open homeroom</h3><p>Go to <b>app.homeroomforfamily.com</b> in <kbd class="js-browser">Safari</kbd>.</p></div>
+      <div class="step"><span class="n">2</span><h3>Sign in with your email</h3><p>Tap <kbd>Send me a sign-in link</kbd>, then tap the link in your inbox. There&rsquo;s no password to create or forget.</p></div>
+      <div class="step"><span class="n">3</span><h3>Set up your household</h3><p>Name it, add everyone who lives there (pets too), and give each person a color. Starter chore lists and meal ideas are there if you want them.</p></div>
+      <div class="step"><span class="n">4</span><h3>Add it to your home screen</h3><p class="js-add">Tap the <kbd>Share</kbd> button (the square with an arrow), scroll down, tap <kbd>Add to Home Screen</kbd>, then <kbd>Add</kbd>.</p></div>
+      <div class="step"><span class="n">5</span><h3>Invite your family</h3><p>In <kbd>Settings</kbd>, open <kbd>Family invite link</kbd> and text it to everyone. They tap their name. For kids, that&rsquo;s the whole setup.</p></div>
+      <div class="step"><span class="n">6</span><h3>Put it on the kitchen wall</h3><p>On any tablet, open the invite link, then go to <b>app.homeroomforfamily.com/wall</b>. On iPad, set Auto-Lock to Never.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="top">
+      <div style="flex:1 1 420px;min-width:0">
+        <span class="kicker">PRICING</span>
+        <h2 style="margin-top:12px" class="balance">One plan. The whole house.</h2>
+        <p>About <b class="js-permo">$8</b> a month covers every person, every phone, every computer, and the kitchen display. Cancel anytime, and we&rsquo;ll email you before your trial ends.</p>
+      </div>
+
+      <div class="plan">
+        <div class="toggle" role="group" aria-label="Billing period">
+          <button data-plan="monthly" aria-pressed="false">Monthly</button>
+          <button data-plan="annual" aria-pressed="true">Yearly</button>
         </div>
-        <div style="margin-top:22px"><a class="btn btn--lg js-start" href="https://app.homeroomforfamily.com">Open homeroom</a></div>
-      </div>
-
-      <div id="installSteps">
-        <div class="tabs" role="tablist" aria-label="Choose your phone">
-          <button role="tab" aria-selected="true" data-os="ios" id="tab-ios">iPhone &amp; iPad</button>
-          <button role="tab" aria-selected="false" data-os="android" id="tab-android">Android</button>
+        <div>
+          <div class="amount"><span class="n" id="amt">$99</span><span class="per" id="per">/year</span></div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <span class="save" id="save">Save $45 a year</span>
+            <span class="save" style="background:rgba(47,102,97,.12);color:#1F4A46"><span class="js-trial-days">7</span>&nbsp;days free</span>
+          </div>
+          <div style="margin-top:8px;font-size:14px;color:#5E655F" id="permo"></div>
         </div>
-        <ol class="steps card" role="tabpanel" aria-labelledby="tab-ios">
-          <li><div><b>Open homeroom</b><p>Go to <code>app.homeroomforfamily.com</code> in <span class="only-ios">Safari</span><span class="only-android">Chrome</span>.</p></div></li>
-          <li><div><b>Sign in with your email</b><p>Tap <strong>Send me a sign-in link</strong>, then tap the link in your inbox. There’s no password to create or forget.</p></div></li>
-          <li><div><b>Set up your household</b><p>Name it, add everyone who lives there (pets too), and give each person a color. Starter chore lists and meal ideas are there if you want them. <span class="js-trial-step"></span></p></div></li>
-          <li><div><b>Add it to your home screen</b>
-            <p class="only-ios">Tap the <span class="key">Share</span> button (the square with an arrow), scroll down, tap <span class="key">Add to Home Screen</span>, then <span class="key">Add</span>.</p>
-            <p class="only-android">Tap the <span class="key">⋮</span> menu at the top right, tap <span class="key">Install app</span> or <span class="key">Add to Home screen</span>, then <span class="key">Install</span>.</p>
-            <p>Open homeroom from the new icon from now on.</p></div></li>
-          <li><div><b>Invite your family</b><p>In the app, open <strong>Settings</strong>, then <strong>Family invite link</strong>, and copy it. Text it to everyone. They open it, add homeroom to their home screen, and tap their name. For kids, that’s the whole setup.</p></div></li>
-        </ol>
-        <div class="extras">
-          <div class="extra card"><b>Open it on your computer</b><p>At work or at home, sign in at <code>app.homeroomforfamily.com</code> in any browser. Same household, same week, nothing to install.</p></div>
-          <div class="extra card"><b>Put it on the kitchen wall</b><p>On any tablet, open the family invite link, then go to <code>app.homeroomforfamily.com/wall</code>. On iPad, set Auto-Lock to Never and use Guided Access to keep little fingers inside homeroom.</p></div>
-          <div class="extra card"><b>See it in your own calendar</b><p>Open <strong>Settings</strong>, then <strong>Calendar subscriptions</strong>, and tap Subscribe next to your name. homeroom events show up in Apple or Google Calendar, reminders included.</p></div>
+        <div class="includes">
+          <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Everyone in the house, pets included, each with their own color</div>
+          <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Who&rsquo;s got it, chores with timers, meals, groceries, wins and services</div>
+          <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Phones, computers and the kitchen display on a tablet you already own</div>
+          <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Calendar feeds for Apple and Google Calendar</div>
+          <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>No ads, no tracking, and your data downloads any time</div>
         </div>
+        <a class="btn wide js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
+        <button class="btn ghost js-share" style="height:auto;justify-content:center">Send this to your partner or co-parent</button>
       </div>
     </div>
-  </section>
-</div>
+    <p class="terms" id="terms"></p>
+  </div>
+</section>
 
-<hr class="rule">
-
-<!-- ═════ PRICING ═════ -->
-<div class="wrap">
-  <section id="pricing">
-    <div class="head center">
-      <span class="label">Pricing</span>
-      <h2 class="h2">One plan. The whole house.</h2>
-      <p class="body">About <span class="js-permo">$8</span> a month covers every person, every phone, every computer, and the kitchen display.</p>
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <span class="kicker">QUESTIONS</span>
+    <h2 style="margin-top:12px">Good to know.</h2>
+    <div class="qa">
+      <details><summary>Does it work on Android?</summary><div class="a">Yes. homeroom works the same on iPhone and Android. Install it from Chrome on Android and from Safari on iPhone. A household can mix both.</div></details>
+      <details><summary>Do my kids need email addresses or phones?</summary><div class="a">No email and no password. Kids join with the family link and tap their name. Kids without a phone can use the kitchen display, and pre-readers get a printable picture chart.</div></details>
+      <details><summary>Does it work for single-parent households?</summary><div class="a">Absolutely. homeroom takes the tracking out of your head so you&rsquo;re not the only place the plan lives. Kids see their own schedule and chores, and a co-parent, grandparent, or sitter can join to see exactly what they&rsquo;re covering. You decide who&rsquo;s in.</div></details>
+      <details><summary>Can I use it on my computer at work?</summary><div class="a">Yes. Sign in at app.homeroomforfamily.com in any browser and you&rsquo;ll see the same household as everyone&rsquo;s phones. There&rsquo;s nothing to install.</div></details>
+      <details><summary>Can grandparents or a sitter join?</summary><div class="a">Yes. Add them as a person and send the invite link. An adult in the household approves every new join. When a sitter moves on, remove them and reset the link so the old one stops working.</div></details>
+      <details><summary>How does it work with my Apple or Google Calendar?</summary><div class="a">homeroom sends your events into Apple or Google Calendar through a calendar subscription, one feed per person plus one for the whole family. Changes you make in homeroom flow out to those calendars. Events you add directly in Apple or Google Calendar stay there and don&rsquo;t come into homeroom.</div></details>
+      <details><summary>Is my family&rsquo;s information private?</summary><div class="a">Your household&rsquo;s data is only visible to your household. We don&rsquo;t show ads, don&rsquo;t track anyone, and never sell data. Read the full <a href="https://app.homeroomforfamily.com/privacy">privacy policy</a>.</div></details>
+      <details><summary>What happens after the free trial?</summary><div class="a js-trial-faq"></div></details>
+      <details><summary>How do I cancel?</summary><div class="a">From Settings in the app, any time. Your plan stays active until the end of the period you paid for.</div></details>
+      <details><summary>Can I get my data out?</summary><div class="a">Any time. In the app, open Settings, then Your data, then Download, and you&rsquo;ll get everything as a spreadsheet or a full backup file.</div></details>
+      <details><summary>Something isn&rsquo;t working. Who do I talk to?</summary><div class="a">Email <a href="mailto:support@homeroomforfamily.com">support@homeroomforfamily.com</a>. Screenshots help a lot, and a real person reads every message.</div></details>
     </div>
-    <div class="price-wrap card">
-      <div class="toggle" role="group" aria-label="Billing period">
-        <button aria-pressed="false" data-plan="monthly">Monthly</button>
-        <button aria-pressed="true" data-plan="annual">Yearly</button>
-      </div>
-      <div class="trial-badge js-trial-badge">7 days free</div>
-      <div class="amount"><span id="amt">$99</span><small id="per">/year</small></div>
-      <div class="per-month" id="permo"></div>
-      <div class="save" id="save">Save $45 a year</div>
-      <ul>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="var(--teal)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited family members, pets included, each with their own color</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="var(--teal)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Who’s got it, chores with timers, meals, groceries, the wins wall, and services</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="var(--teal)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Every phone, every computer, and the kitchen display on a tablet you already own</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="var(--teal)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Calendar feeds for Apple and Google Calendar</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="var(--teal)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>No ads, no tracking, and your data downloads any time</li>
-      </ul>
-      <a class="btn btn--lg js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
-      <div class="assure"><span>We’ll remind you before your trial ends</span><span>Cancel anytime from Settings</span></div>
-      <button class="share js-share" type="button">Send this to your partner or co-parent</button>
-      <div class="share-sub">or anyone who helps run the house</div>
-      <p class="terms" id="terms"></p>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="closing">
+  <div class="wrap">
+    <span class="kicker" style="color:#7E857E">TEN MINUTES FROM NOW</span>
+    <h2 style="margin-top:14px" class="balance">Out of your head. <em>Onto every screen.</em></h2>
+    <p>Set up your household tonight. By tomorrow morning, the whole house knows the plan.</p>
+    <div class="row">
+      <a class="btn js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
+      <button class="btn ghost js-share">Send this to your partner or co-parent</button>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
-<hr class="rule">
-
-<!-- ═════ FOUNDER ═════ -->
-<div class="wrap">
-  <section>
-    <div class="founder">
-      <p>“Managing a family is real work, particularly when one person carries the mental load. I build systems for enterprises, and I used the same principles to build a system for our home. It’s made all the difference now that we all have visibility and input into the family load.”</p>
-      <div class="sig"><span class="dot" style="background:var(--teal);color:var(--on-teal)">E</span>Endia, founder · built by a mom, for the whole house</div>
-    </div>
-  </section>
-</div>
-
-<hr class="rule">
-
-<!-- ═════ FAQ ═════ -->
-<div class="wrap">
-  <section id="faq">
-    <div class="head center">
-      <span class="label">Questions</span>
-      <h2 class="h2">Good to know.</h2>
-    </div>
-    <div class="faq">
-      <details><summary>Does it work on Android?</summary><p>Yes. homeroom works the same on iPhone and Android. Install it from Chrome on Android and from Safari on iPhone. A household can mix both.</p></details>
-      <details><summary>Do my kids need email addresses or phones?</summary><p>No email and no password. Kids join with the family link and tap their name. Kids without a phone can use the kitchen display, and pre-readers get a printable picture chart.</p></details>
-      <details><summary>Does it work for single-parent households?</summary><p>Absolutely. homeroom takes the tracking out of your head so you’re not the only place the plan lives. Kids see their own schedule and chores, and a co-parent, grandparent, or sitter can join to see exactly what they’re covering. You decide who’s in.</p></details>
-      <details><summary>Can I use it on my computer at work?</summary><p>Yes. Sign in at app.homeroomforfamily.com in any browser and you’ll see the same household as everyone’s phones. There’s nothing to install.</p></details>
-      <details><summary>Can grandparents or a sitter join?</summary><p>Yes. Add them as a person and send the invite link. An adult in the household approves every new join. When a sitter moves on, remove them and reset the link so the old one stops working.</p></details>
-      <details><summary>How does it work with my Apple or Google Calendar?</summary><p>homeroom sends your events into Apple or Google Calendar through a calendar subscription, one feed per person plus one for the whole family. Changes you make in homeroom flow out to those calendars. Events you add directly in Apple or Google Calendar stay there and don’t come into homeroom.</p></details>
-      <details><summary>Is my family’s information private?</summary><p>Your household’s data is only visible to your household. We don’t show ads, don’t track anyone, and never sell data. Read the full <a href="https://app.homeroomforfamily.com/privacy">privacy policy</a>.</p></details>
-      <details><summary>What happens after the free trial?</summary><p class="js-trial-faq"></p></details>
-      <details><summary>How do I cancel?</summary><p>From Settings in the app, any time. Your plan stays active until the end of the period you paid for.</p></details>
-      <details><summary>Can I get my data out?</summary><p>Any time. In the app, open Settings, then Your data, then Download, and you’ll get everything as a spreadsheet or a full backup file.</p></details>
-      <details><summary>Something isn’t working. Who do I talk to?</summary><p>Email <a href="mailto:support@homeroomforfamily.com">support@homeroomforfamily.com</a>. Screenshots help a lot, and a real person reads every message.</p></details>
-    </div>
-  </section>
-</div>
-
-<!-- ═════ FINAL ═════ -->
-<div class="wrap">
-  <section class="final">
-    <span class="label">Ten minutes from now</span>
-    <h2 class="h2">Out of your head. <em style="font-style:normal;color:var(--teal)">Onto every screen.</em></h2>
-    <p class="body">Set up your household tonight. By tomorrow morning, the whole house knows the plan.</p>
-    <a class="btn btn--lg js-start" href="https://app.homeroomforfamily.com">Start your free trial</a>
-    <div><button class="share inline js-share" type="button">Send this to your partner or co-parent</button></div>
-  </section>
-</div>
+</main>
 
 <footer>
-  <div class="wrap">
-    <a class="wordmark" href="#top" aria-label="homeroom, home"><span aria-hidden="true"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span></a>
-    <div class="tag">the family command center</div>
+  <div class="wrap foot">
+    <div class="left">
+      <span class="wordmark"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span>
+      <span class="tagline">household operations, shared.</span>
+    </div>
     <div class="links">
-      <a href="https://app.homeroomforfamily.com">Sign in</a>
+      <a class="js-start" href="https://app.homeroomforfamily.com">Sign in</a>
       <a href="https://app.homeroomforfamily.com/privacy">Privacy</a>
       <a href="https://app.homeroomforfamily.com/terms">Terms</a>
       <a href="mailto:support@homeroomforfamily.com">Support</a>
-      <a href="https://instagram.com/homeroomforfamily" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://instagram.com/homeroomforfamily">Instagram</a>
       <a href="https://homeroomforstudents.com">homeroom for students</a>
+      <span class="c">&copy; 2026 homeroom for family, LLC</span>
     </div>
-    <div class="fine">© 2026 homeroom for family, LLC</div>
   </div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn btn--lg js-start" href="https://app.homeroomforfamily.com">Start your free trial</a></div>
+<!-- ============ POP-UPS ============ -->
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<div class="pop" id="pop" role="status" aria-live="polite" aria-hidden="true">
+  <span class="band" id="pop-band"></span>
+  <button class="x" id="pop-x" aria-label="Close">&#10005;</button>
+  <div class="lab" id="pop-lab"></div>
+  <div class="phd" id="pop-head"></div>
+  <div class="psub" id="pop-sub"></div>
+  <span class="pchip" id="pop-chip"></span>
+  <button class="act" id="pop-act"></button>
+  <a class="more js-start" id="pop-more" href="https://app.homeroomforfamily.com"></a>
+</div>
+<button class="pop-again" id="pop-again" aria-label="Show another moment from a homeroom house" title="More from the homeroom house">&#10024;</button>
+
+<div class="sticky" id="sticky"><a class="btn js-start" href="https://app.homeroomforfamily.com">Start your free trial</a></div>
 
 <script>
 (function () {
@@ -1069,22 +968,31 @@ footer .fine{font-size:12px;color:var(--muted);margin-top:16px}
 
   /* ══ EDIT HERE: prices, trial length, and the app link ══════════
      These must match Stripe. The in-app paywall reads the same
-     figures from components/Paywall.jsx — if one changes, both do,
-     in the same commit. A price on a page a checkout does not honour
-     is a consumer-protection problem, not a typo. */
+     figures from lib/plus.js and components/Paywall.jsx — if one
+     changes, all of them do, in the same commit. A price on a page
+     a checkout does not honour is a consumer-protection problem,
+     not a typo. */
   var CONFIG = {
-    appUrl: 'https://app.homeroomforfamily.com',
-    siteUrl: 'https://homeroomforfamily.com',
-    monthly: 12,    // dollars a month
-    annual: 99,     // dollars a year
+    appUrl:   'https://app.homeroomforfamily.com',
+    siteUrl:  'https://homeroomforfamily.com',
+    monthly:  12,   // dollars a month
+    annual:   99,   // dollars a year
     trialDays: 7    // a card is taken at signup; nothing is charged until it ends
   };
   /* ═══════════════════════════════════════════════════════════════ */
 
-  var $ = function (id) { return document.getElementById(id); };
-  var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+  var $  = function (id) { return document.getElementById(id); };
+  var all = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   all('.js-start').forEach(function (a) { a.href = CONFIG.appUrl; });
+  all('.js-trial-days').forEach(function (e) { e.textContent = CONFIG.trialDays; });
+
+  // ── Nav shadow once you leave the top ────────────────────
+  var navbar = $('navbar');
+  var onScroll = function () { navbar.classList.toggle('stuck', window.scrollY > 8); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   // ── Pricing ──────────────────────────────────────────────
   var fmt = function (n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); };
@@ -1099,35 +1007,34 @@ footer .fine{font-size:12px;color:var(--muted);margin-top:16px}
     $('per').textContent = plan === 'annual' ? '/year' : '/month';
     var s = $('save');
     s.textContent = 'Save ' + fmt(save) + ' a year';
-    s.hidden = !(plan === 'annual' && save > 0);
+    s.style.display = (plan === 'annual' && save > 0) ? '' : 'none';
     $('permo').textContent = plan === 'annual'
       ? 'About ' + perMonth() + ' a month for the whole house'
       : 'For the whole house, month to month';
     applyTrial(plan);
   }
 
-  // Every sentence about the trial comes from CONFIG, so changing the
-  // trial length cannot leave one of the four saying something else.
+  // Every sentence about the trial is written from CONFIG, so
+  // changing the trial length cannot leave one of them saying
+  // something else.
   function applyTrial(plan) {
     var d = CONFIG.trialDays;
     var price = plan === 'monthly' ? fmt(CONFIG.monthly) + '/month' : fmt(CONFIG.annual) + '/year';
 
-    all('.js-trial-line').forEach(function (e) {
-      e.innerHTML = '<b>' + d + ' days free.</b> We’ll remind you before it ends. Cancel anytime.<br>'
-        + 'Then ' + fmt(CONFIG.annual) + '/year (about ' + perMonth() + ' a month) or ' + fmt(CONFIG.monthly) + '/month.';
-    });
-    all('.js-trial-step').forEach(function (e) {
-      e.textContent = 'You’ll add a card to start your ' + d + '-day free trial. Nothing is charged until the trial ends.';
+    all('.js-fine').forEach(function (e) {
+      e.textContent = d + ' days free, then ' + fmt(CONFIG.annual) + ' a year (about '
+        + perMonth() + ' a month) or ' + fmt(CONFIG.monthly) + ' a month. Cancel anytime. '
+        + 'Works on iPhone, Android, any computer and the tablet already in your drawer.';
     });
     all('.js-trial-faq').forEach(function (e) {
-      e.textContent = 'We’ll email you a reminder before your ' + d + ' days are up. If you keep going, your '
-        + 'subscription starts automatically on the plan you picked. Cancel any time before then from Settings and you won’t be charged.';
+      e.textContent = 'We’ll email you a reminder before your ' + d + ' days are up. If you keep '
+        + 'going, your subscription starts automatically on the plan you picked. Cancel any time '
+        + 'before then from Settings and you won’t be charged.';
     });
-    all('.js-trial-badge').forEach(function (e) { e.textContent = d + ' days free'; });
-    $('terms').textContent = 'Your ' + d + '-day free trial starts when you sign up, and we’ll email you a reminder '
-      + 'before it ends. Unless you cancel before then, your subscription starts automatically at ' + price
-      + ' and renews at that rate until you cancel. Cancel any time from Settings in the app; a paid plan runs to '
-      + 'the end of the period you paid for.';
+    $('terms').textContent = 'Your ' + d + '-day free trial starts when you sign up, and we’ll email '
+      + 'you a reminder before it ends. Unless you cancel before then, your subscription starts '
+      + 'automatically at ' + price + ' and renews at that rate until you cancel. Cancel any time from '
+      + 'Settings in the app; a paid plan runs to the end of the period you paid for.';
   }
 
   all('.js-permo').forEach(function (e) { e.textContent = perMonth(); });
@@ -1136,193 +1043,194 @@ footer .fine{font-size:12px;color:var(--muted);margin-top:16px}
   });
   setPlan('annual');
 
+  // ── Install tabs ─────────────────────────────────────────
+  var STEP4 = {
+    ios: 'Tap the <kbd>Share</kbd> button (the square with an arrow), scroll down, tap '
+       + '<kbd>Add to Home Screen</kbd>, then <kbd>Add</kbd>.',
+    android: 'Tap the <kbd>⋮</kbd> menu at the top right, tap <kbd>Install app</kbd> or '
+       + '<kbd>Add to Home screen</kbd>, then <kbd>Install</kbd>.'
+  };
+  function setPhone(which) {
+    $('tab-ios').setAttribute('aria-selected', String(which === 'ios'));
+    $('tab-android').setAttribute('aria-selected', String(which === 'android'));
+    all('.js-browser').forEach(function (e) { e.textContent = which === 'ios' ? 'Safari' : 'Chrome'; });
+    all('.js-add').forEach(function (e) { e.innerHTML = STEP4[which]; });
+  }
+  $('tab-ios').addEventListener('click', function () { setPhone('ios'); });
+  $('tab-android').addEventListener('click', function () { setPhone('android'); });
+  // Guess from the device, because the right instructions first time
+  // save a support email.
+  setPhone(/Android/i.test(navigator.userAgent) ? 'android' : 'ios');
+
   // ── Share ────────────────────────────────────────────────
   all('.js-share').forEach(function (btn) {
+    var original = btn.textContent;
     btn.addEventListener('click', function () {
       var data = {
         title: 'homeroom',
-        text: 'Found a family command center I want us to try. Everyone in the house gets their own color. '
-          + CONFIG.trialDays + ' days free:',
+        text: 'Found a family command center I want us to try. Everyone in the house gets their own '
+            + 'color. ' + CONFIG.trialDays + ' days free:',
         url: CONFIG.siteUrl
       };
-      var label = btn.textContent;
-      var restore = function () { setTimeout(function () { btn.textContent = label; }, 2600); };
-
-      if (navigator.share) {
-        navigator.share(data).catch(function () { /* dismissed */ });
-        return;
-      }
+      if (navigator.share) { navigator.share(data).catch(function () {}); return; }
       if (navigator.clipboard) {
         navigator.clipboard.writeText(data.text + ' ' + data.url).then(function () {
-          btn.textContent = 'Link copied. Paste it in a text.';
-          restore();
-        }).catch(function () {
-          window.location.href = 'sms:?&body=' + encodeURIComponent(data.text + ' ' + data.url);
-        });
-        return;
+          btn.textContent = 'Link copied ✓';
+          setTimeout(function () { btn.textContent = original; }, 2200);
+        }).catch(function () {});
       }
-      window.location.href = 'sms:?&body=' + encodeURIComponent(data.text + ' ' + data.url);
     });
   });
 
-  // ── Install tabs ─────────────────────────────────────────
-  var stepsWrap = $('installSteps');
-  all('.tabs button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      all('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
-      stepsWrap.classList.toggle('android', b.dataset.os === 'android');
-      stepsWrap.querySelector('.steps').setAttribute('aria-labelledby', b.id);
-    });
-  });
-  if (/android/i.test(navigator.userAgent)) $('tab-android').click();
+  // ── Confetti ─────────────────────────────────────────────
+  var cv = $('confetti'), cx = cv.getContext('2d'), parts = [], raf = 0;
+  function sizeCanvas() { cv.width = innerWidth; cv.height = innerHeight; }
+  sizeCanvas();
+  addEventListener('resize', sizeCanvas);
 
-  // ── The week, and the phone showing the same day ─────────
-  //
-  // Both screens render from one WEEK array, which is the whole point of
-  // the demo: a claim made on either one is a write to the same data, so
-  // the other updates because it has to, not because it was told to.
-  var M = {
-    all: { n: 'Everyone', c: 'var(--spectrum-v)', i: '', on: '#fff', fam: true },
-    e:  { n: 'Endia',   c: 'var(--teal)',      i: 'E', on: 'var(--on-teal)' },
-    d:  { n: 'David',   c: 'var(--fill-vermilion)', i: 'D', on: 'var(--on-vermilion)' },
-    n:  { n: 'Nia',     c: 'var(--mustard)',   i: 'N', on: 'var(--on-mustard)' },
-    z:  { n: 'Zoë',     c: 'var(--rose)',      i: 'Z', on: 'var(--on-rose)' },
-    j:  { n: 'Josiah',  c: 'var(--moss)',      i: 'J', on: 'var(--on-moss)' },
-    c:  { n: 'Chase',   c: 'var(--dusty)',     i: 'C', on: 'var(--on-dusty)' },
-    ch: { n: 'Charli',  c: 'var(--fill-plum)',  i: 'C', on: 'var(--on-plum)' },
-    p:  { n: 'Phineas', c: 'var(--biscuit)',   i: 'P', on: 'var(--on-biscuit)' }
-  };
+  var ALL = ['#2F6661','#D9472B','#DC9A27','#E78A9B','#7A8B5C','#5E8CA7','#9B6B9E','#B5803F'];
 
-  // [who, label, got-it-by] — 'e'|'d' claimed, '?' still needs someone,
-  // absent means nobody is needed. Church, family dinner and your own
-  // dentist appointment never ask.
-  var WEEK = [
-    { d: 'Mon', ev: [['n','Soccer 5:30','d'], ['e','Client call 2:00'], ['c','Reading log'], ['p','Walk · Josiah']], din: ['Taco night','cook: David'] },
-    { d: 'Tue', today: 1, ev: [['z','Dance 4:15','e'], ['j','Piano 5:00','?'], ['p','Nail trim 3:30'], ['d','Gym 6a']], din: ['Sheet-pan chicken','cook: Nia'] },
-    { d: 'Wed', ev: [['fam','Family walk'], ['ch','Art club','d'], ['e','Groceries lock 8p']], din: ['Hidden-veg pasta','cook: Endia'] },
-    { d: 'Thu', ev: [['n','Ortho 7:45a','e'], ['c','Swim 4:00','d'], ['j','Book report due'], ['p','Walk · Chase']], din: ['Fried-rice-anything','cook: David'] },
-    { d: 'Fri', ev: [['fam','Movie night'], ['z','Sleepover 6:00','d'], ['p','Bath day']], din: ['Kid-pick pizza','picked: Josiah (streak!)'] },
-    { d: 'Sat', ev: [['n','Soccer game 9a','e'], ['fam','Cleaners 10 to 12'], ['ch','Birthday party 1p','?']], din: ['Grill night','cook: David'] },
-    { d: 'Sun', ev: [['fam','Church 10a'], ['p','Long-walk crew'], ['e','Wins wall']], din: ['Slow-cooker chili','cook: Endia'] }
+  function burst(el, cols) {
+    if (reduceMotion) return;
+    var r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + 20;
+    for (var i = 0; i < 120; i++) {
+      var a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 8;
+      parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 6,
+        r: 3 + Math.random() * 4, c: cols[i % cols.length], rot: Math.random() * 6,
+        vr: (Math.random() - .5) * .35, l: 70 + Math.random() * 40 });
+    }
+    cancelAnimationFrame(raf);
+    (function tick() {
+      cx.clearRect(0, 0, cv.width, cv.height);
+      parts = parts.filter(function (p) { return p.l > 0; });
+      parts.forEach(function (p) {
+        p.x += p.vx; p.y += p.vy; p.vy += .28; p.vx *= .99; p.rot += p.vr; p.l--;
+        cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot);
+        cx.globalAlpha = Math.min(1, p.l / 30); cx.fillStyle = p.c;
+        cx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); cx.restore();
+      });
+      if (parts.length) raf = requestAnimationFrame(tick);
+    })();
+  }
+
+  // ── Moments from a homeroom house ────────────────────────
+  // The same four cards the old page had. They are the only
+  // animated thing here, and each one is a real feature doing a
+  // real thing, not an ad for one.
+  var dot = function (c, i) { return '<span class="dot" style="background:' + c + '">' + i + '</span>'; };
+  var hi5 = 0;
+
+  // The action button carries a white label at 15px/600. A member colour
+  // straight from the palette is a fill, not a button colour: dusty blue
+  // measured 3.63:1 and biscuit 4.47:1 behind white. These are the darkened
+  // fills, the same move app/tokens.css makes for the accent buttons. The
+  // band across the top of the card keeps the true member colour, so the
+  // card still reads as that person's.
+  var CARDS = [
+    { band: '#5E8CA7', lab: '🙋 Needs someone',
+      head: 'Chase · art club pickup, 3:30',
+      sub: 'Nobody has claimed it yet. One tap and the whole house knows it’s covered.',
+      chip: dot('#5E8CA7', 'C') + 'Chase · art club',
+      act: 'I’ve got it', color: '#48708F',
+      go: function (b, pop) {
+        b.textContent = '✓ Claimed. Everyone’s phone just updated.';
+        b.classList.add('done');
+        $('pop-chip').innerHTML = dot('#2F6661', 'E') + 'Endia’s got it';
+        burst(pop, ['#5E8CA7', '#2F6661', '#FBFAF8']);
+      } },
+
+    { band: '#7A8B5C', lab: '🎉 New on the wins wall',
+      head: 'Josiah got a 3.87 this term!',
+      sub: 'Posted by Grandma from two states away. High-fives scheduled for dinner.',
+      chip: dot('#7A8B5C', 'J') + 'Josiah · chore streak day 15',
+      act: 'Throw more confetti 🎉', color: '#5F6F47', auto: true,
+      go: function (b, pop) { burst(pop, ALL); } },
+
+    { band: '#D9472B', lab: '🍽 Tonight’s dinner · claimed',
+      head: 'Sheet-pan chicken. Nia’s cooking.',
+      sub: 'She claimed the empty slot herself. Nobody had to ask.',
+      chip: dot('#DC9A27', 'N') + 'Nia · swap: chickpeas for meatless',
+      act: 'Send Nia a high-five 🖐', color: '#C63F22',
+      go: function (b, pop) {
+        hi5++;
+        b.textContent = 'High-five sent 🖐 ×' + hi5
+          + (hi5 > 2 ? '. She’s pretending not to care.' : '');
+        burst(pop, ['#D9472B', '#E78A9B', '#DC9A27']);
+      } },
+
+    { band: '#B5803F', lab: '🐾 Official dog business',
+      head: 'Phineas · vet visit Thu 3:30',
+      sub: 'He will act betrayed. He is fine. Treats are budgeted for after.',
+      chip: dot('#B5803F', '🐾') + 'Ride: Endia · walk covered by Chase',
+      act: 'Mark handled ✓', color: '#8C6230',
+      go: function (b, pop) {
+        b.textContent = 'Handled ✓ The whole house can see it.';
+        b.classList.add('done');
+        burst(pop, ['#B5803F', '#DC9A27', '#FBFAF8']);
+      } }
   ];
 
-  var sel = 'all';
-  var chipsEl = $('chips'), weekEl = $('week'), foot = $('wkfoot');
-  var DEFAULT_FOOT = 'Everyone’s week at a glance. Yes, the dog has a column.';
-  var footT;
+  var pop = $('pop'), popAgain = $('pop-again'), cur = 0;
 
-  function setFoot(msg, hold) {
-    foot.textContent = msg;
-    clearTimeout(footT);
-    if (hold) {
-      footT = setTimeout(function () {
-        setFoot(sel === 'all' ? DEFAULT_FOOT : M[sel].n + '’s week, one tap. No more “wait, what do I have today?”');
-      }, 3400);
-    }
+  function render(i) {
+    var c = CARDS[i];
+    $('pop-band').style.background = c.band;
+    var lab = $('pop-lab'); lab.textContent = c.lab; lab.style.color = c.band;
+    $('pop-head').textContent = c.head;
+    $('pop-sub').textContent = c.sub;
+    $('pop-chip').innerHTML = c.chip;
+    var b = $('pop-act');
+    b.textContent = c.act; b.style.background = c.color; b.classList.remove('done');
+    b.onclick = function () { if (!b.classList.contains('done')) c.go(b, pop); };
+    var more = $('pop-more');
+    more.textContent = 'Try homeroom free for ' + CONFIG.trialDays + ' days →';
+    more.href = CONFIG.appUrl;
   }
 
-  function dotFor(k) {
-    var m = M[k];
-    return '<span class="dot" style="background:' + m.c + ';color:' + m.on + '">' + m.i + '</span>';
+  function showCard(i) {
+    cur = i; render(i);
+    pop.classList.add('show');
+    pop.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pop-open');
+    popAgain.style.display = 'none';
+    if (CARDS[i].auto) setTimeout(function () { burst(pop, ALL); }, 450);
   }
 
-  function renderChips() {
-    chipsEl.innerHTML = Object.keys(M).map(function (k) {
-      return '<button class="chip" data-k="' + k + '" aria-pressed="' + (k === sel) + '">'
-        + dotFor(k) + M[k].n + '</button>';
-    }).join('');
-    Array.prototype.forEach.call(chipsEl.querySelectorAll('.chip'), function (b) {
-      b.addEventListener('click', function () {
-        sel = b.dataset.k;
-        renderChips(); renderWeek();
-        setFoot(sel === 'all' ? DEFAULT_FOOT : M[sel].n + '’s week, one tap. No more “wait, what do I have today?”');
-      });
-    });
+  function hidePop() {
+    pop.classList.remove('show');
+    pop.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pop-open');
+    popAgain.style.display = 'block';
   }
 
-  function gotHtml(got, di, ei) {
-    if (!got) return '';
-    if (got === '?') {
-      return '<button class="askq" data-d="' + di + '" data-e="' + ei + '" '
-        + 'aria-label="Who’s got it? Tap to claim">Who’s got it?</button>';
-    }
-    return '<span class="gi">' + dotFor(got) + M[got].n + '’s got it</span>';
-  }
+  $('pop-x').addEventListener('click', hidePop);
+  popAgain.addEventListener('click', function () { showCard((cur + 1) % CARDS.length); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && pop.classList.contains('show')) hidePop();
+  });
 
-  function renderWeek() {
-    weekEl.innerHTML = WEEK.map(function (day, di) {
-      return '<div class="day' + (day.today ? ' today' : '') + '">'
-        + '<div class="d-name">' + (day.today ? 'Today' : day.d) + '</div>'
-        + day.ev.map(function (row, ei) {
-            var k = row[0], t = row[1], got = row[2];
-            var fam = k === 'fam', m = M[k] || {};
-            var on = sel === 'all' || fam || k === sel || got === sel;
-            var style = fam ? '' : ' style="background:' + m.c + ';color:' + m.on + '"';
-            return '<div class="ev' + (fam ? ' fam' : '') + (on ? '' : ' dim') + '"' + style + '>'
-              + t + gotHtml(got, di, ei) + '</div>';
-          }).join('')
-        + '<div class="din">' + day.din[0] + '<span>' + day.din[1] + '</span></div>'
-        + '</div>';
-    }).join('');
+  var popShown = false;
+  function firstPop() { if (popShown) return; popShown = true; showCard(0); }
 
-    Array.prototype.forEach.call(weekEl.querySelectorAll('.askq'), function (b) {
-      b.addEventListener('click', function () {
-        claim(+b.dataset.d, +b.dataset.e, 'e',
-          'Endia claimed it from her desk. It’s already on David’s phone.');
-      });
-    });
-  }
-
-  var TODAY_I = WEEK.findIndex(function (d) { return d.today; });
-  var PH = { 3: ['6:00 AM', 'David · Gym'], 2: ['3:30 PM', 'Phineas · Nail trim'], 0: ['4:15 PM', 'Zoë · Dance'], 1: ['5:00 PM', 'Josiah · Piano'] };
-  var phList = $('phList');
-
-  function renderPhone() {
-    var day = WEEK[TODAY_I];
-    phList.innerHTML = [3, 2, 0, 1].map(function (ei) {
-      var row = day.ev[ei], k = row[0], got = row[2], m = M[k];
-      var g = '';
-      if (got === '?') g = '<button class="askq" data-e="' + ei + '">Who’s got it?</button>';
-      else if (got) g = '<span class="gi">' + dotFor(got) + M[got].n + '’s got it</span>';
-      return '<div class="ph-ev"><span class="pb" style="background:' + m.c + '"></span><div>'
-        + '<div class="t">' + PH[ei][0] + '</div><div class="n">' + PH[ei][1] + '</div>' + g + '</div></div>';
-    }).join('')
-      + '<div class="ph-din"><span class="label">Tonight’s dinner</span><b>' + day.din[0] + '</b>'
-      + '<span>' + day.din[1].replace('cook: ', '') + '’s cooking</span></div>';
-
-    Array.prototype.forEach.call(phList.querySelectorAll('.askq'), function (b) {
-      b.addEventListener('click', function () {
-        claim(TODAY_I, +b.dataset.e, 'd',
-          'David claimed it from the pickup line. It’s already on Endia’s screen.');
-      });
-    });
-  }
-
-  function claim(di, ei, who, msg) {
-    WEEK[di].ev[ei][2] = who;
-    renderWeek(); renderPhone();
-    setFoot(msg, true);
-  }
-
-  renderChips(); renderWeek(); renderPhone(); setFoot(DEFAULT_FOOT);
-
-  // ── Testimonials arrive as they reach the screen ─────────
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-    document.documentElement.classList.add('js');
-    var qio = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); qio.unobserve(e.target); }
-      });
-    }, { threshold: .18 });
-    all('.q.reveal').forEach(function (q) { qio.observe(q); });
-  }
-
-  // ── Mobile sticky CTA, hidden once the price is on screen ─
-  if ('IntersectionObserver' in window) {
-    var sticky = $('sticky');
+  // Once the hero has scrolled past, or after a while if someone is
+  // reading slowly. Never on arrival: a card over the headline is
+  // the thing everyone hates.
+  var stage = document.querySelector('.stage');
+  if ('IntersectionObserver' in window && stage) {
     new IntersectionObserver(function (es) {
-      sticky.classList.toggle('show', !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
-    }).observe(document.querySelector('.stage'));
+      var e = es[0];
+      if (!e.isIntersecting && e.boundingClientRect.top < 0) setTimeout(firstPop, 900);
+    }).observe(stage);
+  }
+  setTimeout(firstPop, 25000);
+
+  // ── Mobile sticky CTA ────────────────────────────────────
+  var sticky = $('sticky');
+  if ('IntersectionObserver' in window && stage) {
+    new IntersectionObserver(function (es) {
+      var e = es[0];
+      sticky.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0);
+    }).observe(stage);
     new IntersectionObserver(function (es) {
       if (es[0].isIntersecting) sticky.classList.remove('show');
     }, { threshold: .3 }).observe($('pricing'));
