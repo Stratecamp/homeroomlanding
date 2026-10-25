@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Support — homeroom for family</title>
-<meta name="description" content="Get help with homeroom: signing in, inviting your household, calendar feeds, billing and deleting your account. We answer every message.">
+<meta name="description" content="Tell us what happened and we'll sort it out. Help with signing in, inviting your household, calendar feeds, billing and deleting your account.">
 <meta name="theme-color" content="#FCFAF4">
 
 <meta property="og:title" content="Support — homeroom for family">
-<meta property="og:description" content="Get help with homeroom: signing in, inviting your household, calendar feeds, billing and deleting your account.">
+<meta property="og:description" content="Tell us what happened and we'll sort it out. A person reads every one of these.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://homeroomforfamily.com/support">
 <meta property="og:image" content="https://homeroomforfamily.com/og-image.png">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="homeroom for family">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Support — homeroom for family">
-<meta name="twitter:description" content="Get help with homeroom: signing in, inviting your household, calendar feeds, billing and deleting your account.">
+<meta name="twitter:description" content="Tell us what happened and we'll sort it out. A person reads every one of these.">
 <meta name="twitter:image" content="https://homeroomforfamily.com/og-image.png">
 <link rel="canonical" href="https://homeroomforfamily.com/support">
 
@@ -27,8 +27,8 @@
 
 <style>
 /* Self-hosted, so this page makes no request to a third party. Same three
-   faces and the same paths as index.html, so a visitor arriving here from
-   the landing page has them cached already. */
+   faces and the same paths as index.html, so arriving from the landing page
+   costs nothing. */
 @font-face{
   font-family:'Geist';src:url('/fonts/Geist-Variable.woff2') format('woff2-variations');
   font-weight:100 900;font-style:normal;font-display:swap;
@@ -42,9 +42,8 @@
   font-weight:700;font-style:normal;font-display:swap;
 }
 
-/* Every value here is lifted from index.html, which takes them from the
-   app's app/tokens.css light theme. Support is part of the product, so it
-   should not be a page that looks borrowed from somewhere else. */
+/* Every value lifted from index.html, which takes them from the app's
+   app/tokens.css light theme. */
 :root{
   --paper:#FCFAF4; --stone:#F4F1E8; --card:#FFFFFF; --sunk:#F8F5EC;
   --ink:#111412; --body:#3A403C; --muted:#5E655F; --soft:#676E66;
@@ -70,70 +69,109 @@ a:hover{color:var(--action)}
 .wrap{max-width:var(--page);margin:0 auto;padding:0 20px}
 
 /* ── nav ── */
-.nav{
-  border-bottom:1px solid var(--line);background:var(--paper);
-  position:sticky;top:0;z-index:10;
-}
+.nav{border-bottom:1px solid var(--line);background:var(--paper);
+  position:sticky;top:0;z-index:10}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;
   gap:16px;height:68px}
-.wordmark{
-  font-family:'Fredoka',ui-rounded,system-ui,sans-serif;font-weight:700;
-  font-size:26px;letter-spacing:-.01em;text-decoration:none;line-height:1;
-}
+.wordmark{font-family:'Fredoka',ui-rounded,system-ui,sans-serif;font-weight:700;
+  font-size:26px;letter-spacing:-.01em;text-decoration:none;line-height:1}
 .nav .back{font-size:15px;color:var(--muted);text-decoration:none}
 .nav .back:hover{color:var(--action);text-decoration:underline}
 
 /* ── head ── */
 .head{padding:56px 0 8px}
-h1{
-  font-size:clamp(38px,6vw,58px);line-height:1.04;letter-spacing:-.035em;
-  color:var(--ink);margin:0;font-weight:600;
-}
-.lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:46ch}
+h1{font-size:clamp(38px,6vw,58px);line-height:1.04;letter-spacing:-.035em;
+  color:var(--ink);margin:0;font-weight:600}
+.lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:48ch}
 
-/* ── the contact card ── */
-.contact{
+/* ── the form ── */
+.form{
   margin:32px 0 8px;background:var(--card);border:1px solid var(--line-2);
   border-radius:var(--radius-lg);padding:28px;box-shadow:var(--lift);
 }
-.contact h2{margin:0;font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
-.contact p{margin:10px 0 0;color:var(--muted);font-size:16px}
-.mail{
-  display:inline-block;margin-top:18px;background:var(--action);color:#fff;
-  text-decoration:none;font-weight:600;font-size:17px;
-  padding:13px 22px;border-radius:999px;
+.form h2{margin:0;font-size:22px;font-weight:600;color:var(--ink);
+  letter-spacing:-.02em}
+.form .sub{margin:8px 0 0;color:var(--muted);font-size:16px}
+
+.field{margin-top:26px}
+.field > label{display:block;font-size:15px;font-weight:600;color:var(--ink);
+  margin-bottom:10px}
+.hint{margin:8px 0 0;font-size:14px;color:var(--soft);line-height:1.45}
+
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px}
+.chip{
+  text-align:left;background:var(--sunk);border:1px solid var(--line-3);
+  border-radius:var(--radius-sm);padding:12px 14px;cursor:pointer;
+  font-family:inherit;display:block;transition:border-color .12s,background .12s;
 }
-.mail:hover{color:#fff;opacity:.92}
-.addr{
-  display:block;margin-top:14px;font-family:'Geist Mono',ui-monospace,monospace;
-  font-size:14px;color:var(--soft);
+.chip:hover{border-color:var(--line)}
+.chip b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
+.chip span{display:block;font-size:13px;color:var(--soft);margin-top:2px}
+.chip[aria-pressed="true"]{
+  background:#fff;border-color:var(--action);
+  box-shadow:0 0 0 1px var(--action);
 }
 
-/* ── questions ── */
-.sec{padding:48px 0 0}
-.sec > h2{
-  font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--soft);margin:0 0 20px;
+textarea,input[type="email"]{
+  width:100%;font-family:inherit;font-size:16px;color:var(--ink);
+  background:var(--sunk);border:1px solid var(--line-3);
+  border-radius:var(--radius-sm);padding:12px 14px;resize:vertical;
 }
+textarea:focus,input[type="email"]:focus{
+  outline:none;border-color:var(--action);box-shadow:0 0 0 1px var(--action);
+  background:#fff;
+}
+textarea::placeholder,input::placeholder{color:#9AA09A}
+
+details.diag{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+details.diag summary{cursor:pointer;font-size:14px;color:var(--muted);
+  list-style:none}
+details.diag summary::-webkit-details-marker{display:none}
+/* Non-breaking space, because a trailing space in `content` collapses and
+   the marker ends up jammed against the word. */
+details.diag summary::before{content:"+\00a0";font-weight:600}
+details.diag[open] summary::before{content:"\2212\00a0";font-weight:600}
+details.diag pre{
+  margin:12px 0 0;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;
+  color:var(--muted);background:var(--sunk);border:1px solid var(--line-3);
+  border-radius:10px;padding:12px;white-space:pre-wrap;word-break:break-word;
+}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:24px}
+.send{
+  background:var(--action);color:#fff;text-decoration:none;font-weight:600;
+  font-size:17px;padding:13px 24px;border-radius:999px;border:0;
+  font-family:inherit;cursor:pointer;
+}
+.send:hover{color:#fff;opacity:.92}
+.copy{
+  background:none;border:1px solid var(--line-3);color:var(--ink);
+  font-family:inherit;font-size:15px;font-weight:500;padding:12px 18px;
+  border-radius:999px;cursor:pointer;
+}
+.copy:hover{border-color:var(--ink)}
+.addr{margin:16px 0 0;font-size:14px;color:var(--soft)}
+.addr code{font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;
+  color:var(--muted)}
+
+/* ── questions ── */
+.sec{padding:52px 0 0}
+.sec > h2{font-size:13px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--soft);margin:0 0 20px}
 .q{border-top:1px solid var(--line);padding:22px 0}
 .q:last-child{border-bottom:1px solid var(--line)}
-.q h3{margin:0 0 8px;font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.015em}
+.q h3{margin:0 0 8px;font-size:18px;font-weight:600;color:var(--ink);
+  letter-spacing:-.015em}
 .q p{margin:0 0 10px}
 .q p:last-child{margin-bottom:0}
 .q ol,.q ul{margin:10px 0 0;padding-left:22px}
 .q li{margin:6px 0}
-code{
-  font-family:'Geist Mono',ui-monospace,monospace;font-size:.92em;
-  background:var(--sunk);border:1px solid var(--line-3);
-  border-radius:6px;padding:1px 6px;
-}
 
-/* ── the safety note ── */
-.note{
-  margin:48px 0 0;background:var(--stone);border:1px solid var(--line-3);
-  border-radius:var(--radius-lg);padding:26px 28px;
-}
-.note h2{margin:0 0 10px;font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+/* ── the ask ── */
+.note{margin:48px 0 0;background:var(--stone);border:1px solid var(--line-3);
+  border-radius:var(--radius-lg);padding:26px 28px}
+.note h2{margin:0 0 10px;font-size:19px;font-weight:600;color:var(--ink);
+  letter-spacing:-.02em}
 .note p{margin:0 0 10px;font-size:16px}
 .note p:last-child{margin-bottom:0}
 
@@ -149,8 +187,8 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 56px}
 
 @media (max-width:560px){
   .head{padding-top:40px}
-  .contact{padding:22px}
-  .mail{display:block;text-align:center}
+  .form{padding:22px}
+  .send,.copy{width:100%;text-align:center}
 }
 </style>
 </head>
@@ -167,69 +205,102 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 56px}
 
   <div class="head">
     <h1>Support</h1>
-    <p class="lede">Something not working, or a question about your household? Write to us. A person reads every message.</p>
+    <p class="lede">Something not behaving? Tell us about it below. These land with a person, not a queue, and we answer all of them.</p>
   </div>
 
-  <div class="contact">
-    <h2>Email us</h2>
-    <p>Tell us what you were doing and what happened. If you can, say which browser or phone you were on. That usually saves a round trip.</p>
-    <a class="mail" href="mailto:support@homeroomforfamily.com?subject=Help%20with%20homeroom">Email support</a>
-    <span class="addr">support@homeroomforfamily.com</span>
-  </div>
+  <!-- Deliberately a form that writes an email rather than a form that posts
+       somewhere. This site is static by design, and a contact form that needs
+       a server is a thing that can be down on the day someone needs it. The
+       form's job is to ask the right questions, so what arrives is useful
+       instead of "it's broken". -->
+  <section class="form">
+    <h2>Tell us what happened</h2>
+    <p class="sub">Fill this in and it opens your email with everything already written. Nothing sends until you hit send.</p>
+
+    <div class="field">
+      <label id="kind-label">What kind of thing is it?</label>
+      <div class="chips" role="group" aria-labelledby="kind-label" id="chips"></div>
+    </div>
+
+    <div class="field">
+      <label for="detail">What were you doing?</label>
+      <textarea id="detail" rows="4" placeholder="I tapped Save on a new event and nothing happened."></textarea>
+      <p class="hint">What you expected, and what happened instead. That one sentence does more than anything else to get it fixed quickly.</p>
+    </div>
+
+    <div class="field">
+      <label for="email">Where should we write back?</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+      <p class="hint">Only needed if you use Copy instead. If you send from your own email we already have it.</p>
+    </div>
+
+    <details class="diag">
+      <summary>What gets sent along with this</summary>
+      <pre id="diag-text"></pre>
+      <p class="hint" style="margin-top:8px">Nothing from your household. No names, no calendar, no lists. Just enough for us to work out where it went wrong.</p>
+    </details>
+
+    <div class="actions">
+      <a class="send" id="send" href="mailto:support@homeroomforfamily.com">Send it</a>
+      <button class="copy" id="copy" type="button">Copy instead</button>
+    </div>
+
+    <p class="addr">Or write to us directly at <code>support@homeroomforfamily.com</code>.</p>
+  </section>
 
   <section class="sec">
     <h2>Common questions</h2>
 
     <div class="q">
-      <h3>The sign-in code never arrived</h3>
-      <p>homeroom has no passwords. You enter your email address and we send a code. If it has not turned up after a minute or two:</p>
+      <h3>My sign-in code never arrived</h3>
+      <p>There are no passwords in homeroom. You put in your email, we send a code. If it hasn't turned up after a minute or two:</p>
       <ol>
-        <li>Check the spam or junk folder. The first one sometimes lands there.</li>
-        <li>Confirm the address is the one you joined with. A code sent to an address with no account looks identical from your side.</li>
-        <li>Ask for a new code. The old one stops working as soon as a new one is sent, so use the most recent email.</li>
+        <li>Look in spam. The first one often lands there, and once you move it over the rest behave.</li>
+        <li>Check you're using the address you joined with. A code sent to an address with no account looks exactly the same from your end.</li>
+        <li>Ask for a fresh code. The old one dies the moment a new one goes out, so use the newest email, not the first.</li>
       </ol>
-      <p>Still nothing, write to us and we will look it up.</p>
+      <p>Still nothing? Tell us above and we'll go and look.</p>
     </div>
 
     <div class="q">
-      <h3>How do I add someone to my household?</h3>
-      <p>Settings, then Invite. That makes a link you can text or email. Whoever opens it joins your household and picks their name. They do not need an email address or a password of their own, which is how a child joins.</p>
-      <p>Treat the link like a key to your calendar. Anyone holding it can get in, so send it to people directly rather than posting it anywhere.</p>
+      <h3>How do I get everyone else in?</h3>
+      <p>Settings, then Invite. You get a link you can text or email. Whoever opens it joins and picks their name. No email address, no password, nothing for them to set up, which is how a seven-year-old ends up checking off their own chores.</p>
+      <p>Think of it as a key to your calendar. Anyone who has it can walk in, so send it to people directly rather than putting it in a group chat that outlives the group.</p>
     </div>
 
     <div class="q">
-      <h3>Can I see our homeroom in Apple Calendar?</h3>
-      <p>Yes. Settings, then Calendar feed, gives you a subscription link you can add to Apple Calendar, Google Calendar or anything else that takes a calendar URL.</p>
-      <p>It goes one way. Events you add in homeroom appear in that calendar. Events you add in Apple Calendar stay there, they do not come back into homeroom.</p>
+      <h3>Can I see our week in Apple Calendar?</h3>
+      <p>Yes. Settings, then Calendar feed, gives you a link to subscribe to in Apple Calendar, Google Calendar, or anything else that takes a calendar URL.</p>
+      <p>It runs one way. What you put in homeroom shows up over there. What you add over there stays there, it won't come back to us.</p>
     </div>
 
     <div class="q">
-      <h3>Something is marked private. Who can see it?</h3>
-      <p>Only you. A private item is hidden from everyone else in the household, from any share link you create, and from the kitchen display. It is the right place for anything you would not want a babysitter or a houseguest reading off a screen.</p>
+      <h3>If I mark something private, who sees it?</h3>
+      <p>You, and nobody else. Private items don't show to the rest of the household, don't appear in anything you share, and stay off the kitchen display. That's the place for the surprise party, the appointment, the thing you'd rather a babysitter didn't read off the fridge screen.</p>
     </div>
 
     <div class="q">
-      <h3>How do I change or cancel my plan?</h3>
-      <p>Plans are handled on the web rather than in the app. Open homeroom in a browser, go to Settings, and use the billing link there. You can change or cancel at any time and you keep access until the end of the period you have paid for.</p>
+      <h3>How do I change or cancel our plan?</h3>
+      <p>Billing lives on the web rather than in the app. Open homeroom in a browser, go to Settings, and follow the billing link. Change it or cancel whenever you like. If you cancel you keep everything until the end of what you've already paid for.</p>
     </div>
 
     <div class="q">
-      <h3>How do I delete my household and everything in it?</h3>
-      <p>Settings, then <strong>Delete my household</strong>. You will be asked to type DELETE to confirm, because it cannot be undone.</p>
-      <p>It removes the household, everything in it, every sign-in attached to it, and the customer record held by our payment processor. If you are a member rather than the person who set the household up and you want your own access removed, write to us and we will take care of it.</p>
-      <p><strong>Remove person</strong> is a different thing. It takes one member out of a household and leaves the household standing.</p>
+      <h3>How do I delete our household and everything in it?</h3>
+      <p>Settings, then <strong>Delete my household</strong>. We'll ask you to type DELETE first, because there's no getting it back.</p>
+      <p>It takes the household, everything inside it, every sign-in attached to it, and the record our payment processor holds. If you're in someone else's household and you want your own access gone, write to us and we'll take care of it the same day we see it.</p>
+      <p><strong>Remove person</strong> is the gentler one. It takes a single member out and leaves the household where it was.</p>
     </div>
 
     <div class="q">
-      <h3>I found a bug</h3>
-      <p>Please tell us. What you tapped, what you expected, and what happened instead is enough. A screenshot helps more than anything else.</p>
+      <h3>I think I found a bug</h3>
+      <p>Please tell us. Honestly, the bug reports are some of the most useful mail we get, and a screenshot is worth more than a paragraph.</p>
     </div>
   </section>
 
   <div class="note">
-    <h2>One thing worth knowing</h2>
-    <p>homeroom is built for the logistics of a household: who is where, what needs doing, what is for dinner. It is not a medical record or a secure document store.</p>
-    <p>Invite links and share links are designed to be passed around, which is what makes them useful. So keep sensitive details out of event titles and notes. Write "appointment at 3" rather than the reason for it. Anything you do want kept close, mark it private, and it stays out of share links and the kitchen display.</p>
+    <h2>One thing we'd ask</h2>
+    <p>homeroom is built for the running of a house. Who's where, what needs doing, what's for dinner. It isn't a medical record or a safe.</p>
+    <p>Invite links and share links are made to be passed around, which is the whole point of them, so keep the sensitive specifics out of titles and notes. "Appointment at 3" does the job. Anything you'd rather keep close, mark it private, and it stays out of every link and off the kitchen screen.</p>
   </div>
 
 </main>
@@ -248,6 +319,106 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 56px}
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var SUPPORT = 'support@homeroomforfamily.com';
+
+  /* The same five openings the app's reporter offers, plus signing in and
+     billing, which are the two things people write about from a browser
+     rather than from inside the product. */
+  var KINDS = [
+    ['I can’t sign in',       'No code arrived, or it won’t take'],
+    ['Something is broken',        'It didn’t work, or showed an error'],
+    ['I can’t find something', 'I know it’s there, I can’t see where'],
+    ['Something looks wrong',      'Wrong date, wrong name, wrong person'],
+    ['A billing question',         'A charge, a plan, or cancelling'],
+    ['I have an idea',             'Something that would make this better']
+  ];
+
+  var chosen = null;
+
+  var chips = document.getElementById('chips');
+  var detail = document.getElementById('detail');
+  var email = document.getElementById('email');
+  var send = document.getElementById('send');
+  var copy = document.getElementById('copy');
+  var diagText = document.getElementById('diag-text');
+
+  KINDS.forEach(function (k, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip';
+    b.setAttribute('aria-pressed', 'false');
+    var strong = document.createElement('b');
+    strong.textContent = k[0];
+    var hint = document.createElement('span');
+    hint.textContent = k[1];
+    b.appendChild(strong);
+    b.appendChild(hint);
+    b.addEventListener('click', function () {
+      chosen = (chosen === i) ? null : i;
+      Array.prototype.forEach.call(chips.children, function (c, j) {
+        c.setAttribute('aria-pressed', chosen === j ? 'true' : 'false');
+      });
+      update();
+    });
+    chips.appendChild(b);
+  });
+
+  /* Shown in full before it is sent. Nobody should be sending information
+     they cannot see, which is why this sits in a disclosure on the page
+     rather than being appended quietly at submit time. */
+  function diagnostics() {
+    var bits = [];
+    bits.push('Browser: ' + navigator.userAgent);
+    bits.push('Screen size: ' + window.innerWidth + '×' + window.innerHeight);
+    bits.push('When: ' + new Date().toLocaleString());
+    return bits.join('\n');
+  }
+
+  function subject() {
+    return 'homeroom — ' + (chosen === null ? 'Support' : KINDS[chosen][0]);
+  }
+
+  function body() {
+    var out = '';
+    if (chosen !== null) out += KINDS[chosen][0] + '\n\n';
+    out += (detail.value.trim() || '(what happened)') + '\n\n';
+    if (email.value.trim()) out += 'Write back to: ' + email.value.trim() + '\n\n';
+    out += '---\nThis part helps us find it:\n' + diagnostics() + '\n';
+    return out;
+  }
+
+  function update() {
+    send.setAttribute('href',
+      'mailto:' + SUPPORT
+      + '?subject=' + encodeURIComponent(subject())
+      + '&body=' + encodeURIComponent(body()));
+  }
+
+  copy.addEventListener('click', function () {
+    var text = 'To: ' + SUPPORT + '\nSubject: ' + subject() + '\n\n' + body();
+    var done = function () {
+      copy.textContent = 'Copied. Paste it into an email.';
+      setTimeout(function () { copy.textContent = 'Copy instead'; }, 3000);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { window.prompt('Copy this and send it to ' + SUPPORT, text); });
+    } else {
+      window.prompt('Copy this and send it to ' + SUPPORT, text);
+    }
+  });
+
+  detail.addEventListener('input', update);
+  email.addEventListener('input', update);
+
+  diagText.textContent = diagnostics();
+  update();
+}());
+</script>
 
 </body>
 </html>
