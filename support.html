@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Support — homeroom for family</title>
+<meta name="description" content="Get help with homeroom: signing in, inviting your household, calendar feeds, billing and deleting your account. We answer every message.">
+<meta name="theme-color" content="#FCFAF4">
+
+<meta property="og:title" content="Support — homeroom for family">
+<meta property="og:description" content="Get help with homeroom: signing in, inviting your household, calendar feeds, billing and deleting your account.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://homeroomforfamily.com/support">
+<meta property="og:image" content="https://homeroomforfamily.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="homeroom for family">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Support — homeroom for family">
+<meta name="twitter:description" content="Get help with homeroom: signing in, inviting your household, calendar feeds, billing and deleting your account.">
+<meta name="twitter:image" content="https://homeroomforfamily.com/og-image.png">
+<link rel="canonical" href="https://homeroomforfamily.com/support">
+
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<style>
+/* Self-hosted, so this page makes no request to a third party. Same three
+   faces and the same paths as index.html, so a visitor arriving here from
+   the landing page has them cached already. */
+@font-face{
+  font-family:'Geist';src:url('/fonts/Geist-Variable.woff2') format('woff2-variations');
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Geist Mono';src:url('/fonts/GeistMono-Variable.woff2') format('woff2-variations');
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Fredoka';src:url('/fonts/Fredoka-wordmark.ttf') format('truetype-variations');
+  font-weight:700;font-style:normal;font-display:swap;
+}
+
+/* Every value here is lifted from index.html, which takes them from the
+   app's app/tokens.css light theme. Support is part of the product, so it
+   should not be a page that looks borrowed from somewhere else. */
+:root{
+  --paper:#FCFAF4; --stone:#F4F1E8; --card:#FFFFFF; --sunk:#F8F5EC;
+  --ink:#111412; --body:#3A403C; --muted:#5E655F; --soft:#676E66;
+  --line:#ECE9E4; --line-2:#E7E4DF; --line-3:#E2DED8;
+  --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
+  --action:#C63F22;
+  --radius-xl:30px; --radius-lg:22px; --radius-md:18px; --radius-sm:12px;
+  --lift:0 24px 60px -20px rgba(17,20,18,.35);
+  --page:820px;
+}
+
+*{box-sizing:border-box}
+/* clip, not hidden: hidden on html makes it a scroll container. */
+html{overflow-x:clip}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:'Geist',system-ui,-apple-system,sans-serif;
+  font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--ink);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--action)}
+.wrap{max-width:var(--page);margin:0 auto;padding:0 20px}
+
+/* ── nav ── */
+.nav{
+  border-bottom:1px solid var(--line);background:var(--paper);
+  position:sticky;top:0;z-index:10;
+}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;
+  gap:16px;height:68px}
+.wordmark{
+  font-family:'Fredoka',ui-rounded,system-ui,sans-serif;font-weight:700;
+  font-size:26px;letter-spacing:-.01em;text-decoration:none;line-height:1;
+}
+.nav .back{font-size:15px;color:var(--muted);text-decoration:none}
+.nav .back:hover{color:var(--action);text-decoration:underline}
+
+/* ── head ── */
+.head{padding:56px 0 8px}
+h1{
+  font-size:clamp(38px,6vw,58px);line-height:1.04;letter-spacing:-.035em;
+  color:var(--ink);margin:0;font-weight:600;
+}
+.lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:46ch}
+
+/* ── the contact card ── */
+.contact{
+  margin:32px 0 8px;background:var(--card);border:1px solid var(--line-2);
+  border-radius:var(--radius-lg);padding:28px;box-shadow:var(--lift);
+}
+.contact h2{margin:0;font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.contact p{margin:10px 0 0;color:var(--muted);font-size:16px}
+.mail{
+  display:inline-block;margin-top:18px;background:var(--action);color:#fff;
+  text-decoration:none;font-weight:600;font-size:17px;
+  padding:13px 22px;border-radius:999px;
+}
+.mail:hover{color:#fff;opacity:.92}
+.addr{
+  display:block;margin-top:14px;font-family:'Geist Mono',ui-monospace,monospace;
+  font-size:14px;color:var(--soft);
+}
+
+/* ── questions ── */
+.sec{padding:48px 0 0}
+.sec > h2{
+  font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--soft);margin:0 0 20px;
+}
+.q{border-top:1px solid var(--line);padding:22px 0}
+.q:last-child{border-bottom:1px solid var(--line)}
+.q h3{margin:0 0 8px;font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.015em}
+.q p{margin:0 0 10px}
+.q p:last-child{margin-bottom:0}
+.q ol,.q ul{margin:10px 0 0;padding-left:22px}
+.q li{margin:6px 0}
+code{
+  font-family:'Geist Mono',ui-monospace,monospace;font-size:.92em;
+  background:var(--sunk);border:1px solid var(--line-3);
+  border-radius:6px;padding:1px 6px;
+}
+
+/* ── the safety note ── */
+.note{
+  margin:48px 0 0;background:var(--stone);border:1px solid var(--line-3);
+  border-radius:var(--radius-lg);padding:26px 28px;
+}
+.note h2{margin:0 0 10px;font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.note p{margin:0 0 10px;font-size:16px}
+.note p:last-child{margin-bottom:0}
+
+/* ── footer ── */
+footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 56px}
+.foot{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;
+  justify-content:space-between}
+.foot .wordmark{font-size:22px}
+.links{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:15px}
+.links a{color:var(--muted);text-decoration:none}
+.links a:hover{color:var(--action);text-decoration:underline}
+.links .c{color:var(--soft);font-size:14px}
+
+@media (max-width:560px){
+  .head{padding-top:40px}
+  .contact{padding:22px}
+  .mail{display:block;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="/" class="wordmark" aria-label="homeroom, home"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></a>
+    <a class="back" href="/">Back to homeroomforfamily.com</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <div class="head">
+    <h1>Support</h1>
+    <p class="lede">Something not working, or a question about your household? Write to us. A person reads every message.</p>
+  </div>
+
+  <div class="contact">
+    <h2>Email us</h2>
+    <p>Tell us what you were doing and what happened. If you can, say which browser or phone you were on. That usually saves a round trip.</p>
+    <a class="mail" href="mailto:support@homeroomforfamily.com?subject=Help%20with%20homeroom">Email support</a>
+    <span class="addr">support@homeroomforfamily.com</span>
+  </div>
+
+  <section class="sec">
+    <h2>Common questions</h2>
+
+    <div class="q">
+      <h3>The sign-in code never arrived</h3>
+      <p>homeroom has no passwords. You enter your email address and we send a code. If it has not turned up after a minute or two:</p>
+      <ol>
+        <li>Check the spam or junk folder. The first one sometimes lands there.</li>
+        <li>Confirm the address is the one you joined with. A code sent to an address with no account looks identical from your side.</li>
+        <li>Ask for a new code. The old one stops working as soon as a new one is sent, so use the most recent email.</li>
+      </ol>
+      <p>Still nothing, write to us and we will look it up.</p>
+    </div>
+
+    <div class="q">
+      <h3>How do I add someone to my household?</h3>
+      <p>Settings, then Invite. That makes a link you can text or email. Whoever opens it joins your household and picks their name. They do not need an email address or a password of their own, which is how a child joins.</p>
+      <p>Treat the link like a key to your calendar. Anyone holding it can get in, so send it to people directly rather than posting it anywhere.</p>
+    </div>
+
+    <div class="q">
+      <h3>Can I see our homeroom in Apple Calendar?</h3>
+      <p>Yes. Settings, then Calendar feed, gives you a subscription link you can add to Apple Calendar, Google Calendar or anything else that takes a calendar URL.</p>
+      <p>It goes one way. Events you add in homeroom appear in that calendar. Events you add in Apple Calendar stay there, they do not come back into homeroom.</p>
+    </div>
+
+    <div class="q">
+      <h3>Something is marked private. Who can see it?</h3>
+      <p>Only you. A private item is hidden from everyone else in the household, from any share link you create, and from the kitchen display. It is the right place for anything you would not want a babysitter or a houseguest reading off a screen.</p>
+    </div>
+
+    <div class="q">
+      <h3>How do I change or cancel my plan?</h3>
+      <p>Plans are handled on the web rather than in the app. Open homeroom in a browser, go to Settings, and use the billing link there. You can change or cancel at any time and you keep access until the end of the period you have paid for.</p>
+    </div>
+
+    <div class="q">
+      <h3>How do I delete my household and everything in it?</h3>
+      <p>Settings, then <strong>Delete my household</strong>. You will be asked to type DELETE to confirm, because it cannot be undone.</p>
+      <p>It removes the household, everything in it, every sign-in attached to it, and the customer record held by our payment processor. If you are a member rather than the person who set the household up and you want your own access removed, write to us and we will take care of it.</p>
+      <p><strong>Remove person</strong> is a different thing. It takes one member out of a household and leaves the household standing.</p>
+    </div>
+
+    <div class="q">
+      <h3>I found a bug</h3>
+      <p>Please tell us. What you tapped, what you expected, and what happened instead is enough. A screenshot helps more than anything else.</p>
+    </div>
+  </section>
+
+  <div class="note">
+    <h2>One thing worth knowing</h2>
+    <p>homeroom is built for the logistics of a household: who is where, what needs doing, what is for dinner. It is not a medical record or a secure document store.</p>
+    <p>Invite links and share links are designed to be passed around, which is what makes them useful. So keep sensitive details out of event titles and notes. Write "appointment at 3" rather than the reason for it. Anything you do want kept close, mark it private, and it stays out of share links and the kitchen display.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="wordmark"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="https://app.homeroomforfamily.com">Sign in</a>
+      <a href="https://app.homeroomforfamily.com/privacy">Privacy</a>
+      <a href="https://app.homeroomforfamily.com/terms">Terms</a>
+      <a href="https://app.homeroomforfamily.com/billing">Billing</a>
+      <a href="https://homeroomforstudents.com">homeroom for students</a>
+      <span class="c">&copy; 2026 homeroom for family, LLC</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

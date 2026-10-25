@@ -1,0 +1,7 @@
+# /support is the URL given to App Store Connect as the Support URL, and a
+# support URL that 404s is a cited guideline 2.1 rejection. Static hosting
+# usually serves support.html at /support on its own, but "usually" is not a
+# thing to bet a review round on, so this states it.
+#
+# 200 rather than 301: serve the file at that path, no redirect hop.
+/support    /support.html    200
