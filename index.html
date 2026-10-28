@@ -1127,26 +1127,27 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     letter-spacing:-.04em;margin-top:10px;max-width:18ch}
   .shots .lede{font-size:clamp(16px,1.5vw,19px);line-height:1.55;
     color:var(--muted);margin-top:14px;max-width:54ch}
+  /* All four visible, no scrolling.
+     It was a snap-scrolling strip, which left the fourth screen cut off at
+     the right edge with nothing to say it could be dragged. A hidden fourth
+     of four is worse than four smaller ones: the cut edge reads as a layout
+     bug and most people never drag it. The section takes a wider container
+     than the page default so four columns are still worth looking at. */
+  .shots-wide{max-width:min(1340px, 100% - 48px);margin:0 auto}
   .shots-strip{
-    margin-top:clamp(30px,4vw,46px);display:flex;gap:18px;
-    overflow-x:auto;scroll-snap-type:x mandatory;
-    padding:4px 4px 16px;
-    /* The strip runs to the page edge on small screens so it reads as
-       scrollable rather than clipped. */
-    scroll-padding-left:4px;
+    margin-top:clamp(30px,4vw,46px);
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(12px,1.6vw,22px);
   }
-  .shots-strip figure{flex:none;margin:0;width:clamp(210px,24vw,286px);
-    scroll-snap-align:start}
-  .shots-strip img{width:100%;height:auto;display:block;border-radius:20px;
+  .shots-strip figure{margin:0}
+  .shots-strip img{width:100%;height:auto;display:block;border-radius:18px;
     border:1px solid var(--line-3);
     box-shadow:0 18px 40px -22px rgba(17,20,18,.4)}
-  @media (max-width:720px){
-    .shots-strip{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-      padding-left:20px;padding-right:20px;scroll-padding-left:20px}
+  @media (max-width:900px){
+    .shots-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
-  /* Reduce Motion: snap is motion. */
-  @media (prefers-reduced-motion:reduce){
-    .shots-strip{scroll-snap-type:none;scroll-behavior:auto}
+  @media (max-width:520px){
+    .shots-strip{grid-template-columns:1fr;max-width:300px;margin-inline:auto}
   }
 </style>
 <section class="shots" aria-labelledby="shots-h">
@@ -1155,7 +1156,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     <h2 id="shots-h" class="balance">The week, on the phone already in your pocket.</h2>
     <p class="lede">Everyone in the house gets a colour, and every screen answers the
       same question: what is happening, and who has it.</p>
-    <div class="shots-strip" tabindex="0" role="group" aria-label="Screens from homeroom for family">
+    <div class="shots-strip shots-wide" role="group" aria-label="Screens from homeroom for family">
       <figure>
         <img src="/shots/glance.webp" width="620" height="1348" loading="lazy" decoding="async"
           alt="The Today screen. Seven people and a dog across the top, each with their own colour. Up next: soccer practice at 4:30, with an I've got it button. Below, Grandma Rose is staying, day three of eight.">
@@ -1354,8 +1355,14 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     gap:clamp(18px,3vw,40px);
     padding:clamp(34px,5vw,56px) 0 clamp(34px,5vw,56px) clamp(26px,4.5vw,56px);
   }
+  /* gap:0 and explicit margins, NOT a flex gap.
+     With a gap the paragraph margins stacked on top of it: 16px of margin
+     plus 20px of gap gave the two sentences close to double spacing, so they
+     read as two unrelated blocks rather than one thought. Margins alone let
+     the second sentence sit tight under the first while the heading and the
+     button keep their air. */
   .otherone-body{min-width:0;display:flex;flex-direction:column;
-    align-items:flex-start;gap:20px}
+    align-items:flex-start;gap:0}
   /* A SCREEN, not a colour field.
      This was eight brand stripes filling the right edge, which balanced the
      card but showed nothing. The point of this block is to let a parent see
@@ -1382,7 +1389,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 
   .otherone-body h3{
     font-size:clamp(30px,4.4vw,50px);line-height:1.06;letter-spacing:-.035em;
-    font-weight:600;color:var(--on-night);max-width:17ch;margin:0;
+    font-weight:600;color:var(--on-night);max-width:17ch;margin:22px 0 0;
   }
   /* Same annotation the student hero draws, same path, same geometry. */
   .otherone .scribble{position:relative;display:inline-block;color:var(--teal)}
@@ -1390,9 +1397,12 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     width:104%;height:.22em;overflow:visible}
   .otherone-body p{font-size:clamp(16px,1.5vw,19px);line-height:1.55;
     color:var(--on-night-muted);margin:16px 0 0;max-width:52ch}
+  /* The two sentences are one thought. Tight enough to read as a pair, still
+     clear of the loop, which hangs about 7px below the text it circles. */
+  .otherone-body p + p{margin-top:10px}
 
   .otherone-link{
-    display:inline-flex;align-items:center;gap:8px;margin-top:4px;
+    display:inline-flex;align-items:center;gap:8px;margin-top:26px;
     background:var(--stone);color:var(--ink);text-decoration:none;
     font-size:16px;font-weight:600;border-radius:999px;
     padding:13px 24px;min-height:44px;
