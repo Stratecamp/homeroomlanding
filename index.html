@@ -1133,9 +1133,12 @@ body.pop-open .sticky{transform:translateY(160%)!important}
      of four is worse than four smaller ones: the cut edge reads as a layout
      bug and most people never drag it. The section takes a wider container
      than the page default so four columns are still worth looking at. */
-  .shots-wide{max-width:min(1340px, 100% - 48px);margin:0 auto}
+  /* The strip lives OUTSIDE .wrap. Inside it, .wrap's max-width capped the
+     columns at about 240px however wide a max-width the strip was given,
+     which is why the screens looked undersized. */
   .shots-strip{
     margin-top:clamp(30px,4vw,46px);
+    padding-inline:max(20px,3vw);
     display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
     gap:clamp(12px,1.6vw,22px);
   }
@@ -1156,7 +1159,8 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     <h2 id="shots-h" class="balance">The week, on the phone already in your pocket.</h2>
     <p class="lede">Everyone in the house gets a colour, and every screen answers the
       same question: what is happening, and who has it.</p>
-    <div class="shots-strip shots-wide" role="group" aria-label="Screens from homeroom for family">
+    </div>
+    <div class="shots-strip" role="group" aria-label="Screens from homeroom for family">
       <figure>
         <img src="/shots/glance.webp" width="620" height="1348" loading="lazy" decoding="async"
           alt="The Today screen. Seven people and a dog across the top, each with their own colour. Up next: soccer practice at 4:30, with an I've got it button. Below, Grandma Rose is staying, day three of eight.">
@@ -1174,7 +1178,6 @@ body.pop-open .sticky{transform:translateY(160%)!important}
           alt="The wins wall. Everyone made it out on time all week, from Dani. Marcus finally fixed the shed door. Big or tiny, if it made someone proud it goes here.">
       </figure>
     </div>
-  </div>
 </section>
 
 <!-- ============ FOUNDER ============ -->
