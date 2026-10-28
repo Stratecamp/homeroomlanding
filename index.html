@@ -1340,30 +1340,38 @@ body.pop-open .sticky{transform:translateY(160%)!important}
      is the student accent colour, because that page lets a student choose
      theirs; teal is the resting value. -->
 <style>
-  .otherone{padding:0 0 86px}
+  /* Padding on BOTH sides. This was `0 0 86px`, so the card sat hard against
+     whatever section ended above it and then had 86px of air underneath. */
+  .otherone{padding:clamp(56px,7vw,96px) 0 clamp(64px,8vw,104px)}
   /* The student page's ground, not ours. The whole point is that it looks
      like somewhere else. */
   .otherone-card{
     position:relative;overflow:hidden;
     background:var(--night);border-radius:var(--radius-xl);
-    padding:clamp(34px,5vw,56px) clamp(26px,4.5vw,56px);
-    display:flex;flex-direction:column;gap:22px;align-items:flex-start;
     box-shadow:var(--lift);
+    display:grid;align-items:center;
+    grid-template-columns:minmax(0,1fr) clamp(210px,31%,330px);
+    gap:clamp(18px,3vw,40px);
+    padding:clamp(34px,5vw,56px) 0 clamp(34px,5vw,56px) clamp(26px,4.5vw,56px);
   }
-  /* The eight colours as upright bands down the right edge, the same device
-     as the App Store header. Without it the card was two thirds text and one
-     third nothing, which on a card this wide reads as unfinished rather than
-     spacious. Hidden on narrow screens, where there is no spare width. */
-  .otherone-card::after{
-    content:'';position:absolute;top:0;bottom:0;right:0;
-    width:clamp(84px,15%,168px);
-    background:linear-gradient(90deg,
-      var(--teal) 0 12.5%, var(--vermilion) 12.5% 25%,
-      var(--mustard) 25% 37.5%, var(--rose) 37.5% 50%,
-      var(--moss) 50% 62.5%, var(--dusty) 62.5% 75%,
-      var(--plum) 75% 87.5%, var(--biscuit) 87.5% 100%);
+  .otherone-body{min-width:0;display:flex;flex-direction:column;
+    align-items:flex-start;gap:20px}
+  /* A SCREEN, not a colour field.
+     This was eight brand stripes filling the right edge, which balanced the
+     card but showed nothing. The point of this block is to let a parent see
+     the thing they would be sending, so the right column is the student
+     Today screen, bleeding to the card edge on its own colour panel exactly
+     as it does in the App Store shot. */
+  .otherone-art{position:relative;align-self:stretch;display:flex;align-items:flex-end;
+    justify-content:flex-end;margin:calc(-1 * clamp(34px,5vw,56px)) 0}
+  .otherone-art img{display:block;width:100%;height:100%;object-fit:cover;
+    object-position:50% 0}
+  @media (max-width:860px){
+    .otherone-card{grid-template-columns:1fr;
+      padding:clamp(28px,6vw,44px) clamp(22px,5vw,40px) 0}
+    .otherone-art{margin:22px -22px 0;align-self:auto}
+    .otherone-art img{height:auto;max-height:420px;object-position:50% 0}
   }
-  @media (max-width:860px){ .otherone-card::after{display:none} }
   /* Cream pill: four of the eight wordmark colours sit too close to the
      dark ground, so the mark lifts onto cream exactly as it does in the
      student page's own nav. */
@@ -1397,20 +1405,23 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 <section class="otherone" aria-labelledby="otherone-h">
   <div class="wrap">
     <div class="otherone-card">
+      <div class="otherone-body">
       <span class="otherone-mark">
         <span class="wordmark"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span>
         <span class="sub">for students</span>
       </span>
-      <div class="otherone-body">
         <h3 id="otherone-h">Your
           <span class="scribble">whole<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 60 4, 110 22, 160 12 S 260 4, 296 14" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg></span>
           term, not just your class schedule.</h3>
         <p>Classes, deadlines, chores, groceries, study hours and the stuff
            you&rsquo;ll forget by Thursday. One place, on their phone and their
            laptop. It&rsquo;s the thing to send before move-in rather than after.</p>
+        <a class="otherone-link" href="https://homeroomforstudents.com">See homeroom for students
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <a class="otherone-link" href="https://homeroomforstudents.com">See homeroom for students
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="otherone-art" aria-hidden="true">
+        <img src="/shots/student-device.webp" width="620" height="1000" loading="lazy" decoding="async" alt="">
+      </div>
     </div>
   </div>
 </section>
