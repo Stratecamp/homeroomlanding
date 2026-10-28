@@ -486,18 +486,63 @@ button{font:inherit;color:inherit}
 .founder .inner{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
 .founder blockquote{font-size:clamp(26px,3.4vw,42px);line-height:1.18;font-weight:500;
   letter-spacing:-.03em}
-/* The portrait sits with the byline rather than beside the quote. It is a
-   studio headshot: at 360px it had the weight of a hero image and the
-   register of a LinkedIn profile, which is the opposite of what this
-   section is for. At 96px it does the one job a founder photo has to do —
-   confirm there is a person behind the claim — and the words lead. The
-   spectrum ring is the same mark the all-family events carry. */
-.byline{display:flex;align-items:center;gap:22px}
-.byline .shot{width:160px;height:160px;border-radius:50%;flex:none;padding:4px;
-  background:conic-gradient(from 90deg,#2F6661 0 12.5%,#D9472B 12.5% 25%,#DC9A27 25% 37.5%,#E78A9B 37.5% 50%,#7A8B5C 50% 62.5%,#5E8CA7 62.5% 75%,#9B6B9E 75% 87.5%,#B5803F 87.5% 100%);
-  box-shadow:0 16px 36px -16px rgba(17,20,18,.42)}
-.byline .shot img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;
-  background:var(--sunk)}
+/* The portrait sits with the byline rather than beside the quote. At 360px
+   it had the weight of a hero image and the register of a LinkedIn profile,
+   which is the opposite of what this section is for. Small, it does the one
+   job a founder photo has to do: confirm there is a person behind the claim,
+   and let the words lead.
+
+   IT WAS A CIRCLE IN A SPECTRUM RING, AND IT NEVER SAT RIGHT. A circle crops
+   hardest exactly where a head is widest, so the face kept drifting low no
+   matter how the source was re-cropped, and the conic ring put eight colours
+   in a thin band where they read as a tie-dye halo rather than as the brand.
+
+   This is the same eight colours used the way the App Store header uses
+   them: a block of upright stripes, offset behind a portrait that now has
+   room to breathe. Three layers, each doing one thing — stripes for brand,
+   cream border to lift the photo off them, photo on top. */
+.byline{display:flex;align-items:center;gap:30px}
+.byline .shot{position:relative;width:176px;height:208px;flex:none;
+  display:block;isolation:isolate}
+/* Layer 1: a flat teal block offset down and right. Not a shadow and not a
+   frame — a second card behind the first, which is how the app draws a
+   stacked week. Teal because it is the first of the eight member colours
+   and the one the wordmark opens on. */
+.byline .shot::before{
+  content:'';position:absolute;z-index:0;
+  left:16px;top:16px;right:-16px;bottom:-16px;
+  border-radius:22px;background:var(--teal);
+}
+/* Layer 3: the spectrum rule, sitting across the top edge of the card. The
+   same eight colours in the same order as the wordmark and the rule above
+   the wins wall. A first attempt put all eight behind the photo as a full
+   panel, where only a sliver showed and it read as a rainbow accident. A
+   rule is small, deliberate, and already part of the language. */
+.byline .shot::after{
+  content:'';position:absolute;z-index:3;
+  left:20px;right:20px;top:-4px;height:8px;border-radius:999px;
+  background:linear-gradient(90deg,
+    var(--teal) 0 12.5%, var(--vermilion) 12.5% 25%,
+    var(--mustard) 25% 37.5%, var(--rose) 37.5% 50%,
+    var(--moss) 50% 62.5%, var(--dusty) 62.5% 75%,
+    var(--plum) 75% 87.5%, var(--biscuit) 87.5% 100%);
+}
+/* Layer 2: the photo, on a cream card that lifts it off the teal.
+   object-position sits above centre because a head is in the top third of
+   almost every portrait, and centring on the frame centres on a collarbone.
+   This is also why the circle never worked: a circle crops hardest exactly
+   where a head is widest. */
+.byline .shot img{position:relative;z-index:2;width:100%;height:100%;
+  display:block;border-radius:20px;object-fit:cover;object-position:50% 38%;
+  border:7px solid var(--card);background:var(--sunk);
+  box-shadow:0 20px 44px -22px rgba(17,20,18,.5)}
+@media (max-width:620px){
+  .byline{gap:20px}
+  .byline .shot{width:128px;height:152px}
+  .byline .shot::before{left:12px;top:12px;right:-12px;bottom:-12px}
+  .byline .shot::after{left:15px;right:15px;height:6px}
+  .byline .shot img{border-width:5px}
+}
 
 /* ---------- stories ---------- */
 .stories{background:var(--stone);padding:clamp(80px,10vw,140px) 0}
@@ -1067,6 +1112,70 @@ body.pop-open .sticky{transform:translateY(160%)!important}
   </div>
 </section>
 
+<!-- ============ WHAT IT LOOKS LIKE ============
+     The App Store screenshots, which until now only existed on the App
+     Store. They are the clearest thing either of us has made: a real screen
+     with a sentence over it, no diagram and no abstraction. Somebody deciding
+     whether to hand their family a new system wants to see the thing.
+
+     A horizontal strip rather than a grid, because these are 1:2.17 and three
+     of them side by side at full width would be either tiny or a scroll of
+     their own. Snap points so a thumb lands on a whole screen. -->
+<style>
+  .shots{padding:clamp(70px,8vw,112px) 0;background:var(--stone)}
+  .shots h2{font-size:clamp(32px,4.4vw,52px);line-height:1.05;font-weight:600;
+    letter-spacing:-.04em;margin-top:10px;max-width:18ch}
+  .shots .lede{font-size:clamp(16px,1.5vw,19px);line-height:1.55;
+    color:var(--muted);margin-top:14px;max-width:54ch}
+  .shots-strip{
+    margin-top:clamp(30px,4vw,46px);display:flex;gap:18px;
+    overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:4px 4px 16px;
+    /* The strip runs to the page edge on small screens so it reads as
+       scrollable rather than clipped. */
+    scroll-padding-left:4px;
+  }
+  .shots-strip figure{flex:none;margin:0;width:clamp(210px,24vw,286px);
+    scroll-snap-align:start}
+  .shots-strip img{width:100%;height:auto;display:block;border-radius:20px;
+    border:1px solid var(--line-3);
+    box-shadow:0 18px 40px -22px rgba(17,20,18,.4)}
+  @media (max-width:720px){
+    .shots-strip{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+      padding-left:20px;padding-right:20px;scroll-padding-left:20px}
+  }
+  /* Reduce Motion: snap is motion. */
+  @media (prefers-reduced-motion:reduce){
+    .shots-strip{scroll-snap-type:none;scroll-behavior:auto}
+  }
+</style>
+<section class="shots" aria-labelledby="shots-h">
+  <div class="wrap">
+    <span class="kicker">WHAT IT LOOKS LIKE</span>
+    <h2 id="shots-h" class="balance">The week, on the phone already in your pocket.</h2>
+    <p class="lede">Everyone in the house gets a colour, and every screen answers the
+      same question: what is happening, and who has it.</p>
+    <div class="shots-strip" tabindex="0" role="group" aria-label="Screens from homeroom for family">
+      <figure>
+        <img src="/shots/glance.webp" width="620" height="1348" loading="lazy" decoding="async"
+          alt="The Today screen. Seven people and a dog across the top, each with their own colour. Up next: soccer practice at 4:30, with an I've got it button. Below, Grandma Rose is staying, day three of eight.">
+      </figure>
+      <figure>
+        <img src="/shots/meals.webp" width="620" height="1348" loading="lazy" decoding="async"
+          alt="The meal plan. Sunday: pancakes and scrambled eggs by Grandma Rose, turkey sandwiches, taco bowls by Dani. Monday: breakfast burritos by Nina, roast chicken by Grandma Rose. A button turns the week into a grocery list.">
+      </figure>
+      <figure>
+        <img src="/shots/tonight.webp" width="620" height="1348" loading="lazy" decoding="async"
+          alt="The kitchen display. Tonight's dinner is taco bowls and Dani cooks. Beside it, who's got it tonight: Grandma Rose staying all day, soccer practice at 4:30, and a win from Dani that everyone made it out on time all week.">
+      </figure>
+      <figure>
+        <img src="/shots/wins.webp" width="620" height="1348" loading="lazy" decoding="async"
+          alt="The wins wall. Everyone made it out on time all week, from Dani. Marcus finally fixed the shed door. Big or tiny, if it made someone proud it goes here.">
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOUNDER ============ -->
 <section class="founder">
   <div class="wrap">
@@ -1221,39 +1330,87 @@ body.pop-open .sticky{transform:translateY(160%)!important}
      and a second product in front of the decision only splits it. This is
      for the parent whose eldest is about to leave, which is a real moment
      and a bad time to go looking. -->
+<!-- This was a grey card with a 24px heading and a paragraph of prose, and
+     it did not show the student edition at all — it described it. Somebody
+     whose eldest leaves in August has no idea what they would be sending.
+
+     So it is now a window rather than a summary: the student hero, on the
+     student edition's own near-black ground, with its own headline, its own
+     hand-drawn scribble and its own words. The one thing it does not borrow
+     is the student accent colour, because that page lets a student choose
+     theirs; teal is the resting value. -->
 <style>
   .otherone{padding:0 0 86px}
+  /* The student page's ground, not ours. The whole point is that it looks
+     like somewhere else. */
   .otherone-card{
-    display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;
-    background:var(--stone);border:1px solid var(--line-3);
-    border-radius:var(--radius-lg);padding:30px 34px;
+    position:relative;overflow:hidden;
+    background:var(--night);border-radius:var(--radius-xl);
+    padding:clamp(34px,5vw,56px) clamp(26px,4.5vw,56px);
+    display:flex;flex-direction:column;gap:22px;align-items:flex-start;
+    box-shadow:var(--lift);
   }
-  .otherone-body{max-width:56ch;min-width:min(100%,300px)}
-  .otherone-body h3{font-size:24px;letter-spacing:-.025em;margin:10px 0 8px;color:var(--ink)}
-  .otherone-body p{font-size:15px;line-height:1.55;color:var(--body);margin:0 0 16px}
-  .otherone-mark{display:flex;flex-direction:column;gap:2px;flex:none}
-  .otherone-mark .sub{font-size:14px;font-weight:500;color:var(--muted)}
+  /* The eight colours as upright bands down the right edge, the same device
+     as the App Store header. Without it the card was two thirds text and one
+     third nothing, which on a card this wide reads as unfinished rather than
+     spacious. Hidden on narrow screens, where there is no spare width. */
+  .otherone-card::after{
+    content:'';position:absolute;top:0;bottom:0;right:0;
+    width:clamp(84px,15%,168px);
+    background:linear-gradient(90deg,
+      var(--teal) 0 12.5%, var(--vermilion) 12.5% 25%,
+      var(--mustard) 25% 37.5%, var(--rose) 37.5% 50%,
+      var(--moss) 50% 62.5%, var(--dusty) 62.5% 75%,
+      var(--plum) 75% 87.5%, var(--biscuit) 87.5% 100%);
+  }
+  @media (max-width:860px){ .otherone-card::after{display:none} }
+  /* Cream pill: four of the eight wordmark colours sit too close to the
+     dark ground, so the mark lifts onto cream exactly as it does in the
+     student page's own nav. */
+  .otherone-mark{display:inline-flex;align-items:baseline;gap:9px;
+    background:var(--stone);border-radius:999px;padding:9px 18px 11px}
+  .otherone-mark .wordmark{font-size:21px;line-height:1}
+  .otherone-mark .sub{font-size:14px;font-weight:600;color:var(--soft)}
+
+  .otherone-body h3{
+    font-size:clamp(30px,4.4vw,50px);line-height:1.06;letter-spacing:-.035em;
+    font-weight:600;color:var(--on-night);max-width:17ch;margin:0;
+  }
+  /* Same annotation the student hero draws, same path, same geometry. */
+  .otherone .scribble{position:relative;display:inline-block;color:var(--teal)}
+  .otherone .scribble svg{position:absolute;left:-2%;bottom:-.16em;
+    width:104%;height:.22em;overflow:visible}
+  .otherone-body p{font-size:clamp(16px,1.5vw,19px);line-height:1.55;
+    color:var(--on-night-muted);margin:16px 0 0;max-width:52ch}
+
+  .otherone-link{
+    display:inline-flex;align-items:center;gap:8px;margin-top:4px;
+    background:var(--stone);color:var(--ink);text-decoration:none;
+    font-size:16px;font-weight:600;border-radius:999px;
+    padding:13px 24px;min-height:44px;
+  }
+  .otherone-link:hover{background:#fff}
   @media (max-width:720px){
-    .otherone-card{padding:24px;gap:18px}
-    .otherone-mark{order:-1}
+    .otherone-body h3{max-width:none}
   }
 </style>
 <section class="otherone" aria-labelledby="otherone-h">
   <div class="wrap">
     <div class="otherone-card">
-      <div class="otherone-body">
-        <span class="kicker" style="color:var(--soft)">THERE IS A SECOND ONE</span>
-        <h3 id="otherone-h">Someone heading to college?</h3>
-        <p>homeroom for students is the same week built for one person instead of a
-           whole house: every class, every deadline and every shift in one place,
-           sized for a dorm room rather than a kitchen wall. Free to start, and it
-           is the thing to send before move-in rather than after.</p>
-        <a class="btn ghost" href="https://homeroomforstudents.com">See homeroom for students</a>
-      </div>
-      <div class="otherone-mark" aria-hidden="true">
+      <span class="otherone-mark">
         <span class="wordmark"><span style="color:#2F6661">h</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span><span style="color:#E78A9B">e</span><span style="color:#3E4A40">r</span><span style="color:#2F6661">o</span><span style="color:#D9472B">o</span><span style="color:#DC9A27">m</span></span>
         <span class="sub">for students</span>
+      </span>
+      <div class="otherone-body">
+        <h3 id="otherone-h">Your
+          <span class="scribble">whole<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 60 4, 110 22, 160 12 S 260 4, 296 14" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg></span>
+          term, not just your class schedule.</h3>
+        <p>Classes, deadlines, chores, groceries, study hours and the stuff
+           you&rsquo;ll forget by Thursday. One place, on their phone and their
+           laptop. It&rsquo;s the thing to send before move-in rather than after.</p>
       </div>
+      <a class="otherone-link" href="https://homeroomforstudents.com">See homeroom for students
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 </section>
@@ -1312,7 +1469,19 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     siteUrl:  'https://homeroomforfamily.com',
     monthly:  12,   // dollars a month
     annual:   99,   // dollars a year
-    trialDays: 7    // a card is taken at signup; nothing is charged until it ends
+    // No card at sign-up. The household is created with trial_ends_at set to
+    // seven days out (migration 250) and nothing touches Stripe until someone
+    // chooses a plan. The comment here used to say a card was taken at
+    // sign-up, which was never true of this flow and contradicted the sign-in
+    // screen's own "no card until you decide to stay".
+    //
+    // Worth knowing: Stripe checkout adds its OWN seven-day trial for a
+    // household that has never subscribed (app/api/checkout/route.js), so
+    // somebody who signs up, runs out, and then subscribes gets up to
+    // fourteen days before a charge. The page promises seven. Giving more
+    // than promised is not a problem, but it is unintended and it is written
+    // down here rather than left to be rediscovered.
+    trialDays: 7
   };
   /* ═══════════════════════════════════════════════════════════════ */
 
@@ -1793,17 +1962,41 @@ body.pop-open .sticky{transform:translateY(160%)!important}
   });
 
   var popShown = false;
-  function firstPop() { if (popShown) return; popShown = true; showCard(0); }
+  function firstPop() {
+    if (popShown) return;
+    // Never over the screenshot strip. That section is made entirely of
+    // things to look at, and a floating card on top of it hides the one
+    // thing it exists to show. Checked here rather than only at the
+    // trigger, because the slow-reader timer below can fire at any scroll
+    // position.
+    var shots = document.querySelector('.shots');
+    if (shots) {
+      var r = shots.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        setTimeout(firstPop, 1200);
+        return;
+      }
+    }
+    popShown = true;
+    showCard(0);
+  }
 
-  // Once the hero has scrolled past, or after a while if someone is
-  // reading slowly. Never on arrival: a card over the headline is
-  // the thing everyone hates.
+  // Once the FOUNDER section has scrolled past, or after a while if someone
+  // is reading slowly. Never on arrival: a card over the headline is the
+  // thing everyone hates.
+  //
+  // This used to watch `.stage`, the hero, which fired the card about 900ms
+  // into the scroll. That was correct until the screenshot strip was added
+  // immediately above the founder quote: the card then landed squarely on
+  // the first screenshot every time. Anchoring it after the strip moves the
+  // card to where there is prose underneath it rather than product.
   var stage = document.querySelector('.stage');
-  if ('IntersectionObserver' in window && stage) {
+  var popAnchor = document.querySelector('.founder') || stage;
+  if ('IntersectionObserver' in window && popAnchor) {
     new IntersectionObserver(function (es) {
       var e = es[0];
       if (!e.isIntersecting && e.boundingClientRect.top < 0) setTimeout(firstPop, 900);
-    }).observe(stage);
+    }).observe(popAnchor);
   }
   setTimeout(firstPop, 25000);
 
