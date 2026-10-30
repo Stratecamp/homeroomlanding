@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>homeroom · the week, shared</title>
+<meta name="description" content="Pick your homeroom. For family: the command center for the whole house. For students: classes, due dates and the stuff you'll forget by Thursday.">
+<meta name="theme-color" content="#FCFAF4">
+<meta name="color-scheme" content="light">
+<meta property="og:title" content="homeroom · the week, shared">
+<meta property="og:description" content="Pick yours: homeroom for family, or homeroom for students.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://homeroomforfamily.com/hello">
+<meta property="og:image" content="https://homeroomforfamily.com/og-hello.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Two homeroom editions side by side: homeroom for family, the command center for the whole house, and homeroom for students, the agenda book you'll actually open.">
+<meta property="og:site_name" content="homeroom">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="homeroom · the week, shared">
+<meta name="twitter:description" content="Pick yours: homeroom for family, or homeroom for students.">
+<meta name="twitter:image" content="https://homeroomforfamily.com/og-hello.png">
+<link rel="canonical" href="https://homeroomforfamily.com/hello">
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="icon" href="/favicon-16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* ============================================================
+   homeroom — /hello
+   ------------------------------------------------------------
+   The link that goes in a social bio. One job: send a visitor to
+   the right edition in one tap, on a phone, without scrolling.
+
+   Fonts are self-hosted from /fonts, same as every other page
+   here. Nothing on this page calls a third party: no Google
+   Fonts, no analytics, no embeds. This is the page most likely
+   to be opened from Instagram, which is exactly why it must not
+   be the one that leaks a referrer to someone else's server.
+   ============================================================ */
+
+@font-face{
+  font-family:'Geist';src:url('/fonts/Geist-Variable.woff2') format('woff2-variations');
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Geist Mono';src:url('/fonts/GeistMono-Variable.woff2') format('woff2-variations');
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+/* Subset to the eight letters of the wordmark. 7 KB, and it is the
+   only thing on the page set in Fredoka. */
+@font-face{
+  font-family:'Fredoka';src:url('/fonts/Fredoka-wordmark.ttf') format('truetype-variations');
+  font-weight:700;font-style:normal;font-display:swap;
+}
+:root{
+  /* Paper and stone are the site's, not this page's. A bio link that
+     opens a shade off from homeroomforfamily.com reads as a fake. */
+  --paper:#FCFAF4; --stone:#F4F1E8; --surface:#FFFFFF; --hairline:#ECE9E4;
+  --ink:#111412; --ink-2:#3A403C; --graphite:#5E655F;
+  --night:#0B0D0C; --night-2:#1E2320; --night-ink:#F2F1EE; --night-muted:#A9AFA8;
+  --cream:#FCF7F1; --wm-ink:#3E4A40;
+  --teal:#2F6661; --vermilion:#D9472B; --mustard:#DC9A27; --rose:#E78A9B;
+  --moss:#7A8B5C; --dusty:#5E8CA7; --plum:#9B6B9E; --biscuit:#B5803F;
+  --mustard-lift:#E8B04F; --focus:#2F6661;
+  --sans:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'Geist Mono',ui-monospace,Menlo,monospace;
+  --wordmark:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{background:var(--paper);-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+:where(a):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+.spectrum{height:6px;display:grid;grid-template-columns:repeat(8,1fr)}
+.spectrum span:nth-child(1){background:var(--teal)}.spectrum span:nth-child(2){background:var(--vermilion)}
+.spectrum span:nth-child(3){background:var(--mustard)}.spectrum span:nth-child(4){background:var(--rose)}
+.spectrum span:nth-child(5){background:var(--moss)}.spectrum span:nth-child(6){background:var(--dusty)}
+.spectrum span:nth-child(7){background:var(--plum)}.spectrum span:nth-child(8){background:var(--biscuit)}
+
+main{flex:1;width:100%;max-width:520px;margin:0 auto;padding:max(40px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 32px max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:28px}
+
+.head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.icon{width:84px;height:84px;border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(17,20,18,.06),0 18px 40px -18px rgba(17,20,18,.55)}
+.icon svg{display:block;width:100%;height:100%}
+.wm{font-family:var(--wordmark);font-weight:700;letter-spacing:-.01em;line-height:1}
+.wm .c1{color:var(--teal)}.wm .c2{color:var(--vermilion)}.wm .c3{color:var(--mustard)}.wm .c4{color:var(--rose)}.wm .c5{color:var(--wm-ink)}
+.head .wm{font-size:40px;margin-top:4px}
+h1{margin:0;font-size:clamp(34px,9vw,44px);line-height:1;font-weight:600;letter-spacing:-.045em}
+.lede{margin:0;max-width:340px;font-size:17px;line-height:1.45;color:var(--graphite)}
+
+.pick{margin:0;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--graphite);text-align:center}
+.cards{display:flex;flex-direction:column;gap:14px}
+
+.card{position:relative;display:flex;flex-direction:column;gap:14px;padding:22px 22px 20px;border-radius:28px;overflow:hidden;transition:transform 220ms var(--ease),box-shadow 220ms var(--ease)}
+.card:active{transform:scale(.985)}
+@media (hover:hover){.card:hover{transform:translateY(-3px)}}
+.card .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lockup{display:inline-flex;align-items:baseline;gap:7px}
+.lockup .wm{font-size:24px}
+.lockup .ed{font-size:15px;font-weight:500}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.card h2{margin:0;font-size:25px;line-height:1.12;font-weight:600;letter-spacing:-.03em;text-wrap:balance}
+.card p{margin:0;font-size:15px;line-height:1.45}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px}
+.cta .host{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+.btn{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.btn svg{transition:transform 220ms var(--ease)}
+@media (hover:hover){.card:hover .btn svg{transform:translateX(3px)}}
+
+.family{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(17,20,18,.05),0 24px 50px -30px rgba(17,20,18,.35)}
+.family .spectrum{position:absolute;left:0;right:0;top:0;height:5px}
+.family .lockup .ed{color:var(--wm-ink)}
+.family .tag,.family .host,.family p{color:var(--graphite)}
+.family .btn{background:var(--teal);color:#FFFFFF}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 8px;border-radius:999px;font-size:12px;font-weight:600;background:var(--stone);color:var(--ink-2)}
+.chip i{width:10px;height:10px;border-radius:50%;display:block}
+
+.students{background:var(--night);color:var(--night-ink);box-shadow:0 24px 50px -26px rgba(11,13,12,.8)}
+.students .lockup{background:var(--cream);height:36px;padding:0 14px;border-radius:999px;align-items:center}
+.students .lockup .wm{font-size:21px}
+.students .lockup .ed{color:var(--wm-ink);font-size:14px}
+.students .tag,.students .host,.students p{color:var(--night-muted)}
+.students h2 .hl{color:var(--mustard-lift)}
+.students .btn{background:var(--mustard-lift);color:var(--ink)}
+.due{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--night-2)}
+.due .what{flex:1;min-width:0}
+.due .lbl{font-size:10px;font-weight:600;letter-spacing:.08em;color:#F0603F}
+.due .ttl{margin-top:2px;font-size:14px;font-weight:600;color:var(--night-ink)}
+.due .left{font-family:var(--mono);font-size:11px;color:var(--night-muted)}
+
+footer{width:100%;max-width:520px;margin:0 auto;padding:8px max(16px,env(safe-area-inset-right)) max(28px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:13px;color:var(--graphite)}
+footer strong{font-weight:600;color:var(--ink-2)}
+
+@media (prefers-reduced-motion:no-preference){
+  .rise{opacity:0;transform:translateY(10px);animation:rise 520ms var(--ease) forwards}
+  .d1{animation-delay:60ms}.d2{animation-delay:140ms}.d3{animation-delay:220ms}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){.card,.btn svg{transition:none}}
+</style>
+</head>
+<body>
+<div class="spectrum" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<main>
+  <header class="head rise">
+    <div class="icon">
+      <svg viewBox="0 0 1024 1024" role="img" aria-label="homeroom app icon">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A302D"/><stop offset="1" stop-color="#0A0C0B"/></linearGradient>
+          <linearGradient id="house" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DEDBD4"/></linearGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="url(#bg)"/>
+        <circle cx="512" cy="228" r="62" fill="#5FA39B"/><circle cx="712.8" cy="311.2" r="62" fill="#F0603F"/><circle cx="796" cy="512" r="62" fill="#E8B04F"/><circle cx="712.8" cy="712.8" r="62" fill="#F09AAA"/><circle cx="512" cy="796" r="62" fill="#9AAD78"/><circle cx="311.2" cy="712.8" r="62" fill="#7FAACB"/><circle cx="228" cy="512" r="62" fill="#B98BBC"/><circle cx="311.2" cy="311.2" r="62" fill="#D19F5E"/>
+        <path d="M512 408 L616 492 V616 H408 V492 Z" fill="url(#house)" stroke="url(#house)" stroke-width="40" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="wm" aria-label="homeroom"><span class="c1">h</span><span class="c2">o</span><span class="c3">m</span><span class="c4">e</span><span class="c5">r</span><span class="c1">o</span><span class="c2">o</span><span class="c3">m</span></div>
+    <h1>The week, shared.</h1>
+    <p class="lede">Where the invisible work becomes visible. Built by a mom.</p>
+  </header>
+
+  <p class="pick rise d1">Pick yours</p>
+
+  <div class="cards">
+    <a class="card family rise d1" href="/" aria-label="homeroom for family: the command center for the whole house. Try it free for 7 days.">
+      <div class="spectrum" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="top">
+        <span class="lockup"><span class="wm"><span class="c1">h</span><span class="c2">o</span><span class="c3">m</span><span class="c4">e</span><span class="c5">r</span><span class="c1">o</span><span class="c2">o</span><span class="c3">m</span></span><span class="ed">for family</span></span>
+        <span class="tag">FAMILY</span>
+      </div>
+      <h2>The command center for the whole house.</h2>
+      <p>Everyone's week in one place. Every person gets a color. The dog too.</p>
+      <div class="chips" aria-hidden="true">
+        <span class="chip"><i style="background:var(--dusty)"></i>Soccer 3:30</span>
+        <span class="chip"><i style="background:var(--mustard)"></i>Dinner: tacos</span>
+        <span class="chip"><i style="background:var(--biscuit)"></i>Vet · Phineas</span>
+      </div>
+      <div class="cta">
+        <span class="host">7 DAYS FREE</span>
+        <span class="btn">Start your house <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </a>
+
+    <a class="card students rise d2" href="https://homeroomforstudents.com/" aria-label="homeroom for students: classes, due dates and the stuff you'll forget by Thursday. Free to start.">
+      <div class="top">
+        <span class="lockup"><span class="wm"><span class="c1">h</span><span class="c2">o</span><span class="c3">m</span><span class="c4">e</span><span class="c5">r</span><span class="c1">o</span><span class="c2">o</span><span class="c3">m</span></span><span class="ed">for students</span></span>
+        <span class="tag">STUDENTS</span>
+      </div>
+      <h2>The agenda book you'll <span class="hl">actually</span> open.</h2>
+      <p>Classes, due dates and the stuff you'll forget by Thursday.</p>
+      <div class="due" aria-hidden="true">
+        <div class="what"><div class="lbl">DUE THU 11:59 PM</div><div class="ttl">Essay draft</div></div>
+        <span class="left">2 DAYS</span>
+      </div>
+      <div class="cta">
+        <span class="host">FREE TO START</span>
+        <span class="btn">Start your term <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <span><strong>homeroom</strong> · household operations, shared.</span>
+  <span>© 2026 homeroom for family, LLC</span>
+</footer>
+</body>
+</html>
