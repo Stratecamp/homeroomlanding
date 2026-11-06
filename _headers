@@ -9,7 +9,7 @@
   Cache-Control: public, max-age=604800
 /og-founding.png
   Cache-Control: public, max-age=604800
-/appstore-badge.svg
+/appstore-badge-*.svg
   Cache-Control: public, max-age=604800
 /og-hello.png
   Cache-Control: public, max-age=604800

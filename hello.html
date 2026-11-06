@@ -131,6 +131,26 @@ h1{margin:0;font-size:clamp(34px,9vw,44px);line-height:1;font-weight:600;letter-
 .due .ttl{margin-top:2px;font-size:14px;font-weight:600;color:var(--night-ink)}
 .due .left{font-family:var(--mono);font-size:11px;color:var(--night-muted)}
 
+/* The App Store, as a third route rather than a fourth card.
+   ------------------------------------------------------------------
+   One binary serves both editions and there is ONE listing, so this is
+   deliberately not a badge per card: whoever taps it downloads the same
+   app either way and picks their edition on first run. The two cards
+   are for people who want to read about the one they came for; this is
+   for people who have already decided.
+
+   The BLACK badge, because this page is paper. The dark band on the
+   home page takes the white one. Apple supplies both and forbids
+   recreating either, which is why the filenames say which is which. */
+.get{display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding-top:4px;text-align:center}
+.get .line{margin:0;font-size:14px;line-height:1.45;color:var(--graphite);max-width:34ch}
+.get .badge-link{display:inline-block;line-height:0;border-radius:9px;
+  transition:transform 200ms var(--ease),opacity 200ms var(--ease)}
+.get .badge-link img{display:block;height:48px;width:auto}
+@media (hover:hover){.get .badge-link:hover{transform:translateY(-2px);opacity:.9}}
+.get .badge-link:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+
 footer{width:100%;max-width:520px;margin:0 auto;padding:8px max(16px,env(safe-area-inset-right)) max(28px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:13px;color:var(--graphite)}
 footer strong{font-weight:600;color:var(--ink-2)}
 
@@ -200,6 +220,13 @@ footer strong{font-weight:600;color:var(--ink-2)}
         <span class="host">FREE TO START</span>
         <span class="btn">Start your term <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
+    </a>
+  </div>
+
+  <div class="get rise d2">
+    <p class="line">Either one is the same download. Pick your side when you open it.</p>
+    <a class="badge-link" href="https://apps.apple.com/us/app/id6827345668" aria-label="Download homeroom on the App Store">
+      <img src="appstore-badge-black.svg" alt="Download on the App Store" width="120" height="40">
     </a>
   </div>
 </main>
