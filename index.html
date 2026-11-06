@@ -577,6 +577,57 @@ button{font:inherit;color:inherit}
 .step kbd{font-family:'Geist',sans-serif;font-weight:600;color:var(--ink);background:var(--sunk);
   border-radius:6px;padding:1px 6px;font-size:14px}
 
+/* ---------- the download band ----------
+   Replaced six numbered install steps on 5 Nov 2026, the night the App
+   Store listing went live. The steps were a manual, and a manual is what
+   you write when there is no button to press. There is one now.
+
+   The old copy also said "no app store, and nothing to update", which
+   stopped being true at 8pm, so this is a correctness fix as much as a
+   design one.
+
+   [data-store="pending"] hides the badge and promotes the browser link,
+   so the section is honest in both states and one attribute flips it. */
+.install-band{position:relative;overflow:hidden;border-radius:var(--radius-xl);
+  background:var(--night);color:var(--on-night);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);gap:clamp(24px,4vw,56px);
+  padding:clamp(32px,4.5vw,60px);padding-bottom:0;align-items:center}
+.install-band .install-copy{align-self:center;padding-bottom:clamp(32px,4.5vw,60px)}
+.install-band h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;font-weight:600;
+  letter-spacing:-.04em;color:var(--on-night)}
+.install-band p{margin-top:18px;max-width:46ch;font-size:17.5px;line-height:1.55;color:var(--night-muted)}
+.get{margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.badge-link{display:inline-block;line-height:0;border-radius:10px;
+  transition:transform 200ms var(--ease),opacity 200ms var(--ease)}
+.badge-link img{display:block;height:56px;width:auto}
+@media (hover:hover){.badge-link:hover{transform:translateY(-2px);opacity:.9}}
+.get .or{font-size:15px;color:var(--night-muted)}
+.get .or a{color:var(--on-night);text-decoration:underline;text-underline-offset:3px}
+/* family-device.webp is tonight.webp cropped to the phone alone. The full
+   shot is a marketing mockup carrying its own headline, which competed
+   with this band's. Clipped so the device bleeds off the bottom edge:
+   the top of the screen is the part that carries the message. */
+.install-art{align-self:end;min-width:0;overflow:hidden;max-height:min(440px,52vw)}
+.install-art img{display:block;width:100%;height:auto;border-radius:18px 18px 0 0}
+
+/* Before approval: no badge, no App Store claim, browser link becomes the button. */
+.install[data-store="pending"] .badge-link{display:none}
+.install[data-store="pending"] .get .or{font-size:inherit;color:inherit}
+.install[data-store="pending"] .get .or a{display:inline-flex;align-items:center;height:54px;
+  padding:0 26px;border-radius:999px;background:var(--on-night);color:var(--ink);
+  font-size:17px;font-weight:600;text-decoration:none}
+
+.after{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.after div{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.5;color:var(--muted)}
+.after b{color:var(--ink);font-weight:600}
+.after svg{flex:none;margin-top:3px}
+
+@media (max-width:860px){
+  .install-band{grid-template-columns:1fr;gap:0}
+  .install-band .install-copy{padding-bottom:0}
+  .install-art{margin-top:32px;max-width:420px;justify-self:center;width:100%}
+}
+
 /* ---------- pricing ---------- */
 .pricing{background:var(--stone);padding:clamp(80px,10vw,140px) 0}
 .pricing .top{display:flex;flex-wrap:wrap;gap:40px;align-items:center;justify-content:space-between}
@@ -1234,24 +1285,40 @@ body.pop-open .sticky{transform:translateY(160%)!important}
 </section>
 
 <!-- ============ INSTALL ============ -->
-<section class="install" id="install">
+<!-- data-store="live" from 8pm EST, 5 Nov 2026. Set it to "pending" to pull
+     the badge and every App Store claim without touching anything else. -->
+<section class="install" id="install" data-store="live">
   <div class="wrap">
-    <span class="kicker">GET THE APP</span>
-    <h2 style="margin-top:12px" class="balance">On your phone in about ten minutes.</h2>
-    <p class="lede">One adult sets up the household first. Everyone else joins with a link. homeroom installs straight from the web and lives on your home screen with its own icon &mdash; no app store, and nothing to update.</p>
-
-    <div class="tabs" role="tablist" aria-label="Choose your phone">
-      <button role="tab" id="tab-ios" aria-selected="true" aria-controls="panel-ios">iPhone &amp; iPad</button>
-      <button role="tab" id="tab-android" aria-selected="false" aria-controls="panel-android">Android</button>
+    <div class="install-band">
+      <div class="install-copy">
+        <span class="kicker" style="color:var(--night-muted)">GET THE APP</span>
+        <h2 style="margin-top:14px" class="balance">Tonight, everyone knows who&rsquo;s got what.</h2>
+        <p>Download it, name your household, and text one link to the people you live with. They tap their name and they&rsquo;re in. For the kids, that&rsquo;s the whole setup.</p>
+        <div class="get">
+          <a class="badge-link" href="https://apps.apple.com/us/app/id6827345668" aria-label="Download homeroom on the App Store">
+            <img src="appstore-badge.png" alt="Download on the App Store" width="464" height="153">
+          </a>
+          <span class="or">Or <a href="https://app.homeroomforfamily.com">start in your browser</a></span>
+        </div>
+      </div>
+      <div class="install-art">
+        <img src="shots/family-device.webp" alt="homeroom on an iPhone, showing tonight's dinner and who is cooking" width="492" height="1067" loading="lazy" decoding="async">
+      </div>
     </div>
 
-    <div class="steps" id="panel-ios" role="tabpanel" aria-labelledby="tab-ios">
-      <div class="step"><span class="n">1</span><h3>Open homeroom</h3><p>Go to <b>app.homeroomforfamily.com</b> in <kbd class="js-browser">Safari</kbd>.</p></div>
-      <div class="step"><span class="n">2</span><h3>Sign in with your email</h3><p>Tap <kbd>Send me a sign-in link</kbd>, then tap the link in your inbox. There&rsquo;s no password to create or forget.</p></div>
-      <div class="step"><span class="n">3</span><h3>Set up your household</h3><p>Name it, add everyone who lives there (pets too), and give each person a color. Starter chore lists and meal ideas are there if you want them.</p></div>
-      <div class="step"><span class="n">4</span><h3>Add it to your home screen</h3><p class="js-add">Tap the <kbd>Share</kbd> button (the square with an arrow), scroll down, tap <kbd>Add to Home Screen</kbd>, then <kbd>Add</kbd>.</p></div>
-      <div class="step"><span class="n">5</span><h3>Invite your family</h3><p>In <kbd>Settings</kbd>, open <kbd>Family invite link</kbd> and text it to everyone. They tap their name. For kids, that&rsquo;s the whole setup.</p></div>
-      <div class="step"><span class="n">6</span><h3>Put it on the kitchen wall</h3><p>On any tablet, open the invite link, then go to <b>app.homeroomforfamily.com/wall</b>. On iPad, set Auto-Lock to Never.</p></div>
+    <div class="after">
+      <div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>No password to forget.</b> Sign in with your email and tap the link we send.</span>
+      </div>
+      <div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>Everyone joins free.</b> One adult subscribes. Nobody else in the house pays, ever.</span>
+      </div>
+      <div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2F6661" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>The kitchen display works too.</b> Open <b>/wall</b> on any tablet you already own.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1605,24 +1672,14 @@ body.pop-open .sticky{transform:translateY(160%)!important}
   });
   setPlan('annual');
 
-  // ── Install tabs ─────────────────────────────────────────
-  var STEP4 = {
-    ios: 'Tap the <kbd>Share</kbd> button (the square with an arrow), scroll down, tap '
-       + '<kbd>Add to Home Screen</kbd>, then <kbd>Add</kbd>.',
-    android: 'Tap the <kbd>⋮</kbd> menu at the top right, tap <kbd>Install app</kbd> or '
-       + '<kbd>Add to Home screen</kbd>, then <kbd>Install</kbd>.'
-  };
-  function setPhone(which) {
-    $('tab-ios').setAttribute('aria-selected', String(which === 'ios'));
-    $('tab-android').setAttribute('aria-selected', String(which === 'android'));
-    all('.js-browser').forEach(function (e) { e.textContent = which === 'ios' ? 'Safari' : 'Chrome'; });
-    all('.js-add').forEach(function (e) { e.innerHTML = STEP4[which]; });
-  }
-  $('tab-ios').addEventListener('click', function () { setPhone('ios'); });
-  $('tab-android').addEventListener('click', function () { setPhone('android'); });
-  // Guess from the device, because the right instructions first time
-  // save a support email.
-  setPhone(/Android/i.test(navigator.userAgent) ? 'android' : 'ios');
+  // The install-tab code lived here until 5 Nov 2026. It rewrote step 4 to
+  // say Safari or Chrome depending on the device, for a six-step
+  // add-to-home-screen walkthrough that the App Store listing replaced.
+  //
+  // It had to go rather than sit harmlessly: $('tab-ios') now returns null,
+  // addEventListener throws on it, and because this is one script body,
+  // everything below would stop running with it. The share button, the terms
+  // line and the pop card are all downstream.
 
   // ── Share ────────────────────────────────────────────────
   all('.js-share').forEach(function (btn) {
