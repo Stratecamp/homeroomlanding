@@ -560,22 +560,14 @@ button{font:inherit;color:inherit}
 
 /* ---------- install ---------- */
 .install{padding:clamp(80px,10vw,140px) 0}
-.install h2{font-size:clamp(36px,5vw,60px);line-height:1.04;font-weight:600;letter-spacing:-.04em}
-.install .lede{margin-top:18px;max-width:620px;font-size:18px;line-height:1.5;color:var(--muted)}
-.tabs{margin-top:32px;display:inline-flex;padding:4px;border-radius:999px;background:var(--stone);gap:4px}
-.tabs button{height:40px;padding:0 20px;border-radius:999px;border:0;background:transparent;
-  font-size:15px;font-weight:600;color:var(--muted);cursor:pointer}
-.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);
-  box-shadow:0 1px 2px rgba(17,20,18,.1)}
-.steps{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.step{background:var(--card);border-radius:var(--radius-lg);padding:24px;
-  border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
-.step .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);
-  display:grid;place-items:center;font-size:14px;font-weight:600}
-.step h3{font-size:18px;font-weight:600;letter-spacing:-.02em}
-.step p{font-size:15px;line-height:1.5;color:var(--muted)}
-.step kbd{font-family:'Geist',sans-serif;font-weight:600;color:var(--ink);background:var(--sunk);
-  border-radius:6px;padding:1px 6px;font-size:14px}
+
+/* .tabs, .steps, .step and .install .lede lived here until 5 Nov 2026.
+   They styled the six-step add-to-home-screen walkthrough and its
+   iPhone/Android tab control, which the App Store listing replaced. The
+   markup went in the same change, so these were styling nothing. Removed
+   rather than left: the tab control is where the dead $('tab-ios')
+   listener came from, and leaving its CSS behind is how the next reader
+   concludes the tabs still exist somewhere. */
 
 /* ---------- the download band ----------
    Replaced six numbered install steps on 5 Nov 2026, the night the App
@@ -1296,7 +1288,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
         <p>Download it, name your household, and text one link to the people you live with. They tap their name and they&rsquo;re in. For the kids, that&rsquo;s the whole setup.</p>
         <div class="get">
           <a class="badge-link" href="https://apps.apple.com/us/app/id6827345668" aria-label="Download homeroom on the App Store">
-            <img src="appstore-badge.png" alt="Download on the App Store" width="464" height="153">
+            <img src="appstore-badge.svg" alt="Download on the App Store" width="120" height="40">
           </a>
           <span class="or">Or <a href="https://app.homeroomforfamily.com">start in your browser</a></span>
         </div>
@@ -1367,7 +1359,7 @@ body.pop-open .sticky{transform:translateY(160%)!important}
     <span class="kicker">QUESTIONS</span>
     <h2 style="margin-top:12px">Good to know.</h2>
     <div class="qa">
-      <details><summary>Does it work on Android?</summary><div class="a">Yes. homeroom works the same on iPhone and Android. Install it from Chrome on Android and from Safari on iPhone. A household can mix both.</div></details>
+      <details><summary>Does it work on Android?</summary><div class="a">Yes. homeroom works the same on iPhone and Android. On iPhone, download it from the App Store. On Android, install it straight from Chrome and it lives on your home screen like any other app. A household can mix both.</div></details>
       <details><summary>Do my kids need email addresses or phones?</summary><div class="a">No email and no password. Kids join with the family link and tap their name. Kids without a phone can use the kitchen display, and pre-readers get a printable picture chart.</div></details>
       <details><summary>Does it work for single-parent households?</summary><div class="a">Absolutely. homeroom takes the tracking out of your head so you&rsquo;re not the only place the plan lives. Kids see their own schedule and chores, and a co-parent, grandparent, or sitter can join to see exactly what they&rsquo;re covering. You decide who&rsquo;s in.</div></details>
       <details><summary>Can I use it on my computer at work?</summary><div class="a">Yes. Sign in at app.homeroomforfamily.com in any browser and you&rsquo;ll see the same household as everyone&rsquo;s phones. There&rsquo;s nothing to install.</div></details>
@@ -1558,8 +1550,8 @@ body.pop-open .sticky{transform:translateY(160%)!important}
   var CONFIG = {
     appUrl:   'https://app.homeroomforfamily.com',
     siteUrl:  'https://homeroomforfamily.com',
-    monthly:  12,   // dollars a month
-    annual:   99,   // dollars a year
+    monthly:  12.99,   // dollars a month
+    annual:   99,      // dollars a year
     // No card at sign-up. The household is created with trial_ends_at set to
     // seven days out (migration 250) and nothing touches Stripe until someone
     // chooses a plan. The comment here used to say a card was taken at
